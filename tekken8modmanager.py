@@ -9,7 +9,14 @@ from imgui.integrations.glfw import GlfwRenderer
 
 
 
+
+
 """ 
+    Tekken 8 Mod Manager
+
+    Inspinerd by CDDTreborn's Tekken 8 Mod On / Off Switch (Version 2) at https://tekkenmods.com/mod/3312/tekken-8-mod-on-off-switch-version-2
+
+
     Dependences
     - Python: https://www.python.org/
     - glfw: pip install glfw
@@ -18,17 +25,18 @@ from imgui.integrations.glfw import GlfwRenderer
     - imgui: pip install imgui
 
     ***Instruction***
-    1. Place script inside the Tekken 8 Folder.
+    1. Place script inside the Tekken 8 game Folder.
 
-    Linux - Open Terminal, Type: python3 , Drag and drop script into terminal and press enter.
+    Linux - Open Terminal, Type: python3/python, Drag and drop script onto terminal and press enter.
     Window - Left click file, Open with Python
 
 
 
-   How it works
-   Adds or removes "-x" at the end of the files to determine if the mod is enabled/disabled.
-    - Enabled = Filename not ending with "-x"
-    - Disabled = filename ending with "-x"
+   How it works.
+   - Searches for folder ~mods and logicmods inside the Tekken 8 folder
+   - Adds or removes "-x" at the end of the files to enabled/disabled a mod.
+    - Enabled = Filenames not ending with "-x"
+    - Disabled = Filenames ending with "-x"
 
 """
 
@@ -76,10 +84,7 @@ class mod_manager:
                             self.mod_list.append(new)
 
             self.mod_list.sort(reverse=False,key=self.getname)
-        else:
-            #print("Script was not placed in the Tekken 8 Directory.")
-            #sys.exit()
-            pass
+        
     
             
 
@@ -147,7 +152,7 @@ class mod_manager:
         
        
         
-        #glfw.set_window_icon(window,1,d)
+        
 
         if not window:
             glfw.terminate()
@@ -166,6 +171,8 @@ class mod_manager:
       
 
         title = ""
+
+
         # Loop until the user closes the window
         while not glfw.window_should_close(window):
             # Render here, e.g. using pyOpenGL
@@ -197,7 +204,6 @@ class mod_manager:
             
     
 
-         
             imgui.render()
             impl.render(imgui.get_draw_data())
 
@@ -210,8 +216,9 @@ class mod_manager:
 
             # Poll for and process events
             glfw.poll_events()
-            glfw.wait_events()
             impl.process_inputs()
+            glfw.wait_events()
+            
 
 
 
