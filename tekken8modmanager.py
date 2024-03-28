@@ -215,9 +215,10 @@ class mod_manager:
             
 
             # Poll for and process events
+            
             glfw.poll_events()
-            impl.process_inputs()
             glfw.wait_events()
+            impl.process_inputs()
             
 
 
