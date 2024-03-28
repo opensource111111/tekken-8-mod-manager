@@ -25,10 +25,10 @@ from imgui.integrations.glfw import GlfwRenderer
     - imgui: pip install imgui
 
     ***Instruction***
-    1. Place script inside the Tekken 8 game Folder.
+    1. Place script inside the Tekken 8 game folder.
 
-    Linux - Open Terminal, Type: python3/python, Drag and drop script onto terminal and press enter.
-    Window - Left click file, Open with Python
+    Linux - Open terminal and type "python3" or "python". Drag and drop script onto the terminal and press enter.
+    Window - Left click file and Open with Python
 
 
 
