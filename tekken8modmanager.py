@@ -12,31 +12,26 @@ from imgui.integrations.glfw import GlfwRenderer
 
 
 """ 
-    Tekken 8 Mod Manager
-
-    Inspired by CDDTreborn's Tekken 8 Mod On / Off Switch (Version 2) at https://tekkenmods.com/mod/3312/tekken-8-mod-on-off-switch-version-2
-
-
-    Dependence
+    Dependences
     - Python: https://www.python.org/
-        - glfw: pip install glfw
-        - numpy: pip install numpy
-        - PyOpenGL : pip install PyOpenGL
-        - imgui: pip install imgui
+    - glfw: pip install glfw
+    - numpy: pip install numpy
+    - PyOpenGL : pip install PyOpenGL
+    - imgui: pip install imgui
 
     ***Instruction***
-    1. Place script inside the Tekken 8 game folder.
+    Make sure your mods are in seperate folders inside the ~mods or logicmods folder
+    1. Place script inside the Tekken 8 Folder.
 
-    Linux - Open terminal and type "python3" or "python". Drag and drop script onto the terminal and press enter.
-    Window - Right click file and Open with Python
+    Linux - Open Terminal, Type: python3 , Drag and drop script into terminal and press enter.
+    Window - Left click file, Open with Python
 
 
 
-   How it works.
-   - Searches for folder ~mods and logicmods inside the Tekken 8 folder
-   - Adds or removes "-x" at the end of the files to enabled/disabled a mod.
-    - Enabled = Filenames not ending with "-x"
-    - Disabled = Filenames ending with "-x"
+   How it works
+   Adds or removes "-x" at the end of the files to determine if the mod is enabled/disabled.
+    - Enabled = Filename not ending with "-x"
+    - Disabled = filename ending with "-x"
 
 """
 
@@ -84,9 +79,10 @@ class mod_manager:
                             self.mod_list.append(new)
 
             self.mod_list.sort(reverse=False,key=self.getname)
-        
-    
-            
+        else:
+            print("Script was not placed in the Tekken 8 Directory.")
+            sys.exit()
+
 
 
     def activation(self,state,dir):
@@ -128,16 +124,10 @@ class mod_manager:
             self.activation(i.active,i.location) 
                 
         imgui.pop_style_color()
-        
+        if len(self.mod_list) == 0:
+            imgui.text("No Mods.....")
 
 
-        if os.path.isdir(self.path) == True:
-            if len(self.mod_list) == 0:
-                imgui.text("No Mods.....")
-        else:
-             imgui.text("Please place this script inside the Tekken 8 folder.")
-        
-            
         
 
     def main(self):
@@ -152,7 +142,7 @@ class mod_manager:
         
        
         
-        
+        #glfw.set_window_icon(window,1,d)
 
         if not window:
             glfw.terminate()
@@ -170,9 +160,7 @@ class mod_manager:
         program.find_mods()
       
 
-        title = ""
-
-
+        
         # Loop until the user closes the window
         while not glfw.window_should_close(window):
             # Render here, e.g. using pyOpenGL
@@ -185,25 +173,21 @@ class mod_manager:
             
             imgui.new_frame()
 
-            if os.path.isdir(self.path) == True:
-                title = str(len(program.mod_list)) + " Mods"
-            else:
-                title = " "
+        
 
             imgui.set_next_window_size(480,480)
             imgui.set_next_window_position(0,0)
             imgui.push_style_color(imgui.COLOR_WINDOW_BACKGROUND,0.05,0.05,0.05)
             imgui.push_style_color(imgui.COLOR_TITLE_BACKGROUND_ACTIVE,1,0,0)
-
-            imgui.begin(title,False,imgui.WINDOW_ALWAYS_AUTO_RESIZE | imgui.WINDOW_NO_MOVE | imgui.WINDOW_ALWAYS_VERTICAL_SCROLLBAR | imgui.WINDOW_NO_COLLAPSE)
+            imgui.begin(str(len(program.mod_list)) + " Mods",False,imgui.WINDOW_ALWAYS_AUTO_RESIZE | imgui.WINDOW_NO_MOVE | imgui.WINDOW_ALWAYS_VERTICAL_SCROLLBAR | imgui.WINDOW_NO_COLLAPSE)
             imgui.pop_style_color()
             imgui.pop_style_color()
             program.ui_checklist()
 
             imgui.end()
-            
     
 
+         
             imgui.render()
             impl.render(imgui.get_draw_data())
 
@@ -215,11 +199,9 @@ class mod_manager:
             
 
             # Poll for and process events
-            
             glfw.poll_events()
             glfw.wait_events()
             impl.process_inputs()
-            
 
 
 
