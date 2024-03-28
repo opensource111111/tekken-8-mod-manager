@@ -21,6 +21,8 @@ How it works.
         - imgui: pip install imgui
 
 ***Instruction***
+Make sure your mods are in seperate folders inside the ~mods or logicmods folder.
+   
 1. Place script inside the Tekken 8 game folder.
 
    Linux - Open terminal and type "python3" or "python". Drag and drop script onto the terminal and press enter.
