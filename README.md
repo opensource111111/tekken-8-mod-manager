@@ -1,7 +1,6 @@
 # tekken-8-mod-manager
 A Tekken 8 mod manager to turn on / off mods 
 
-Tekken 8 Mod Manager
 
 Inspired by CDDTreborn's Tekken 8 Mod On / Off Switch (Version 2) at https://tekkenmods.com/mod/3312/tekken-8-mod-on-off-switch-version-2
 
