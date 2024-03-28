@@ -3,8 +3,14 @@ A Tekken 8 mod manager to turn on / off mods
 
 Tekken 8 Mod Manager
 
-    Inspinerd by CDDTreborn's Tekken 8 Mod On / Off Switch (Version 2) at https://tekkenmods.com/mod/3312/tekken-8-mod-on-off-switch-version-2
+Inspinerd by CDDTreborn's Tekken 8 Mod On / Off Switch (Version 2) at https://tekkenmods.com/mod/3312/tekken-8-mod-on-off-switch-version-2
 
+
+How it works.
+    - Searches for folder ~mods and logicmods inside the Tekken 8 folder
+    - Adds or removes "-x" at the end of the files to enabled/disabled a mod.
+    - Enabled = Filenames not ending with "-x"
+    - Disabled = Filenames ending with "-x"
 
     Dependences
     - Python: https://www.python.org/
@@ -21,8 +27,3 @@ Tekken 8 Mod Manager
 
 
 
-   How it works.
-   - Searches for folder ~mods and logicmods inside the Tekken 8 folder
-   - Adds or removes "-x" at the end of the files to enabled/disabled a mod.
-    - Enabled = Filenames not ending with "-x"
-    - Disabled = Filenames ending with "-x"
