@@ -135,7 +135,7 @@ class mod_manager:
             if len(self.mod_list) == 0:
                 imgui.text("No Mods.....")
         else:
-             imgui.text("Script was not placed in the Tekken 8 Directory.")
+             imgui.text("Please place this script inside the Tekken 8 folder.")
         
             
         
