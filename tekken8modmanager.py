@@ -20,11 +20,11 @@ from imgui.integrations.glfw import GlfwRenderer
     - imgui: pip install imgui
 
     ***Instruction***
-    Make sure your mods are in seperate folders inside the ~mods or logicmods folder
-    1. Place script inside the Tekken 8 Folder.
+    Make sure your mods are in seperate folders inside the ~mods or logicmods folder.
+    1. Place script inside the Tekken 8 game folder.
 
     Linux - Open Terminal, Type: python3 , Drag and drop script into terminal and press enter.
-    Window - Left click file, Open with Python
+    Window - Left click file and Open with: Python.
 
 
 
@@ -79,9 +79,9 @@ class mod_manager:
                             self.mod_list.append(new)
 
             self.mod_list.sort(reverse=False,key=self.getname)
-        else:
-            print("Script was not placed in the Tekken 8 Directory.")
-            sys.exit()
+       
+           
+            
 
 
 
@@ -124,8 +124,11 @@ class mod_manager:
             self.activation(i.active,i.location) 
                 
         imgui.pop_style_color()
-        if len(self.mod_list) == 0:
+        if len(self.mod_list) == 0 and os.path.isdir(self.path) == True:
             imgui.text("No Mods.....")
+
+        if os.path.isdir(self.path) == False:
+            imgui.text("Script was not placed in the Tekken 8 game folder.")
 
 
         
@@ -165,21 +168,25 @@ class mod_manager:
         while not glfw.window_should_close(window):
             # Render here, e.g. using pyOpenGL
 
-            
             glClearColor(1, 1, 1, 1)
             glClear(GL_COLOR_BUFFER_BIT)
 
 
             
             imgui.new_frame()
+            
+            mod_title = " "
+            if os.path.isdir(self.path) == False:
+                mod_title = " "
+            else:
+                mod_title = str(len(program.mod_list)) + " Mods"
 
-        
 
             imgui.set_next_window_size(480,480)
             imgui.set_next_window_position(0,0)
             imgui.push_style_color(imgui.COLOR_WINDOW_BACKGROUND,0.05,0.05,0.05)
             imgui.push_style_color(imgui.COLOR_TITLE_BACKGROUND_ACTIVE,1,0,0)
-            imgui.begin(str(len(program.mod_list)) + " Mods",False,imgui.WINDOW_ALWAYS_AUTO_RESIZE | imgui.WINDOW_NO_MOVE | imgui.WINDOW_ALWAYS_VERTICAL_SCROLLBAR | imgui.WINDOW_NO_COLLAPSE)
+            imgui.begin(mod_title,False,imgui.WINDOW_ALWAYS_AUTO_RESIZE | imgui.WINDOW_NO_MOVE | imgui.WINDOW_ALWAYS_VERTICAL_SCROLLBAR | imgui.WINDOW_NO_COLLAPSE)
             imgui.pop_style_color()
             imgui.pop_style_color()
             program.ui_checklist()
