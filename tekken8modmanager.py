@@ -17,12 +17,12 @@ from imgui.integrations.glfw import GlfwRenderer
     Inspired by CDDTreborn's Tekken 8 Mod On / Off Switch (Version 2) at https://tekkenmods.com/mod/3312/tekken-8-mod-on-off-switch-version-2
 
 
-    Dependences
+    Dependence
     - Python: https://www.python.org/
-    - glfw: pip install glfw
-    - numpy: pip install numpy
-    - PyOpenGL : pip install PyOpenGL
-    - imgui: pip install imgui
+        - glfw: pip install glfw
+        - numpy: pip install numpy
+        - PyOpenGL : pip install PyOpenGL
+        - imgui: pip install imgui
 
     ***Instruction***
     1. Place script inside the Tekken 8 game folder.
