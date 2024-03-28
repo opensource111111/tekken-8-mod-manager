@@ -12,12 +12,12 @@ How it works.
     - Enabled = Filenames not ending with "-x"
     - Disabled = Filenames ending with "-x"
 
-    Dependences
+     Dependence
     - Python: https://www.python.org/
-    - glfw: pip install glfw
-    - numpy: pip install numpy
-    - PyOpenGL : pip install PyOpenGL
-    - imgui: pip install imgui
+        - glfw: pip install glfw
+        - numpy: pip install numpy
+        - PyOpenGL : pip install PyOpenGL
+        - imgui: pip install imgui
 
     ***Instruction***
     1. Place script inside the Tekken 8 game folder.
