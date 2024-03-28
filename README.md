@@ -9,6 +9,7 @@ Inspired by CDDTreborn's Tekken 8 Mod On / Off Switch (Version 2) at https://tek
 How it works.
     - Searches for folder ~mods and logicmods inside the Tekken 8 folder
     - Adds or removes "-x" at the end of the files to enabled/disabled a mod.
+    
     - Enabled = Filenames not ending with "-x"
     - Disabled = Filenames ending with "-x"
 
