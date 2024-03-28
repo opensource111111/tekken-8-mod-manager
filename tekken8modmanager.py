@@ -14,7 +14,7 @@ from imgui.integrations.glfw import GlfwRenderer
 """ 
     Tekken 8 Mod Manager
 
-    Inspinerd by CDDTreborn's Tekken 8 Mod On / Off Switch (Version 2) at https://tekkenmods.com/mod/3312/tekken-8-mod-on-off-switch-version-2
+    Inspired by CDDTreborn's Tekken 8 Mod On / Off Switch (Version 2) at https://tekkenmods.com/mod/3312/tekken-8-mod-on-off-switch-version-2
 
 
     Dependences
