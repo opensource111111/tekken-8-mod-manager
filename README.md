@@ -23,7 +23,7 @@ How it works.
     1. Place script inside the Tekken 8 game folder.
 
     Linux - Open terminal and type "python3" or "python". Drag and drop script onto the terminal and press enter.
-    Window - Left click file and Open with Python
+    Window - Right click file and Open with Python
 
 
 
