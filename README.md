@@ -9,7 +9,7 @@ Inspired by CDDTreborn's Tekken 8 Mod On / Off Switch (Version 2) at https://tek
 
 How it works.
 - Searches for folder ~mods and logicmods inside the Tekken 8 folder
-- Adds or removes "-x" at the end of the files to enabled/disabled a mod.
+- Adds or removes "-x" at the end of the files to enabled/disabled.
 - Enabled = Filenames not ending with "-x"
 - Disabled = Filenames ending with "-x"
 
@@ -22,15 +22,17 @@ How it works.
         - PyOpenGL : pip install PyOpenGL
         - imgui: pip install imgui
 
+
+
 ***Instruction***
-Create ~mods and logicmods folders and place them in "Tekken 8/Parlaris/Content/Paks".
+Create ~mods and logicmods folders and place them in <steamapps>\common\Tekken 8\Parlaris\Content/Paks.
 Make sure your mods are in seperate folders inside the ~mods or logicmods folders.
    
-1. Place script inside the Tekken 8 game folder.
+1. Place this script in <steamapps>\common\Tekken 8.
 
    Linux - Open terminal and type "python3" or "python". Drag and drop script onto the terminal and press enter.
 
-   Window - Right click file and Open with Python
+   Window - Right click file and open with Python
 
 
 
