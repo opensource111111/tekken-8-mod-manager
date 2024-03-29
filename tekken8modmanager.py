@@ -20,20 +20,20 @@ from imgui.integrations.glfw import GlfwRenderer
     - imgui: pip install imgui
 
     ***Instruction***
-    Create ~mods and logicmods folders and place them in "Tekken 8/Parlaris/Content/Paks".
+    Create ~mods and logicmods folders and place them in <steamapps>\common\Tekken 8/Parlaris/Content/Paks.
     Make sure your mods are in seperate folders inside the ~mods or logicmods folders.
    
-    1. Place script inside the Tekken 8 game folder.
+    1. Place this script in <steamapps>\common\Tekken 8.
 
     Linux - Open Terminal, Type: python3 , Drag and drop script into terminal and press enter.
     Window - Left click file and Open with: Python.
 
 
 
-   How it works
-   Adds or removes "-x" at the end of the files to determine if the mod is enabled/disabled.
-    - Enabled = Filename not ending with "-x"
-    - Disabled = filename ending with "-x"
+   # How it works
+   Adds or removes "-x" at the end of the files to enabled/disabled.
+    - Enabled = Filenames not ending with "-x"
+    - Disabled = Filenames ending with "-x"
 
 """
 
@@ -188,7 +188,9 @@ class mod_manager:
             imgui.set_next_window_position(0,0)
             imgui.push_style_color(imgui.COLOR_WINDOW_BACKGROUND,0.05,0.05,0.05)
             imgui.push_style_color(imgui.COLOR_TITLE_BACKGROUND_ACTIVE,1,0,0)
+            imgui.push_style_color(imgui.COLOR_TEXT,0,0,0,1)
             imgui.begin(mod_title,False,imgui.WINDOW_ALWAYS_AUTO_RESIZE | imgui.WINDOW_NO_MOVE | imgui.WINDOW_ALWAYS_VERTICAL_SCROLLBAR | imgui.WINDOW_NO_COLLAPSE)
+            imgui.pop_style_color()
             imgui.pop_style_color()
             imgui.pop_style_color()
             program.ui_checklist()
