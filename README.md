@@ -21,18 +21,21 @@ How it works.
         - numpy: pip install numpy
         - PyOpenGL : pip install PyOpenGL
         - imgui: pip install imgui
-
+        - pyinstaller(for creating exe)
 
 
 ***Instruction***
 Create ~mods and logicmods folders and place them in <steamapps>\common\Tekken 8\Parlaris\Content\Paks.
 Make sure your mods are in seperate folders inside the ~mods or logicmods folders.
-   
+
+Option 1: Script
 1. Place this script in <steamapps>\common\Tekken 8.
 
    Linux - Open terminal and type "python3" or "python". Drag and drop script onto the terminal and press enter.
 
    Window - Right click file and open with Python
 
-
+Option 2: EXE
+   1. Place the executable in <steamapps>\common\Tekken 8 and run.
+   
 
