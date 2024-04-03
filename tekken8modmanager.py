@@ -113,28 +113,25 @@ class mod_manager:
             
             #imgui.image(texture_id, 66, 66, border_color=(1, 0, 0, 1))
             
-            imgui.same_line()
+            #imgui.same_line()
             _, i.active = imgui.checkbox(i.name, i.active)
-            
-            
             self.activation(i.active,i.location) 
             imgui.separator()
 
 
 
-
-
-        imgui.pop_style_color()
-        imgui.pop_style_color()
-
         if len(self.mod_list) == 0 and os.path.isdir(self.path) == True:
+            
             imgui.text("No Mods.....")
-
+           
+        
         if os.path.isdir(self.path) == False:
+            
             imgui.text("This program was not placed in the Tekken 8 game folder.")
-
-
-
+            
+        
+        imgui.pop_style_color()
+        imgui.pop_style_color()
     
             
             
