@@ -6,8 +6,8 @@ import imgui
 import OpenGL
 from OpenGL.GL import *
 from imgui.integrations.glfw import GlfwRenderer
-
-
+import imageio.v3 as iio
+import OpenGL.GL as gl
 
 
 
@@ -32,7 +32,7 @@ class mod_manager:
         
     
     def getname(self,mod_list):
-        return mod_list.name.upper()
+        return mod_list.name.title()
    
 
 
@@ -48,7 +48,7 @@ class mod_manager:
                         for mod_folder in os.listdir(self.path + "/" + folder):
                                 
                             new = mod_manager.mod_list_format()
-                            new.name = mod_folder.upper()
+                            new.name = mod_folder.title()
                             new.location = self.path + "/" + folder + "/" + mod_folder
 
                             for filecheck in os.listdir(self.path + "/" + folder + "/" + mod_folder):
@@ -92,17 +92,41 @@ class mod_manager:
 
 
     def ui_checklist(self):
-        
-        
-        self.update_list()
+        """
+        image = iio.imread("") 
+        w = 0
+        h = 0
+        texture_id = gl.glGenTextures(1)
+        gl.glPixelStorei(gl.GL_UNPACK_ALIGNMENT, 1)
+        gl.glBindTexture(gl.GL_TEXTURE_2D, texture_id)
+        gl.glPixelStorei(gl.GL_UNPACK_ALIGNMENT, 1)
+        gl.glTexParameteri(gl.GL_TEXTURE_2D, gl.GL_TEXTURE_MAG_FILTER, gl.GL_LINEAR)
+        gl.glTexParameteri(gl.GL_TEXTURE_2D, gl.GL_TEXTURE_MIN_FILTER, gl.GL_LINEAR)
+        gl.glTexImage2D(gl.GL_TEXTURE_2D, 0, gl.GL_RGB, w, h, 0, gl.GL_BGR, gl.GL_UNSIGNED_BYTE, image)
+        gl.glBindTexture(gl.GL_TEXTURE_2D, 0)
+        """
 
+        self.update_list()
+        imgui.push_style_color(imgui.COLOR_TEXT,1,1,1,1)
         imgui.push_style_color(imgui.COLOR_CHECK_MARK,1,1,1)
         for i in self.mod_list:
+            
+            #imgui.image(texture_id, 66, 66, border_color=(1, 0, 0, 1))
+            
+            imgui.same_line()
             _, i.active = imgui.checkbox(i.name, i.active)
             
+            
             self.activation(i.active,i.location) 
-                
+            imgui.separator()
+
+
+
+
+
         imgui.pop_style_color()
+        imgui.pop_style_color()
+
         if len(self.mod_list) == 0 and os.path.isdir(self.path) == True:
             imgui.text("No Mods.....")
 
@@ -110,7 +134,17 @@ class mod_manager:
             imgui.text("This program was not placed in the Tekken 8 game folder.")
 
 
+
+    
+            
+            
         
+
+
+
+
+
+
 
     def main(self):
 
@@ -160,20 +194,26 @@ class mod_manager:
             else:
                 mod_title = str(len(program.mod_list)) + " Mods"
 
-
+            
             imgui.set_next_window_size(480,480)
             imgui.set_next_window_position(0,0)
             imgui.push_style_color(imgui.COLOR_WINDOW_BACKGROUND,0.05,0.05,0.05)
             imgui.push_style_color(imgui.COLOR_TITLE_BACKGROUND_ACTIVE,1,0,0)
-            imgui.push_style_color(imgui.COLOR_TEXT,0,0,0,1)
-            imgui.begin(mod_title,False,imgui.WINDOW_ALWAYS_AUTO_RESIZE | imgui.WINDOW_NO_MOVE | imgui.WINDOW_ALWAYS_VERTICAL_SCROLLBAR | imgui.WINDOW_NO_COLLAPSE)
+            imgui.push_style_color(imgui.COLOR_TEXT,0.1,0.1,0.1,1)
+            with imgui.begin(mod_title,False,imgui.WINDOW_ALWAYS_AUTO_RESIZE | imgui.WINDOW_NO_MOVE | imgui.WINDOW_ALWAYS_VERTICAL_SCROLLBAR | imgui.WINDOW_NO_COLLAPSE):
+                program.ui_checklist()
+
+
+                
             imgui.pop_style_color()
             imgui.pop_style_color()
             imgui.pop_style_color()
 
-            program.ui_checklist()
 
-            imgui.end()
+           
+
+            
+            
     
 
          
