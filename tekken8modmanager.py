@@ -6,8 +6,8 @@ import imgui
 import OpenGL
 from OpenGL.GL import *
 from imgui.integrations.glfw import GlfwRenderer
-import imageio.v3 as iio
-import OpenGL.GL as gl
+#import imageio.v3 as iio
+#import OpenGL.GL as gl
 
 
 
@@ -92,8 +92,9 @@ class mod_manager:
 
 
     def ui_checklist(self):
+        
         """
-        image = iio.imread("") 
+        image = iio.imread("icon.png") 
         w = 0
         h = 0
         texture_id = gl.glGenTextures(1)
@@ -107,13 +108,15 @@ class mod_manager:
         """
 
         self.update_list()
+
         imgui.push_style_color(imgui.COLOR_TEXT,1,1,1,1)
         imgui.push_style_color(imgui.COLOR_CHECK_MARK,1,1,1)
+
         for i in self.mod_list:
             
             #imgui.image(texture_id, 66, 66, border_color=(1, 0, 0, 1))
-            
             #imgui.same_line()
+
             _, i.active = imgui.checkbox(i.name, i.active)
             self.activation(i.active,i.location) 
             imgui.separator()
@@ -198,13 +201,15 @@ class mod_manager:
             imgui.push_style_color(imgui.COLOR_TITLE_BACKGROUND_ACTIVE,1,0,0)
             imgui.push_style_color(imgui.COLOR_TEXT,0.1,0.1,0.1,1)
             with imgui.begin(mod_title,False,imgui.WINDOW_ALWAYS_AUTO_RESIZE | imgui.WINDOW_NO_MOVE | imgui.WINDOW_ALWAYS_VERTICAL_SCROLLBAR | imgui.WINDOW_NO_COLLAPSE):
+                
+                
                 program.ui_checklist()
-
 
                 
             imgui.pop_style_color()
             imgui.pop_style_color()
             imgui.pop_style_color()
+        
 
 
            
