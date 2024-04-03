@@ -25,7 +25,7 @@ How it works.
 
 
 ***Instruction***
-Create ~mods and logicmods folders and place them in <steamapps>\common\Tekken 8\Parlaris\Content\Paks.
+Create ~mods and logicmods folders and place them in Steam\steamapps\common\Tekken 8\Parlaris\Content\Paks.
 Make sure your mods are in seperate folders inside the ~mods or logicmods folders.
 
 Option 1: Script
@@ -36,6 +36,6 @@ Option 1: Script
    Window - Right click file and open with Python
 
 Option 2: EXE
-   1. Place the executable in <steamapps>\common\Tekken 8 and run.
+   1. Place the executable in Steam\steamapps\common\Tekken 8 and run.
    
 
