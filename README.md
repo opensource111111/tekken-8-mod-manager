@@ -1,5 +1,5 @@
 
-![Screenshot of a comment on a GitHub issue showing an image, added in the Markdown, of an Octocat smiling and raising a tentacle.](assets/icon.png)
+![Screenshot of a comment on a GitHub issue showing an image, added in the Markdown, of an Octocat smiling and raising a tentacle.](assets/banner.png)
 
 
 
@@ -39,7 +39,7 @@ Create ~mods and logicmods folders and place them in Steam\steamapps\common\Tekk
 Make sure your mods are in seperate folders inside the ~mods or logicmods folders.
 
 Option 1: Script
-1. Place this script in <steamapps>\common\Tekken 8.
+1. Place this script in Steam\common\Tekken 8.
 
    Linux - Open terminal and type "python3" or "python". Drag and drop script onto the terminal and press enter.
 

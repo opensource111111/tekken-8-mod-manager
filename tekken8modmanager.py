@@ -21,7 +21,7 @@ class mod_manager:
             self.path = os.path.dirname(sys.executable) + "/Polaris/Content/Paks"
         else:
             self.path =  os.path.dirname(os.path.abspath(__file__)) + "/Polaris/Content/Paks"
-        print(self.path)
+        
 
 
     class mod_list_format:
@@ -84,7 +84,7 @@ class mod_manager:
                         os.rename(dir +"/" + file, dir +"/" + file +"-x")
                 
 
-    def updateList(self):
+    def update_list(self):
  
         self.mod_list.clear()
         self.find_mods()
@@ -94,7 +94,7 @@ class mod_manager:
     def ui_checklist(self):
         
         
-        self.updateList()
+        self.update_list()
 
         imgui.push_style_color(imgui.COLOR_CHECK_MARK,1,1,1)
         for i in self.mod_list:
@@ -170,6 +170,7 @@ class mod_manager:
             imgui.pop_style_color()
             imgui.pop_style_color()
             imgui.pop_style_color()
+
             program.ui_checklist()
 
             imgui.end()
