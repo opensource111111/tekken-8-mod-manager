@@ -18,7 +18,7 @@ TARRGET FONT : https://www.fonts4free.net/tarrget-font.html#
 
 
 How it works.
-- Searches for folder ~mods and logicmods inside the Tekken 8 folder
+- Searches for folder ~mods and logicmods inside Steam\steamapps\common\Tekken 8\Parlaris\Content\Paks
 - Adds or removes "-x" at the end of the files to enabled/disabled.
 - Enabled = Filenames not ending with "-x"
 - Disabled = Filenames ending with "-x"
