@@ -11,37 +11,6 @@ from imgui.integrations.glfw import GlfwRenderer
 
 
 
-""" 
-    Dependences
-    - Python: https://www.python.org/
-    - glfw: pip install glfw
-    - numpy: pip install numpy
-    - PyOpenGL : pip install PyOpenGL
-    - imgui: pip install imguiwsss
-
-    ***Instruction***
-    Create ~mods and logicmods folders and place them in <steamapps>\common\Tekken 8/Parlaris/Content/Paks.
-    Make sure your mods are in seperate folders inside the ~mods or logicmods folders.
-   
-    1. Place script in <steamapps>\common\Tekken 8.
-
-    Linux - Open Terminal, Type: python3 , Drag and drop script into terminal and press enter.
-    Window - Left click file and Open with: Python.
-
-
-
-   # How it works
-   Adds or removes "-x" at the end of the files to enabled/disabled.
-    - Enabled = Filenames not ending with "-x"
-    - Disabled = Filenames ending with "-x"
-
-"""
-
-
-
-
-
-
 class mod_manager:
     
     def __init__(self):
