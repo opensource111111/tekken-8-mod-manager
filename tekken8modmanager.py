@@ -17,13 +17,13 @@ from imgui.integrations.glfw import GlfwRenderer
     - glfw: pip install glfw
     - numpy: pip install numpy
     - PyOpenGL : pip install PyOpenGL
-    - imgui: pip install imgui
+    - imgui: pip install imguiwsss
 
     ***Instruction***
     Create ~mods and logicmods folders and place them in <steamapps>\common\Tekken 8/Parlaris/Content/Paks.
     Make sure your mods are in seperate folders inside the ~mods or logicmods folders.
    
-    1. Place this script in <steamapps>\common\Tekken 8.
+    1. Place script in <steamapps>\common\Tekken 8.
 
     Linux - Open Terminal, Type: python3 , Drag and drop script into terminal and press enter.
     Window - Left click file and Open with: Python.
@@ -41,11 +41,19 @@ from imgui.integrations.glfw import GlfwRenderer
 
 
 
+
 class mod_manager:
     
     def __init__(self):
         self.mod_list : mod_list_format = []
-        self.path : str = os.path.dirname(os.path.abspath(__file__)) + "/Polaris/Content/Paks"
+        self.path : str = ""
+        
+        if getattr(sys,"frozen", False):
+            self.path = os.path.dirname(sys.executable) + "/Polaris/Content/Paks"
+        else:
+            self.path =  os.path.dirname(os.path.abspath(__file__)) + "/Polaris/Content/Paks"
+        print(self.path)
+
 
     class mod_list_format:
         name : str = ""
@@ -130,7 +138,7 @@ class mod_manager:
             imgui.text("No Mods.....")
 
         if os.path.isdir(self.path) == False:
-            imgui.text("Script was not placed in the Tekken 8 game folder.")
+            imgui.text("This program was not placed in the Tekken 8 game folder.")
 
 
         
