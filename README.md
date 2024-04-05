@@ -18,32 +18,34 @@ TARRGET FONT : https://www.fonts4free.net/tarrget-font.html#
 
 
 How it works.
-- Searches for folder ~mods and logicmods inside Steam\steamapps\common\Tekken 8\Parlaris\Content\Paks
+- Searches for folder ~mods and logicmods inside the Tekken 8 folder
 - Adds or removes "-x" at the end of the files to enabled/disabled.
 - Enabled = Filenames not ending with "-x"
 - Disabled = Filenames ending with "-x"
 
-   
 
-        Dependence
-        - Python: https://www.python.org/
+***Instruction***
+
+   Option 1: Script
+
+      Dependence
+        - Install Python: https://www.python.org/
         - glfw: pip install glfw
         - numpy: pip install numpy
         - PyOpenGL : pip install PyOpenGL
         - imgui: pip install imgui
-        - pyinstaller(for creating exe)  Command: pyinstaller --icon "assets\icon.ico" --onefile <path to script> --add-binary "dep\glfw-3.4.bin.WIN64\lib-mingw-w64\glfw3.dll;." --noconsole
       
+   1. Place the "tekken8modmanager.py" script in Steam\common\Tekken 8.
 
-***Instruction***
-Create ~mods and logicmods folders and place them in Steam\steamapps\common\Tekken 8\Parlaris\Content\Paks.
-Make sure your mods are in seperate folders inside the ~mods or logicmods folders.
+      Linux - Open the python terminal and type "python3" or "python" with a space after and drag and drop the script onto the terminal and press enter.
 
-Option 1: Script
-1. Place this script in Steam\common\Tekken 8.
+            python3 path_to_script
 
-   Linux - Open terminal and type "python3" or "python". Drag and drop script onto the terminal and press enter.
+      Window - Right click file and open with Python
 
-   Window - Right click file and open with Python
+
+
+
 
 Option 2: EXE
    1. Place the executable in Steam\steamapps\common\Tekken 8 and run.
