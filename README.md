@@ -24,12 +24,14 @@ How it works.
 - Disabled = Filenames ending with "-x"
 
 
-***Instruction***
+***Install Instruction***
 
-   Option 1: Script
+   Option 1: Run from Script
 
-      Dependence
-        - Install Python: https://www.python.org/
+   Dependence
+    - Install Python: https://www.python.org/
+         
+      In the python terminal:
         - glfw: pip install glfw
         - numpy: pip install numpy
         - PyOpenGL : pip install PyOpenGL
@@ -41,13 +43,11 @@ How it works.
 
             python3 path_to_script
 
-      Window - Right click file and open with Python
+      Windows - Right click file and open with Python
 
 
 
-
-
-Option 2: EXE
-   1. Unzip the file and you will most likely can a virus warning. Any virus warning you may have are false positives. Place the executable in Steam\steamapps\common\Tekken 8 and run.
+   Option 2: Run from excutable.
+      1. Unzip the file and you will most likely can a virus warning. Any virus warning you may have are false positives. Place the executable in Steam\steamapps\common\Tekken 8 and run.
    
 
