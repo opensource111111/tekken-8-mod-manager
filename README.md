@@ -31,11 +31,11 @@ How it works.
    Dependence
     - Install Python: https://www.python.org/
          
-      In the python terminal:
-        - glfw: pip install glfw
-        - numpy: pip install numpy
-        - PyOpenGL : pip install PyOpenGL
-        - imgui: pip install imgui
+      In the python terminal type and install one at a time:
+        - pip install glfw
+        - pip install numpy
+        - pip install PyOpenGL
+        - pip install imgui
       
    1. Place the "tekken8modmanager.py" script in Steam\common\Tekken 8.
 
