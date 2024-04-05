@@ -19,6 +19,7 @@ TARGET FONT : https://www.fonts4free.net/tarrget-font.html#
 
 # How it works.
 - Searches for folders ~mods and logicmods inside "Steam\steamapps\common\Tekken 8\Polaris\Content\Paks"
+and lists every mod inside theses 2 folders. Make sure that each mod has it own separate folder.
 - Adds or removes "-x" at the end of the files to enabled/disabled.
 - Enabled = Filenames not ending with "-x"
 - Disabled = Filenames ending with "-x"
