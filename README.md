@@ -39,7 +39,7 @@ How it works.
       
    1. Place the "tekken8modmanager.py" script in Steam\common\Tekken 8.
 
-      Linux - Open the python terminal and type "python3" or "python" with a space after and drag and drop the script onto the terminal and press enter.
+      Linux - Open the python terminal and type "python3"  with a space after and drag and drop the script onto the terminal and press enter.
 
             python3 path_to_script
 
