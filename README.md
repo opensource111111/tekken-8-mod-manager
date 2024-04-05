@@ -38,7 +38,7 @@ TARRGET FONT : https://www.fonts4free.net/tarrget-font.html#
    Dependence
     - Install Python: https://www.python.org/
          
-      In the python terminal type and install one at a time:
+      In the command prompt type and install one at a time:
         - pip install glfw
         - pip install numpy
         - pip install PyOpenGL
