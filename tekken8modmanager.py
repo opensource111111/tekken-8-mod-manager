@@ -6,8 +6,10 @@ import imgui
 import OpenGL
 from OpenGL.GL import *
 from imgui.integrations.glfw import GlfwRenderer
+import OpenGL.GL as gl
+
 #import imageio.v3 as iio
-#import OpenGL.GL as gl
+
 
 
 
@@ -22,6 +24,11 @@ class mod_manager:
         else:
             self.path =  os.path.dirname(os.path.abspath(__file__)) + "/Polaris/Content/Paks"
         
+       
+
+        self.texture_id = ""
+
+
 
 
     class mod_list_format:
@@ -93,19 +100,7 @@ class mod_manager:
 
     def ui_checklist(self):
         
-        """
-        image = iio.imread("icon.png") 
-        w = 0
-        h = 0
-        texture_id = gl.glGenTextures(1)
-        gl.glPixelStorei(gl.GL_UNPACK_ALIGNMENT, 1)
-        gl.glBindTexture(gl.GL_TEXTURE_2D, texture_id)
-        gl.glPixelStorei(gl.GL_UNPACK_ALIGNMENT, 1)
-        gl.glTexParameteri(gl.GL_TEXTURE_2D, gl.GL_TEXTURE_MAG_FILTER, gl.GL_LINEAR)
-        gl.glTexParameteri(gl.GL_TEXTURE_2D, gl.GL_TEXTURE_MIN_FILTER, gl.GL_LINEAR)
-        gl.glTexImage2D(gl.GL_TEXTURE_2D, 0, gl.GL_RGB, w, h, 0, gl.GL_BGR, gl.GL_UNSIGNED_BYTE, image)
-        gl.glBindTexture(gl.GL_TEXTURE_2D, 0)
-        """
+        
 
         self.update_list()
 
@@ -113,8 +108,10 @@ class mod_manager:
         imgui.push_style_color(imgui.COLOR_CHECK_MARK,1,1,1)
 
         for i in self.mod_list:
+                
+           
             
-            #imgui.image(texture_id, 66, 66, border_color=(1, 0, 0, 1))
+            #imgui.image(self.texture_id, 66, 66, border_color=(1, 0, 0, 1))
             #imgui.same_line()
 
             _, i.active = imgui.checkbox(i.name, i.active)
@@ -175,6 +172,22 @@ class mod_manager:
         program = mod_manager()
         program.find_mods()
       
+
+         
+        """
+        image = iio.imread("C:\\Users\\Carlton\\Pictures\\71340_20230703173324_1.png") 
+        w = 0
+        h = 0
+        self.texture_id = gl.glGenTextures(1)
+        gl.glBindTexture(gl.GL_TEXTURE_2D, self.texture_id)
+        gl.glTexParameteri(gl.GL_TEXTURE_2D, gl.GL_TEXTURE_MAG_FILTER, gl.GL_LINEAR)
+        gl.glTexParameteri(gl.GL_TEXTURE_2D, gl.GL_TEXTURE_MIN_FILTER, gl.GL_LINEAR)
+        gl.glPixelStorei(gl.GL_UNPACK_ROW_LENGTH,0)
+        gl.glTexImage2D(gl.GL_TEXTURE_2D, 0, gl.GL_RGB, w, h, 0, gl.GL_BGR, gl.GL_UNSIGNED_BYTE, image)
+        gl.glBindTexture(gl.GL_TEXTURE_2D, 0)
+
+        """
+
 
         
         # Loop until the user closes the window
