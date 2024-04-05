@@ -31,7 +31,7 @@ How it works.
         - numpy: pip install numpy
         - PyOpenGL : pip install PyOpenGL
         - imgui: pip install imgui
-        - pyinstaller(for creating exe)
+        - pyinstaller(for creating exe)  Command: pyinstaller --icon "assets\icon.ico" --onefile <path to script> --add-binary "dep\glfw-3.4.bin.WIN64\lib-mingw-w64\glfw3.dll;." --noconsole
       
 
 ***Instruction***
