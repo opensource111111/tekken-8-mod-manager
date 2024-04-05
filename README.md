@@ -28,7 +28,7 @@ TARGET FONT : https://www.fonts4free.net/tarrget-font.html#
 
 
 
-# Install Instruction
+# Install Instructions
    
    ### Option 1: Run from executable. (Windows Only)
    1. Unzip the exe file from the zip file. You will most likely get a virus warning which will then quarantine the file. Any virus warning you may have are false positives. Place the executable in "Steam\steamapps\common\Tekken 8" and run.
@@ -38,17 +38,16 @@ TARGET FONT : https://www.fonts4free.net/tarrget-font.html#
 
   Dependence
       - Install Python: https://www.python.org/
-          
+      
     Windows - Open Windows command prompt
     Linux - Open Terminal
-
+      - pip install pip
       - pip install glfw
       - pip install numpy
-      - pip install PyOpenGL
+      - pip install PyOpenGL PyOpenGL_accelerate
       - pip install imgui
       
-      
-      
+
    1. Place the "tekken8modmanager.py" script in "Steam\steamapps\common\Tekken 8".
 
       Linux - Open the python terminal and type "python3". Drag and drop the script onto the terminal and press enter.
