@@ -48,6 +48,6 @@ How it works.
 
 
 Option 2: EXE
-   1. Place the executable in Steam\steamapps\common\Tekken 8 and run.
+   1. Unzip the file and you will most likely can a virus warning. Any virus warning you may have are false positives. Place the executable in Steam\steamapps\common\Tekken 8 and run.
    
 
