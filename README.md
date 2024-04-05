@@ -17,16 +17,23 @@ TARRGET FONT : https://www.fonts4free.net/tarrget-font.html#
 
 
 
-How it works.
-- Searches for folder ~mods and logicmods inside the Tekken 8 folder
+# How it works.
+- Searches for folders ~mods and logicmods inside "Steam\steamapps\common\Tekken 8\Polaris\Content\Paks"
 - Adds or removes "-x" at the end of the files to enabled/disabled.
 - Enabled = Filenames not ending with "-x"
 - Disabled = Filenames ending with "-x"
 
 
-***Install Instruction***
 
-   Option 1: Run from Script
+
+# Install Instruction
+
+   
+   ### Option 1: Run from executable. (Windows Only)
+   1. Unzip the exe file from the zip file. You will most likely get a virus warning which will then quarantine the file. Any virus warning you may have are false positives. Place the executable in "Steam\steamapps\common\Tekken 8" and run.
+
+
+   ### Option 2: Run from the script (Windows / Linux)
 
    Dependence
     - Install Python: https://www.python.org/
@@ -37,17 +44,15 @@ How it works.
         - pip install PyOpenGL
         - pip install imgui
       
-   1. Place the "tekken8modmanager.py" script in Steam\common\Tekken 8.
+   1. Place the "tekken8modmanager.py" script in "Steam\steamapps\common\Tekken 8".
 
-      Linux - Open the python terminal and type "python3"  with a space after and drag and drop the script onto the terminal and press enter.
+      Linux - Open the python terminal and type "python3" or "python"  and drag and drop the script onto the terminal and press enter.
 
             python3 path_to_script
 
-      Windows - Right click file and open with Python
+      Windows - Right click file to open the context menu and open with Python
 
 
 
-   Option 2: Run from excutable.
-      1. Unzip the file and you will most likely can a virus warning. Any virus warning you may have are false positives. Place the executable in Steam\steamapps\common\Tekken 8 and run.
    
 
