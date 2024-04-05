@@ -5,8 +5,10 @@
 
 # Tekken 8 Mod Manager
 A Tekken 8 mod manager to turn on / off mods 
+
 Compiled using pyinstaller
-Command : pyinstaller --icon "assest\icon.ico" --onefile tekken8modmanager.py --add-binary "dep\glfw-3.4.bin.WIN64\lib-mingw-w64\glfw3.dll;." --noconsole
+
+         pyinstaller --icon "assest\icon.ico" --onefile tekken8modmanager.py --add-binary "dep\glfw-3.4.bin.WIN64\lib-mingw-w64\glfw3.dll;." --noconsole
 
 Inspired by CDDTreborn's Tekken 8 Mod On / Off Switch (Version 2) at https://tekkenmods.com/mod/3312/tekken-8-mod-on-off-switch-version-2
 
