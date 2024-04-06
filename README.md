@@ -5,6 +5,10 @@
 
 # Tekken 8 Mod Manager
 A Tekken 8 mod manager to turn on / off mods 
+Source code: [https://github.com/opensource111111/tekken-8-mod-manager](https://github.com/opensource111111/tekken-8-mod-manager)
+Program compiled using pyinstaller.
+
+      pyinstaller --icon "assets\icon.ico" --onefile tekken8modmanager.py --add-binary "dep\glfw-3.4.bin.WIN64\lib-mingw-w64\glfw3.dll;." --noconsole
 
 
 
