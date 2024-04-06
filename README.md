@@ -3,13 +3,11 @@
 
 
 
-# Tekken 8 Mod Manager
 A Tekken 8 mod manager to turn on / off mods 
 Source code: [https://github.com/opensource111111/tekken-8-mod-manager](https://github.com/opensource111111/tekken-8-mod-manager)
-Windows exe was compiled using pyinstaller.
+Window exe was compiled using pyinstaller.
 
       pyinstaller --icon "assets\icon.ico" --onefile tekken8modmanager.py --add-binary "dep\glfw-3.4.bin.WIN64\lib-mingw-w64\glfw3.dll;." --noconsole
-
 
 
 
@@ -20,16 +18,25 @@ Font used in logo
 TARGET FONT : https://www.fonts4free.net/tarrget-font.html#
 
 
+
 ![Screenshot of a comment on a GitHub issue showing an image, added in the Markdown, of an Octocat smiling and raising a tentacle.](assets/screenshot.png)
 
 
 
 # How it works.
 - Searches for folders ~mods and logicmods inside "Steam\steamapps\common\Tekken 8\Polaris\Content\Paks"
-and lists every mod inside theses 2 folders. Make sure that each mod has it own separate folder.
-- Adds or removes "-x" at the end of the files to enabled/disabled.
-- Enabled = Filenames not ending with "-x"
-- Disabled = Filenames ending with "-x"
+and lists every mod inside theses 2 folders. 
+
+# Make sure that each mod has it own separate folder with all the files inside it.
+
+example:
+
+![e.g](assets/s.png)
+
+
+- The program adds or removes "-x" at the end of each file to enabled/disabled.
+	- Enabled = Filenames not ending with "-x"
+	- Disabled = Filenames ending with "-x"
 
 
 
@@ -41,7 +48,7 @@ and lists every mod inside theses 2 folders. Make sure that each mod has it own 
    ### Option 1: Run from executable. (Windows Only)
    1. Unzip the exe file from the zip file. You will most likely get a virus warning which will then quarantine the file. Any virus warning you may have are false positives. Place the executable in "Steam\steamapps\common\Tekken 8" and run.
 
-      
+
 
   ### Option 2: Run from the script (Windows / Linux)
 
@@ -65,7 +72,7 @@ and lists every mod inside theses 2 folders. Make sure that each mod has it own 
             python3 path_to_script
 
       Windows - Right click file to open the context menu and open with Python
-      
+
 
 
    
