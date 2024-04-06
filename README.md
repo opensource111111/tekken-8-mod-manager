@@ -62,7 +62,7 @@ The Windows excutable was compiled using pyinstaller.
       - pip install pip
       - pip install glfw
       - pip install numpy
-      - pip install PyOpenGL
+      - pip install PyOpenGL PyOpenGL_accelerate
       - pip install imgui
       
       
