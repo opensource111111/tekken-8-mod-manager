@@ -62,8 +62,11 @@ class mod_manager:
                                     new.location = self.path + "/" + folder + "/" + mod_folder
 
                                     for filecheck in os.listdir(self.path + "/" + folder + "/" + mod_folder):
-                                        if filecheck.endswith("-x"):
-                                            new.active = False
+                                        
+                                        if filecheck.endswith("pak") | filecheck.endswith("pak-x") | filecheck.endswith("ucas") | filecheck.endswith("ucas-x") | filecheck.endswith("utoc") | filecheck.endswith("utoc-x"):
+                                            
+                                            if filecheck.endswith("-x"):
+                                                new.active = False
                                             
                                     self.mod_list.append(new)
 
@@ -80,21 +83,23 @@ class mod_manager:
 
         if os.path.isdir(dir) == True:
             for file in os.listdir(dir):
+                if file.endswith("pak") | file.endswith("pak-x") | file.endswith("ucas") | file.endswith("ucas-x") | file.endswith("utoc") | file.endswith("utoc-x"):
+                                                
+                    if state == True:
+                        if file.endswith("-x"):
+                            os.rename(dir +"/" + file, dir +"/" + file.strip("-x"))
+                            
+                        else:
+                            pass
                 
-                if state == True:
-                    if file.endswith("-x"):
-                        os.rename(dir +"/" + file, dir +"/" + file.strip("-x"))
+                    if state == False:
+                        if file.endswith("-x"):
+                            pass
+                        else:
                         
-                    else:
-                        pass
-                
-                if state == False:
-                    if file.endswith("-x"):
-                        pass
-                    else:
+                            os.rename(dir +"/" + file, dir +"/" + file +"-x")
                     
-                        os.rename(dir +"/" + file, dir +"/" + file +"-x")
-                
+
 
     def update_list(self):
  
@@ -128,11 +133,12 @@ class mod_manager:
         if len(self.mod_list) == 0 and os.path.isdir(self.path) == True:
             
             imgui.text("No Mods.....")
+            imgui.text("Please make sure that each mod has its own separate folder")
            
         
         if os.path.isdir(self.path) == False:
             
-            imgui.text("This program was not placed in the Tekken 8 game folder.")
+            imgui.text("This program was not placed Steam\steamapps\common\Tekken 8.")
             
         
         imgui.pop_style_color()
