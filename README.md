@@ -27,7 +27,7 @@ TARGET FONT : https://www.fonts4free.net/tarrget-font.html#
 - Searches for folders ~mods and logicmods inside "Steam\steamapps\common\Tekken 8\Polaris\Content\Paks"
 and lists every mod inside theses 2 folders. 
 
-# Make sure that each mod has it own separate folder with all the files inside it.
+# Please make sure that each mod has it own separate folder.
 
 example:
 
