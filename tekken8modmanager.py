@@ -12,7 +12,6 @@ import OpenGL.GL as gl
 
 
 
-
 class mod_manager:
     
     def __init__(self):
@@ -20,9 +19,10 @@ class mod_manager:
         self.path : str = ""
         
         if getattr(sys,"frozen", False):
-            self.path = os.path.dirname(sys.executable) + "/Polaris/Content/Paks"
+            self.path = os.getcwd() + "\Polaris\Content\Paks"
+            print(self.path)
         else:
-            self.path =  os.path.dirname(os.path.abspath(__file__)) + "/Polaris/Content/Paks"
+            self.path =  os.getcwd()  + "\Polaris\Content\Paks"
         
        
 
