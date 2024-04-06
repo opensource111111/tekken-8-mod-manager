@@ -12,6 +12,7 @@ import OpenGL.GL as gl
 
 
 
+
 class mod_manager:
     
     def __init__(self):
@@ -19,10 +20,9 @@ class mod_manager:
         self.path : str = ""
         
         if getattr(sys,"frozen", False):
-            self.path = os.getcwd() + "\Polaris\Content\Paks"
-            print(self.path)
+            self.path = os.path.dirname(sys.executable) + "\Polaris\Content\Paks"
         else:
-            self.path =  os.getcwd()  + "\Polaris\Content\Paks"
+            self.path =  os.path.dirname(os.path.abspath(__file__)) + "\Polaris\Content\Paks"
         
        
 
@@ -53,17 +53,22 @@ class mod_manager:
                     if folder == "~mods" or folder == "logicmods":
                         
                         for mod_folder in os.listdir(self.path + "/" + folder):
+                            
+                            if os.path.isdir(self.path + "/" + folder   + "/" + mod_folder):
                                 
-                            new = mod_manager.mod_list_format()
-                            new.name = mod_folder.title()
-                            new.location = self.path + "/" + folder + "/" + mod_folder
+                                if os.listdir(self.path + "/" + folder   + "/" + mod_folder) != []:
+                                    new = mod_manager.mod_list_format()
+                                    new.name = mod_folder.title()
+                                    new.location = self.path + "/" + folder + "/" + mod_folder
 
-                            for filecheck in os.listdir(self.path + "/" + folder + "/" + mod_folder):
-                                if filecheck.endswith("-x"):
-                                    new.active = False
-                                        
-                            self.mod_list.append(new)
+                                    for filecheck in os.listdir(self.path + "/" + folder + "/" + mod_folder):
+                                        if filecheck.endswith("-x"):
+                                            new.active = False
+                                            
+                                    self.mod_list.append(new)
 
+
+          
             self.mod_list.sort(reverse=False,key=self.getname)
        
            
