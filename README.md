@@ -4,11 +4,8 @@
 
 
 A Tekken 8 mod manager to turn on / off mods 
+
 Source code: [https://github.com/opensource111111/tekken-8-mod-manager](https://github.com/opensource111111/tekken-8-mod-manager)
-Window exe was compiled using pyinstaller.
-
-      pyinstaller --icon "assets\icon.ico" --onefile tekken8modmanager.py --add-binary "dep\glfw-3.4.bin.WIN64\lib-mingw-w64\glfw3.dll;." --noconsole
-
 
 
 Inspired by CDDTreborn's Tekken 8 Mod On / Off Switch (Version 2) at https://tekkenmods.com/mod/3312/tekken-8-mod-on-off-switch-version-2
@@ -34,7 +31,7 @@ example:
 ![e.g](assets/s.png)
 
 
-- The program adds or removes "-x" at the end of each file to enabled/disabled.
+- The program adds or removes "-x" at the end of each file(.utoc, .ucas, .pak) to enabled/disabled.
 	- Enabled = Filenames not ending with "-x"
 	- Disabled = Filenames ending with "-x"
 
@@ -73,7 +70,4 @@ example:
 
       Windows - Right click file to open the context menu and open with Python
 
-
-
-   
 
