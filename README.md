@@ -43,7 +43,11 @@ example:
 # Install Instruction
    
    ### Option 1: Run from executable. (Windows Only)
-   1. Unzip the exe file from the zip file. You will most likely get a virus warning which will then quarantine the file. Any virus warning you may have are false positives. Place the executable in "Steam\steamapps\common\Tekken 8" and run.
+   1. Unzip the tekken8modmanager.exe file from the zip file. You will most likely get a virus warning which will then quarantine the file. Any virus warning you may have are false positives. Place the executable in "Steam\steamapps\common\Tekken 8" and run.
+
+The Windows excutable was compiled using pyinstaller.
+
+	pyinstaller --icon "assets\icon.ico" --onefile tekken8modmanager.py --add-binary "dep\glfw-3.4.bin.WIN64\lib-mingw-w64\glfw3.dll;." --noconsole   
 
 
 
