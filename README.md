@@ -18,7 +18,7 @@ TARGET FONT : https://www.fonts4free.net/tarrget-font.html#
 # UPDATE : 7th April 2024
 - Added a separator to the UI to show both ~mods and logicmods separately.
 
-![Screenshot of a comment on a GitHub issue showing an image, added in the Markdown, of an Octocat smiling and raising a tentacle.](assets/screenshot.png)
+![Screenshot of a comment on a GitHub issue showing an image, added in the Markdown, of an Octocat smiling and raising a tentacle.](assets/screenshotd.png)
 
 
 # How it works.
