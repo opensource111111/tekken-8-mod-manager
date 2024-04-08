@@ -1,5 +1,6 @@
 import os
 import sys
+import subprocess
 
 import glfw
 import imgui
@@ -8,16 +9,28 @@ from OpenGL.GL import *
 from imgui.integrations.glfw import GlfwRenderer
 import OpenGL.GL as gl
 
-#import imageio.v3 as iio
 
 
+class mod_list_format:
+        name : str = ""
+        location : str = ""
+        _type : str = ""
+        active : bool = True
+
+
+    
+def name_sort(mod_list):
+    return mod_list.name.title()
+   
 
 
 class mod_manager:
     
     def __init__(self):
+
         self._mod_list : mod_list_format = []
         self.logicmods_list : mod_list_format = []
+
 
         self.path : str = ""
         
@@ -28,43 +41,29 @@ class mod_manager:
         
        
 
-        self.texture_id = ""
 
 
+    def generate_modlist(self):
 
-
-    class mod_list_format:
-        name : str = ""
-        location : str = ""
-        _type :str = ""
-        active : bool = True
-
-        
-    
-    def getname(self,mod_list):
-        return mod_list.name.title()
-   
-
-
-    def find_mods(self):
-
+        self._mod_list.clear()
+        self.logicmods_list.clear()
 
         if os.path.isdir(self.path):
                 
             for folder in os.listdir(self.path):
+
                 if os.path.isdir(self.path + "/" + folder):
+
                     if folder == "~mods" or folder == "logicmods":
                         
                         for mod_folder in os.listdir(self.path + "/" + folder):
                             
                             if os.path.isdir(self.path + "/" + folder   + "/" + mod_folder):
                                 
-                                if os.listdir(self.path + "/" + folder   + "/" + mod_folder) != []:
-
-
+                                if os.listdir(self.path + "/" + folder   + "/" + mod_folder) != [] :
 
                                     if folder == "~mods":
-                                        new = mod_manager.mod_list_format()
+                                        new = mod_list_format()
                                         new._type = folder
                                         new.name = mod_folder.title()
                                         new.location = self.path + "/" + folder + "/" + mod_folder
@@ -84,7 +83,7 @@ class mod_manager:
 
                                     if folder == "logicmods":
 
-                                        new = mod_manager.mod_list_format()
+                                        new = mod_list_format()
                                         new._type = folder
                                         new.name = mod_folder.title()
                                         new.location = self.path + "/" + folder + "/" + mod_folder
@@ -101,12 +100,11 @@ class mod_manager:
                                         self.logicmods_list.append(new)
 
         
-            self._mod_list.sort(reverse=False,key=self.getname)
-            self.logicmods_list.sort(reverse=False,key=self.getname)
+            self._mod_list.sort(reverse=False,key=name_sort)
+            self.logicmods_list.sort(reverse=False,key=name_sort)
            
+
             
-
-
 
     def activation(self,state,dir):
 
@@ -130,76 +128,70 @@ class mod_manager:
                     
 
 
-    def update_list(self):
- 
-        self._mod_list.clear()
-        self.logicmods_list.clear()
-        self.find_mods()
-               
 
 
     def ui_checklist(self):
         
+        
+        self.generate_modlist()
 
-        self.update_list()
 
+        
         imgui.push_style_color(imgui.COLOR_TEXT,1,1,1,1)
         imgui.push_style_color(imgui.COLOR_CHECK_MARK,1,1,1)
-       
-        imgui.separator()
-
 
         if os.path.isdir(self.path) == True:
-
-            imgui.text("~mods" + ":" + str(len(self._mod_list)))
             
+            #~mods ui list
             imgui.separator()
-        
+            imgui.text("~mods" + ":" + str(len(self._mod_list)))
+            imgui.separator()
+            
+
             for i in self._mod_list:
-            
-                _, i.active = imgui.checkbox(i.name, i.active)
-                self.activation(i.active,i.location) 
                 
-            
+                    _, i.active = imgui.checkbox(i.name, i.active)
+                    self.activation(i.active,i.location) 
+                    
+                
             if len(self._mod_list) == 0:
                 imgui.text("No mods found inside ~mods")
-                imgui.text("Tip: " +"Please make sure that each mod has its own separate folder")
-
+                imgui.text("Tip: " +"Please make sure that each mod has its own separate folder.")
 
             
+        
+        
+
+
+            #logicmods ui list
             imgui.separator()
-            
             imgui.text("logicmods" + ":" + str(len(self.logicmods_list)))
             imgui.separator()
 
 
             if len(self.logicmods_list) == 0:
-                imgui.text("No mods found inside logicmods")
-                imgui.text("Tip: " +"Please make sure that each mod has its own separate folder")
+                    imgui.text("No mods found inside logicmods")
+                    imgui.text("Tip: " +"Please make sure that each mod has its own separate folder.")
+
+
+
+
 
             for i in self.logicmods_list:
+                    
+                    _, i.active = imgui.checkbox(i.name, i.active)
+                    self.activation(i.active,i.location) 
                 
-                _, i.active = imgui.checkbox(i.name, i.active)
-                self.activation(i.active,i.location) 
-                
-
-
         
-        if os.path.isdir(self.path) == False:
-            
+        else:
             imgui.text("This program was not placed in Steam\steamapps\common\Tekken 8.")
             
-        
-        
+
+
         imgui.pop_style_color()
         imgui.pop_style_color()
         
     
-            
-            
-        
-
-
 
 
 
@@ -217,7 +209,6 @@ class mod_manager:
         
        
         
-   
 
         if not window:
             glfw.terminate()
@@ -231,24 +222,11 @@ class mod_manager:
         imgui.create_context()
         impl = GlfwRenderer(window)
        
+
+        #function
         program = mod_manager()
-        program.find_mods()
+        program.generate_modlist()
       
-
-         
-        """
-        image = iio.imread("") 
-        w = 0
-        h = 0
-        self.texture_id = gl.glGenTextures(1)
-        gl.glBindTexture(gl.GL_TEXTURE_2D, self.texture_id)
-        gl.glTexParameteri(gl.GL_TEXTURE_2D, gl.GL_TEXTURE_MAG_FILTER, gl.GL_LINEAR)
-        gl.glTexParameteri(gl.GL_TEXTURE_2D, gl.GL_TEXTURE_MIN_FILTER, gl.GL_LINEAR)
-        gl.glPixelStorei(gl.GL_UNPACK_ROW_LENGTH,0)
-        gl.glTexImage2D(gl.GL_TEXTURE_2D, 0, gl.GL_RGB, w, h, 0, gl.GL_BGR, gl.GL_UNSIGNED_BYTE, image)
-        gl.glBindTexture(gl.GL_TEXTURE_2D, 0)
-
-        """
 
 
         
@@ -263,37 +241,41 @@ class mod_manager:
             
             imgui.new_frame()
             
+            
+            
             mod_title = " "
             if os.path.isdir(self.path) == False:
                 mod_title = " "
             else:
-                mod_title = str(len(program._mod_list) + len(program.logicmods_list)) + " Mods"
+                mod_title = " Total:" + str(len(program._mod_list) + len(program.logicmods_list)) 
 
             
-            imgui.set_next_window_size(480,480)
+            imgui.set_next_window_size(glfw.get_window_size(window)[0],glfw.get_window_size(window)[1])
             imgui.set_next_window_position(0,0)
             imgui.push_style_color(imgui.COLOR_WINDOW_BACKGROUND,0.05,0.05,0.05)
             imgui.push_style_color(imgui.COLOR_TITLE_BACKGROUND_ACTIVE,1,0,0)
             imgui.push_style_color(imgui.COLOR_TEXT,0.1,0.1,0.1,1)
+
+            
             with imgui.begin(mod_title,False,imgui.WINDOW_ALWAYS_AUTO_RESIZE | imgui.WINDOW_NO_MOVE | imgui.WINDOW_ALWAYS_VERTICAL_SCROLLBAR | imgui.WINDOW_NO_COLLAPSE):
                 
-                
+
                 program.ui_checklist()
 
+            
                 
+
             imgui.pop_style_color()
             imgui.pop_style_color()
             imgui.pop_style_color()
         
-
-
-           
-
             
             
-    
+                
+            #imgui.show_demo_window()
 
-         
+            
+        
             imgui.render()
             impl.render(imgui.get_draw_data())
 
@@ -322,3 +304,5 @@ program = mod_manager()
 if __name__ == "__main__":
   
     program.main()
+
+
