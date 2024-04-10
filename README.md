@@ -22,10 +22,10 @@ TARGET FONT : https://www.fonts4free.net/tarrget-font.html#
 # Updates
 
       10th April 2024
-      - Added a button to open ~mods and logicmods folders
-      - Change colour of UI titlebar
-      - Added an indent to the lists of mods under each folder
-      - Corrected a path issue when using the python script under Linux
+      - Added a button to open ~mods and logicmods folders.
+      - Change colour of UI titlebar.
+      - Added an indent to the lists of mods under each folder.
+      - Corrected a issue with paths using the python script under Linux.
       
 
       7th April 2024
