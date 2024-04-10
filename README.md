@@ -15,17 +15,33 @@ Font used in logo
 TARGET FONT : https://www.fonts4free.net/tarrget-font.html#
 
 
-# UPDATE : 7th April 2024
-- Added a separator to the UI to show both ~mods and logicmods separately.
+![Screenshot of a comment on a GitHub issue showing an image, added in the Markdown, of an Octocat smiling and raising a tentacle.](assets/screenshot.png)
 
-![Screenshot of a comment on a GitHub issue showing an image, added in the Markdown, of an Octocat smiling and raising a tentacle.](assets/screenshotd.png)
+
+
+# Updates
+
+      10th April 2024
+      - Added a button to open ~mods and logicmods folders
+      - Change colour of UI titlebar
+      - Added an indent the lists of mods under each folder
+      - Corrected a path issue when using the python script under Linux
+      
+
+      7th April 2024
+         - Added a separator to the UI to show both ~mods and logicmods separately.
+
+   
+
+
+
 
 
 # How it works.
 - Searches for folders ~mods and logicmods inside "Steam\steamapps\common\Tekken 8\Polaris\Content\Paks"
 and lists every mod inside theses 2 folders. 
 
-# Please make sure that each mod has it own separate folder
+# Please make sure that each mod has it own separate folder or you will get an error.
 
 example:
 
@@ -44,12 +60,11 @@ example:
 # Install Instruction
    
    ### Option 1: Run from executable. (Windows Only)
-   1. Unzip the "tekken8modmanager.exe" file from the zip file and place the executable in "Steam\steamapps\common\Tekken 8" and run.
-You will most likely get a virus warning which will then quarantine the file. Any virus warning you may have are false positives.
+   1. Unzip the exe file from the zip file. You will most likely get a virus warning which will then quarantine the file. Any virus warning you may have are false positives. Place the executable in "Steam\steamapps\common\Tekken 8" and run.
 
-The Windows excutable was compiled using pyinstaller.
+   The Windows excutable was compiled using pyinstaller.
 
-	pyinstaller --icon "assets\icon.ico" --onefile tekken8modmanager.py --add-binary "dep\glfw-3.4.bin.WIN64\lib-mingw-w64\glfw3.dll;." --noconsole   
+      pyinstaller --icon "assets\icon.ico" --onefile tekken8modmanager.py --add-binary "dep\glfw-3.4.bin.WIN64\lib-mingw-w64\glfw3.dll;." --noconsole   
 
 
 
@@ -65,6 +80,7 @@ The Windows excutable was compiled using pyinstaller.
       - pip install numpy
       - pip install PyOpenGL PyOpenGL_accelerate
       - pip install imgui
+      - pip install pillow
       
       
       
