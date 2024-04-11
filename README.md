@@ -21,7 +21,7 @@ TARGET FONT : https://www.fonts4free.net/tarrget-font.html#
 
 # Updates
        11th April 2024
-	-Add support for searching for the folder "mods" inside "Steam\steamapps\common\Tekken 8\Polaris\Content\Paks"
+	-Can now search for the folder "mods" inside "Steam\steamapps\common\Tekken8\Polaris\Content\Paks"
 
       10th April 2024
       - Added a button to open ~mods and logicmods folders.
