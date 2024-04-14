@@ -706,7 +706,7 @@ class mod_manager:
 
     def ui_treeview(self, directory, indent=0):
 
-        #self.generate_modlist_with_subfolders()
+        self.generate_modlist_with_subfolders()
     
         
         imgui.push_style_color(imgui.COLOR_TEXT,1,1,1,1)
