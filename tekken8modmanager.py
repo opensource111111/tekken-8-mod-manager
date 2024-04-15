@@ -224,7 +224,7 @@ class mod_manager:
 
     def ui_listview(self):
             
-        self.generate_modlist_with_subfolders()
+        #self.generate_modlist_with_subfolders()
 
             
         imgui.push_style_color(imgui.COLOR_TEXT,1,1,1,1)
@@ -292,7 +292,7 @@ class mod_manager:
 
 
                 if len(self._mod_list) == 0:
-                    imgui.text(self.no_mod_message.format(~mods))
+                    imgui.text(self.no_mod_message.format("~mods"))
                     imgui.text(self.tip_message)
                        
                     
@@ -706,7 +706,7 @@ class mod_manager:
 
     def ui_treeview(self, directory, indent=0):
 
-        self.generate_modlist_with_subfolders()
+        #self.generate_modlist_with_subfolders()
     
         
         imgui.push_style_color(imgui.COLOR_TEXT,1,1,1,1)
@@ -927,12 +927,13 @@ class mod_manager:
             
 
 
-            """
+           
             #Refresh
+            #if self.toggle_view == True:
             imgui.indent(400)
             if imgui.button("Refresh"):
                 self.generate_modlist_with_subfolders()
-            """  
+            
              
 
 
