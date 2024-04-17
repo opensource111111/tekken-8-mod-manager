@@ -52,7 +52,7 @@ class mod_manager:
         self.toggle_hide_mods : bool = False
         self.toggle_hide__mods : bool = False
         self.toggle_hide_logicmods : bool = False
-        
+        self.show_thumbnail : bool = False
         
         
         
@@ -62,9 +62,9 @@ class mod_manager:
         self.toggle_logicmods : bool = True
 
 
-        self.version = 1.3
+
+        self.version = 1.4
         self.about_message : str = "Created by Beanman"
-        self.folder_message : str = " Folder not present."
         self.no_mod_message : str = "No mods were found inside the {0} folder"
         self.tip_message : str = "Tip: Please make sure that each mod has its own separate folder."
         self.path_error : str = "This program was not placed inside Steam\steamapps\common\Tekken 8."
@@ -112,12 +112,12 @@ class mod_manager:
         self.logicmods_list.clear()   
         
 
-        """
-        if self.toggle_view == False: 
+        
+        if self.toggle_view == False and self.show_thumbnail == True: 
             default_icon = self.ui_images() 
         else: 
             default_icon = None
-        """
+       
 
 
         if os.path.isdir(self.path):
@@ -149,11 +149,11 @@ class mod_manager:
                                                         new._type = folder
                                                         new.name = mod_folder
                                                         new.location = root  + "/" + mod_folder
-                                                        #new.icon = default_icon
+                                                        new.icon = default_icon
                                                         
                                                         for filecheck in os.listdir(root  + "/" + mod_folder):
-                                                            #if filecheck.startswith("thumbnail"):
-                                                                #new.icon = self.ui_images(root  + "/" + mod_folder + "/" + filecheck)
+                                                            if filecheck.startswith("thumbnail") and self.show_thumbnail == True:
+                                                                new.icon = self.ui_images(root  + "/" + mod_folder + "/" + filecheck)
                                                             
                                                             if filecheck.endswith("pak") | filecheck.endswith("pak-x") | filecheck.endswith("ucas") | filecheck.endswith("ucas-x") | filecheck.endswith("utoc") | filecheck.endswith("utoc-x"):
                                                                     
@@ -282,16 +282,18 @@ class mod_manager:
 
                                     
                     for i in self._mod_list:
-                        """
+                        
+                        if self.show_thumbnail == True and i.icon != None:
+
                             glBindTexture(GL_TEXTURE_2D, i.icon)     
                             imgui.image(i.icon,50,50)    
                             if imgui.is_item_hovered():  
                                 if imgui.begin_tooltip():   
-                                    imgui.image(i.icon,250,200)
+                                    imgui.image(i.icon,290,200)
                                 imgui.end_tooltip()
                                         
                             imgui.same_line()
-                        """
+                        
 
                         _, i.active = imgui.checkbox(i.name, i.active)
                         if imgui.is_item_edited:
@@ -352,17 +354,18 @@ class mod_manager:
                     
                         #imgui.indent(20)
                     for i in self.mod_list:
-                        """
-                            glBindTexture(GL_TEXTURE_2D, i.icon[0])     
-                            imgui.image(i.icon[0],50,50)    
+
+                        if self.show_thumbnail == True and i.icon != None:
+                            glBindTexture(GL_TEXTURE_2D, i.icon)     
+                            imgui.image(i.icon,50,50)    
                             if imgui.is_item_hovered():  
                                 if imgui.begin_tooltip():
                                                     
-                                    imgui.image(i.icon[0],250,200)
+                                    imgui.image(i.icon,290,200)
                                 imgui.end_tooltip()
                                     
                             imgui.same_line()
-                        """
+                        
 
                         _, i.active = imgui.checkbox(i.name, i.active)
                         self.activation_list(i.active,i.location) 
@@ -428,17 +431,16 @@ class mod_manager:
                     #imgui.indent(20)
                     for i in self.logicmods_list:
                             
-                        """
+                        if self.show_thumbnail == True and i.icon != None:
                             glBindTexture(GL_TEXTURE_2D, i.icon)     
                             imgui.image(i.icon,50,50)    
                             if imgui.is_item_hovered():  
                                 if imgui.begin_tooltip():              
-                                    imgui.image(i.icon,250,200)
-                                    imgui.text("Hello")
+                                    imgui.image(i.icon,290,200)
                                 imgui.end_tooltip()
 
                             imgui.same_line()
-                        """
+                       
 
                         _, i.active = imgui.checkbox(i.name, i.active)
                         self.activation_list(i.active,i.location) 
@@ -545,7 +547,7 @@ class mod_manager:
                                 _,i.active = imgui.checkbox("##"+i.name,i.active)
                                 
                                 if imgui.is_item_edited():
-                                    #print(i.active)
+                                    
                                     self.toggle__mods  = True
                                     self.activation_tree(i.active,i.location) 
                                 imgui.same_line()
@@ -558,7 +560,7 @@ class mod_manager:
                                 _,i.active = imgui.checkbox("##"+i.name,i.active)
                                 
                                 if imgui.is_item_edited():
-                                    #print(i.active)
+                                    
                                     self.toggle_mods = True
                                     self.activation_tree(i.active,i.location) 
                                 imgui.same_line()
@@ -573,7 +575,7 @@ class mod_manager:
                                 _,i.active = imgui.checkbox("##"+i.name,i.active)
                                 
                                 if imgui.is_item_edited():
-                                    #print(i.active)
+                                    
                                     self.toggle_logicmods = True
                                     self.activation_tree(i.active,i.location) 
                                 imgui.same_line()
@@ -749,7 +751,23 @@ class mod_manager:
             
            
 
-        
+            #Options 
+            if imgui.begin_menu("Options"):
+                
+                _, self.show_thumbnail = imgui.checkbox("Show Thumbnails",self.show_thumbnail)
+                if imgui.is_item_edited():
+                    self.generate_modlist()
+                       
+                        
+
+
+             
+                
+      
+                imgui.end_menu()
+
+
+
             
             #view modes
             if imgui.begin_menu("View"):
@@ -760,13 +778,13 @@ class mod_manager:
                 if list_view:
                     self.toggle_view = False
                     self.generate_modlist()
-                    #print("list view")
+                 
                 
 
                 if tree_view:
                     self.toggle_view  = True
                     self.generate_modlist()
-                    #print("tree view")
+             
                 
       
                 imgui.end_menu()
