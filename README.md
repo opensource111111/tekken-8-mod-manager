@@ -22,12 +22,16 @@ TARGET FONT : https://www.fonts4free.net/tarrget-font.html#
 # Updates
 
 
-
+![Screenshot of a comment on a GitHub issue showing an image, added in the Markdown, of an Octocat smiling and raising a tentacle.](assets\treeview.png)
 
       17th April 2024
       - Cleaned up UI elements
       - Add a hide button for each folder.
-      - Can now search for ~mods, logicmods or mods folders in highercase or uppercase
+      - Can now search for ~mods, logicmods or mods folders in lowercase or uppercase
+
+      - (Experimental) Added thumbnail support. Only works in List view mode.  Click on the options tab and show thumbnail.  Place a image file  inside the mod folder of your choice and name it "thumbnail". If no image is found then it will default to using the programs logo as the thumbnail.
+
+
 
 
       14th April 2024
@@ -101,7 +105,7 @@ example:
       
       
       
-   1. Place the "tekken8modmanager.py" script in "Steam\steamapps\common\Tekken 8".
+   1. Place the "tekken8modmanager.py" script and "assets folder inside "Steam\steamapps\common\Tekken 8".
 
       Linux - Open the python terminal and type "python3". Drag and drop the script onto the terminal and press enter.
 
