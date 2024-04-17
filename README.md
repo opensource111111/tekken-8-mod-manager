@@ -27,7 +27,7 @@ TARGET FONT : https://www.fonts4free.net/tarrget-font.html#
       17th April 2024
       - Cleaned up UI elements
       - Add a hide button for each folder.
-      - Can not search for ~mods, logicmods or mods folders in highercase or uppercase
+      - Can now search for ~mods, logicmods or mods folders in highercase or uppercase
 
 
       14th April 2024
