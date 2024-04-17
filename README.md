@@ -22,12 +22,16 @@ TARGET FONT : https://www.fonts4free.net/tarrget-font.html#
 # Updates
 
 
-![Screenshot of a comment on a GitHub issue showing an image, added in the Markdown, of an Octocat smiling and raising a tentacle.](assets/treeview.png)
+![Screenshot of a comment on a GitHub issue showing an image, added in the Markdown, of an Octocat smiling and raising a tentacle.](assets\treeview.png)
+
+      17th April 2024
+      - Cleaned up UI elements
+      - Add a hide button for each folder.
+      - Can not search for ~mods, logicmods or mods folders in highercase or uppercase
+
 
       14th April 2024
-      - Added a list directory tree view mode. In this mode you can now enable or 
-      disable from the top level folder or sub level folder. To switch viewing mode 
-      click the View button on the top left corner and select Tree View from the drop menu.
+      - Added a list directory tree view mode. In this mode you can now enable or disable from the top level folder or sub level folder. To switch viewing mode click the View button on the top left corner and select Tree View from the drop menu.
 
 
 
@@ -51,10 +55,10 @@ TARGET FONT : https://www.fonts4free.net/tarrget-font.html#
 
 
 # How it works.
-- Searches for folders ~mods , mods and  logicmods inside "Steam\steamapps\common\Tekken 8\Polaris\Content\Paks" and lists every mod inside theses 3 folders. 
+- Searches for folders ~mods and logicmods inside "Steam\steamapps\common\Tekken 8\Polaris\Content\Paks"
+and lists every mod inside theses 2 folders. 
 
-
-# Please make sure that each mod  has it own separate folder with a unique name or you will get an error.
+# Please make sure that each mod has it own separate folder or you will get an error.
 
 example:
 
