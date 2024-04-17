@@ -92,6 +92,14 @@ class mod_manager:
             
         
        
+        #folder setting
+        self.__mods_folder = "~mods"
+        self.mods_folder = "mods"
+        self.logicmods_folder = "logicmods"
+
+
+
+
 
 
 
@@ -120,8 +128,8 @@ class mod_manager:
                 #checking for root mod folders.
                 if os.path.isdir(self.path + "/" + folder):
 
-                    if folder == "~mods" or folder == "mods" or folder == "logicmods":
-
+                    if folder.lower() == self.__mods_folder.lower() or folder.lower() == self.mods_folder.lower() or folder.lower() == self.logicmods_folder.lower():
+                        
 
                         # look through the root mod folders.
                         for root, dirnames, filenames  in os.walk(self.path +"/" + folder):
@@ -156,14 +164,18 @@ class mod_manager:
                                                                         new.active = True
                                                                 
                                                             
-                                                        if folder == "~mods":        
+                                                        if folder.lower() == self.__mods_folder.lower():        
                                                             self._mod_list.append(new)
                                                         
-                                                        if folder == "mods":        
+                                                        if folder.lower() == self.mods_folder.lower():        
                                                             self.mod_list.append(new)
-
-                                                        if folder == "logicmods":
+                                                            
+                                            
+                                                        if folder.lower() == self.logicmods_folder.lower():
                                                             self.logicmods_list.append(new)
+                                                        
+                                                          
+
                                                         break
                                             
                                             else:
@@ -185,13 +197,14 @@ class mod_manager:
                                                                         new.active = True
                                                                 
                                                             
-                                                        if folder == "~mods":        
+                                                        if folder.lower() == self.__mods_folder.lower():        
                                                             self._mod_list.append(new)
                                                         
-                                                        if folder == "mods":        
+                                                        if folder.lower() == self.mods_folder.lower():        
                                                             self.mod_list.append(new)
-
-                                                        if folder == "logicmods":
+                                                            
+                                            
+                                                        if folder.lower() == self.logicmods_folder.lower():
                                                             self.logicmods_list.append(new)
 
 
@@ -224,10 +237,10 @@ class mod_manager:
             
                 
             #~mods ui list
-            if os.path.isdir(self.path + "/" + "~mods") == True:
+            if os.path.isdir(self.path + "/" + self.__mods_folder) == True:
                 
                 imgui.separator()
-                imgui.text("~mods" + ": " + str(len(self._mod_list)))
+                imgui.text(self.__mods_folder + ": " + str(len(self._mod_list)))
                 
                     
 
@@ -250,10 +263,10 @@ class mod_manager:
                 if imgui.button("Open##Open ~mods Folder"):
                     if sys.platform == "win32":
 
-                         subprocess.Popen(['explorer', "{0}".format(self.path + "\~mods")])
+                         subprocess.Popen(['explorer', "{0}".format(self.path + "\{0}".format(self.__mods_folder))])
 
                     if sys.platform == "linux":
-                        os.system('xdg-open "%s"' % self.path + "/~mods")
+                        os.system('xdg-open "%s"' % self.path + "/{0}".format(self.__mods_folder))
 
                 imgui.pop_style_color()   
               
@@ -286,7 +299,7 @@ class mod_manager:
                         
 
                     if len(self._mod_list) == 0:
-                        imgui.text(self.no_mod_message.format("~mods"))
+                        imgui.text(self.no_mod_message.format(self.__mods_folder))
                         imgui.text(self.tip_message)
                             
                             
@@ -297,9 +310,10 @@ class mod_manager:
         
 
             #mods ui list
-            if os.path.isdir(self.path + "/" + "mods") == True:
+            if os.path.isdir(self.path + "/" + self.mods_folder) == True:
+              
                 imgui.separator()
-                imgui.text("mods" + ": " + str(len(self.mod_list)))
+                imgui.text(self.mods_folder + ": " + str(len(self.mod_list)))
 
                 
                 #Hide
@@ -321,10 +335,10 @@ class mod_manager:
                 if imgui.button("Open##Open mods Folder"):
                     if sys.platform == "win32":
 
-                        subprocess.Popen(['explorer', "{0}".format(self.path + "\mods")])
+                        subprocess.Popen(['explorer', "{0}".format(self.path + "\{0}".format(self.mods_folder))])
 
                     if sys.platform == "linux":
-                        os.system('xdg-open "%s"' % self.path + "/mods")
+                        os.system('xdg-open "%s"' % self.path + "/{0}".format(self.mods_folder))
 
                     
                 imgui.pop_style_color()       
@@ -356,7 +370,7 @@ class mod_manager:
 
 
                     if len(self.mod_list) == 0:
-                        imgui.text(self.no_mod_message.format("mods"))
+                        imgui.text(self.no_mod_message.format(self.mods_folder))
                         imgui.text(self.tip_message)
                         
                         
@@ -369,7 +383,7 @@ class mod_manager:
             #logicmods ui list
             if os.path.isdir(self.path + "/" + "logicmods") == True:
                 imgui.separator()
-                imgui.text("logicmods" + ": " + str(len(self.logicmods_list)))
+                imgui.text(self.logicmods_folder + ": " + str(len(self.logicmods_list)))
                 
                 
             
@@ -392,10 +406,10 @@ class mod_manager:
                 imgui.push_style_color(imgui.COLOR_BUTTON,radians(11),radians(22),radians(76.5))  
                 if imgui.button("Open##Open logicmods Folder"):
                     if sys.platform == "win32":
-                        subprocess.Popen(['explorer', "{0}".format(self.path + "\logicmods")])
+                        subprocess.Popen(['explorer', "{0}".format(self.path + "\{0}".format(self.logicmods_folder))])
 
                     if sys.platform == "linux":
-                        os.system('xdg-open "%s"' % self.path + "/logicmods")
+                        os.system('xdg-open "%s"' % self.path + "/{0}".format(self.logicmods_folder))
 
                     
                     
@@ -487,49 +501,46 @@ class mod_manager:
             
 
            
-            match  item:
-                    
-                    
-                    case "~mods":
+            if item.lower() == self.__mods_folder.lower():
                        
-                        _,self.toggle__mods = imgui.checkbox("##"+"mm",self.toggle__mods)
-                        if imgui.is_item_edited():
+                _,self.toggle__mods = imgui.checkbox("##"+"mm",self.toggle__mods)
+                if imgui.is_item_edited():
      
-                            self.activation_tree(self.toggle__mods,self.path +"/~mods") 
-                        imgui.same_line()
+                    self.activation_tree(self.toggle__mods,self.path +"/{0}".format(self.__mods_folder)) 
+                imgui.same_line()
 
-                        
-                    case "mods":
+           
+            if item.lower() == self.mods_folder.lower():
 
-                        _,self.toggle_mods = imgui.checkbox("##"+"m",self.toggle_mods)
-                        if imgui.is_item_edited():
+                _,self.toggle_mods = imgui.checkbox("##"+"m",self.toggle_mods)
+                if imgui.is_item_edited():
                                 
                            
-                            self.activation_tree(self.toggle_mods,self.path +"/mods") 
-                        imgui.same_line()
+                    self.activation_tree(self.toggle_mods,self.path +"/{0}".format(self.mods_folder)) 
+                imgui.same_line()
                         
 
-                    case "logicmods":
+            if item.lower() ==self.logicmods_folder.lower():
 
-                        _,self.toggle_logicmods = imgui.checkbox("##"+"l",self.toggle_logicmods)
-                        if imgui.is_item_edited():
+                _,self.toggle_logicmods = imgui.checkbox("##"+"l",self.toggle_logicmods)
+                if imgui.is_item_edited():
                                 
                            
-                            self.activation_tree(self.toggle_logicmods,self.path +"/logicmods") 
-                        imgui.same_line()
-
-            
+                    self.activation_tree(self.toggle_logicmods,self.path +"/{0}".format(self.logicmods_folder)) 
+                imgui.same_line()
+                
+                    
           
 
 
 
             if os.path.isdir(item_path):
-                
-              
+                  
                     
                     for i in self._mod_list:
                             
                             if item == i.name:
+                                
                                 
                                 _,i.active = imgui.checkbox("##"+i.name,i.active)
                                 
@@ -541,9 +552,9 @@ class mod_manager:
 
                    
                     for i in self.mod_list:
-                            
+                          
                             if item == i.name:
-                                
+                               
                                 _,i.active = imgui.checkbox("##"+i.name,i.active)
                                 
                                 if imgui.is_item_edited():
