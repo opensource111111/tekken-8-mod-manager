@@ -1,7 +1,7 @@
 
 ![Screenshot of a comment on a GitHub issue showing an image, added in the Markdown, of an Octocat smiling and raising a tentacle.](assets/banner.png)
 
-
+Release: https://tekkenmods.com/mod/3873/my-tekken-8-mod-manager
 
 A Tekken 8 mod manager to turn on / off mods 
 
