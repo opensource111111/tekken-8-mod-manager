@@ -695,11 +695,11 @@ class mod_manager:
        
 
    
-    def ui_images(self, image = os.path.abspath(os.path.dirname(__file__)) + "\\assets\icon.ico"):
+    def ui_images(self, image = os.path.abspath(os.path.dirname(__file__)) + "//icon.ico"):
         
 
         img = Image.open(image).convert("RGBA")
-        imdata = numpy.array(list(img.getdata()),numpy.uint8)
+        imdata = img.tobytes() 
         width, height = img.size
                      
         texname = glGenTextures(1)
