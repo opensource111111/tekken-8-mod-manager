@@ -695,7 +695,7 @@ class mod_manager:
        
 
    
-    def ui_images(self, image = "assets/icon.ico"):
+    def ui_images(self, image = os.path.abspath(os.path.dirname(__file__)) + "\\assets\icon.ico"):
         
 
         img = Image.open(image).convert("RGBA")
