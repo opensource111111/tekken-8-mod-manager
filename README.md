@@ -35,7 +35,7 @@ Inspired by CDDTreborn's Tekken 8 Mod On / Off Switch (Version 2) at https://tek
 
 #### 14th April 2024
 
-   ![Screenshot of a comment on a GitHub issue showing an image, added in the Markdown, of an Octocat smiling and raising a tentacle.](assets/screenshots\treeview.png)
+   ![Screenshot of a comment on a GitHub issue showing an image, added in the Markdown, of an Octocat smiling and raising a tentacle.](assets/screenshots/treeview.png)
 
 
    - Added a list directory tree view mode. In this mode you can now enable or disable from the top level folder or sub level folder. To switch viewing mode click the View button on the top left corner and select Tree View from the drop menu.
@@ -136,7 +136,7 @@ example:
    <span style="color:Yellow;"> Windows </span> - Right click file to open the context menu and open with 
    Python.
 
-   ![folder2](assets\screenshots\open_with_python.png)
+   ![folder2](assets/screenshots/open_with_python.png)
 
 
 
