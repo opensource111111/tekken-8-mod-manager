@@ -116,7 +116,7 @@ example:
 
    2. <span style="color:LightBlue;"> Linux </span> - Open Terminal / Windows - Open Windows command prompt
       
-      Install required pacakges using there commands:
+      Install required pacakges using these commands:
 
             - pip install pip
             - pip install glfw
@@ -151,5 +151,5 @@ example:
 
 ## Credits
 
-TARGET FONT : https://www.fonts4free.net/tarrget-font.html#
+TARGET FONT BY Iconian Fonts : https://www.fonts4free.net/tarrget-font.html#
 
