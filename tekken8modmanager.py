@@ -464,7 +464,7 @@ class mod_manager:
             
             #highlighted = None
          
-            if os.path.isdir(self.owner.path) == True:
+          
                         
                 
                     
@@ -711,10 +711,6 @@ class mod_manager:
 
         
 
-            else:
-
-                imgui.text(self.path_error_message)
-                
                 
 
 
@@ -749,117 +745,119 @@ class mod_manager:
         def ui_treeview(self, directory, indent=0):
 
             
-            for item in os.listdir(directory):
-                item_path = os.path.join(directory, item)
+
+                for item in os.listdir(directory):
+                    item_path = os.path.join(directory, item)
+                    
+
+                
+                    if item.lower() == self.owner._mods_folder.lower():
+                            
+                        _,self.toggle__mods = imgui.checkbox("##"+"mm",self.toggle__mods)
+                        if imgui.is_item_edited():
+            
+                            self.activation_tree(self.toggle__mods,self.path +"/{0}".format(self.__mods_folder)) 
+                        imgui.same_line()
+
+                
+                    if item.lower() == self.owner.mods_folder.lower():
+
+                        _,self.toggle_mods = imgui.checkbox("##"+"m",self.toggle_mods)
+                        if imgui.is_item_edited():
+                                        
+                                
+                            self.activation_tree(self.toggle_mods,self.owner.path +"/{0}".format(self.owner.mods_folder)) 
+                        imgui.same_line()
+                                
+
+                    if item.lower() == self.owner.logicmods_folder.lower():
+
+                        _,self.toggle_logicmods = imgui.checkbox("##"+"l",self.toggle_logicmods)
+                        if imgui.is_item_edited():
+                                        
+                                
+                            self.activation_tree(self.toggle_logicmods,self.owner.path +"/{0}".format(self.owner.logicmods_folder)) 
+                        imgui.same_line()
+                        
+                            
                 
 
-            
-                if item.lower() == self.owner._mods_folder.lower():
+
+
+                    if os.path.isdir(item_path):
                         
-                    _,self.toggle__mods = imgui.checkbox("##"+"mm",self.toggle__mods)
-                    if imgui.is_item_edited():
-        
-                        self.activation_tree(self.toggle__mods,self.path +"/{0}".format(self.__mods_folder)) 
-                    imgui.same_line()
-
-            
-                if item.lower() == self.owner.mods_folder.lower():
-
-                    _,self.toggle_mods = imgui.checkbox("##"+"m",self.toggle_mods)
-                    if imgui.is_item_edited():
-                                    
                             
-                        self.activation_tree(self.toggle_mods,self.owner.path +"/{0}".format(self.owner.mods_folder)) 
-                    imgui.same_line()
-                            
-
-                if item.lower() == self.owner.logicmods_folder.lower():
-
-                    _,self.toggle_logicmods = imgui.checkbox("##"+"l",self.toggle_logicmods)
-                    if imgui.is_item_edited():
+                            for i in self.owner._mod_list:
                                     
-                            
-                        self.activation_tree(self.toggle_logicmods,self.owner.path +"/{0}".format(self.owner.logicmods_folder)) 
-                    imgui.same_line()
-                    
-                        
-            
-
-
-
-                if os.path.isdir(item_path):
-                    
-                        
-                        for i in self.owner._mod_list:
-                                
-                                if item == i.name:
-                                    
-                                    _,i.active = imgui.checkbox("##"+i.name,i.active)
-                                    
-                                    if imgui.is_item_edited():
+                                    if item == i.name:
                                         
-                                        self.toggle__mods  = True
-                                        self.activation_tree(i.active,i.location) 
-                                    imgui.same_line()
-
-                    
-                        for i in self.owner.mod_list:
-                            
-                                if item == i.name:
-                                
-                                    _,i.active = imgui.checkbox("##"+i.name,i.active)
-                                    
-                                    if imgui.is_item_edited():
+                                        _,i.active = imgui.checkbox("##"+i.name,i.active)
                                         
-                                        self.toggle_mods = True
-                                        self.activation_tree(i.active,i.location) 
-                                    imgui.same_line()
+                                        if imgui.is_item_edited():
+                                            
+                                            self.toggle__mods  = True
+                                            self.activation_tree(i.active,i.location) 
+                                        imgui.same_line()
 
-                    
-
-
-                        for i in self.owner.logicmods_list:
+                        
+                            for i in self.owner.mod_list:
                                 
-                                if item == i.name:
+                                    if item == i.name:
                                     
-                                    _,i.active = imgui.checkbox("##"+i.name,i.active)
-                                    
-                                    if imgui.is_item_edited():
+                                        _,i.active = imgui.checkbox("##"+i.name,i.active)
                                         
-                                        self.toggle_logicmods = True
-                                        self.activation_tree(i.active,i.location) 
-                                    imgui.same_line()
-
-
+                                        if imgui.is_item_edited():
+                                            
+                                            self.toggle_mods = True
+                                            self.activation_tree(i.active,i.location) 
+                                        imgui.same_line()
 
                         
-                        
 
-                    
-                        
-                        if imgui.tree_node( "Directory: " + item, imgui.TREE_NODE_OPEN_ON_ARROW ):
-                            imgui.indent(5)
-                        
-                            #files
-                            for i in os.listdir(item_path):
+
+                            for i in self.owner.logicmods_list:
                                     
-                                    if os.path.isfile(item_path +"/" + i):
-                                        imgui.indent(33)
-                                        imgui.text("File: " + i)
-                                    
-                                        imgui.indent(-33)
+                                    if item == i.name:
+                                        
+                                        _,i.active = imgui.checkbox("##"+i.name,i.active)
+                                        
+                                        if imgui.is_item_edited():
+                                            
+                                            self.toggle_logicmods = True
+                                            self.activation_tree(i.active,i.location) 
+                                        imgui.same_line()
+
+
+
+                            
+                            
+
+                        
+                            
+                            if imgui.tree_node( "Directory: " + item, imgui.TREE_NODE_OPEN_ON_ARROW ):
+                                imgui.indent(5)
+                            
+                                #files
+                                for i in os.listdir(item_path):
+                                        
+                                        if os.path.isfile(item_path +"/" + i):
+                                            imgui.indent(33)
+                                            imgui.text("File: " + i)
+                                        
+                                            imgui.indent(-33)
+                                
+                            
+                                self.ui_treeview(item_path, indent+1)
+                        
+
+                                imgui.tree_pop()
+                                imgui.indent(-5)
                             
                         
-                            self.ui_treeview(item_path, indent+1)
-                    
 
-                            imgui.tree_pop()
-                            imgui.indent(-5)
-                        
-                    
-
-                    
-   
+            
+                     
+    
             
         
     
@@ -1280,10 +1278,24 @@ class mod_manager:
             imgui.push_style_color(imgui.COLOR_WINDOW_BACKGROUND,*self.config.bg_colour)
     
             
-
             imgui.push_font(self.config.selected_font) 
-            self.main_window_bar()
-            self.main_window_box()
+
+            if os.path.isdir(self.owner.path) == True:
+
+
+
+                self.main_window_bar()
+                self.main_window_box()
+                
+            
+            else:
+              
+                imgui.begin("Error")
+                imgui.text(self.path_error_message)
+                if imgui.button("Close##Close Window"):
+                    glfw.set_window_should_close(self.window,glfw.TRUE)
+                imgui.end()
+                
             imgui.pop_font()
 
 
