@@ -1,8 +1,32 @@
 
 ## Updates
 
+Any feedback, bugs or issues please post in the comment section. Thank you.
+
+#### 5th May 2024
+
+   ![Screenshot of a comment on a GitHub issue showing an image, added in the Markdown, of an Octocat smiling and raising a tentacle.](assets/screenshots/window_setting.png)
+   
+   - Added a windows configuration menu. Will add onto this at a later date. Option > Windows Settings:
+
+      - Global Scale (Disabled for now)
+      - Font Size
+      - Font Style
+      - Thumbnail Scale
+      - Show Thumbnail
+      - Start Maximised Window
+      - Button Colour
+      - Background Colour
+
+   All setting will be saved in the "tekken8modmanager.ini". The file will be created in the same location as the program.
+
+
+   - Clean up of script.
+
+
 
 #### 3rd May 2024
+
    - Added the ability to save your viewmode setting. This will create a file called "tekken8modmanager.ini".
 
  
@@ -20,7 +44,7 @@
    - Can now search for ~mods, logicmods or mods folders in lowercase or uppercase
 
 
-   ![Screenshot of a comment on a GitHub issue showing an image, added in the Markdown, of an Octocat smiling and raising a tentacle.](assets/screenshots/thumbnail2.png)
+   ![Screenshot of a comment on a GitHub issue showing an image, added in the Markdown, of an Octocat smiling and raising a tentacle.](assets/screenshots/thumbnail_structure.png)
 
    - (Experimental) Added thumbnail support. Only works in List view mode.  Click on the options tab and show thumbnail.  Place a image file  inside the mod folder of your choice and name it "thumbnail"(jpg, png) If no image is found then it will default to using the programs logo as the thumbnail. 
    -Fixed slow loading of thumbnails
