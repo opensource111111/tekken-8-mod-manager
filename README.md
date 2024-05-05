@@ -1,5 +1,5 @@
 
-![banner](assets/banner.png)
+![banner](assets/branding/banner_bbg.png)
 
 
 ## Description
