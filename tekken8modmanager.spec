@@ -5,7 +5,7 @@ a = Analysis(
     ['tekken8modmanager.py'],
     pathex=[],
     binaries=[('dep/glfw-3.4.bin.WIN64/lib-mingw-w64/glfw3.dll', '.'),('dep/glfw-3.4.bin.WIN64/lib-mingw-w64/libglfw3.a', ',')],
-    datas=[('assets/icon.ico', '.'), ('assets/arial.ttf', '.')],
+    datas=[('assets/branding/*', 'assets/branding/'), ('assets/fonts/*', 'assets/fonts/')],
     hiddenimports=[],
     hookspath=[],
     hooksconfig={},
@@ -34,5 +34,5 @@ exe = EXE(
     target_arch=None,
     codesign_identity=None,
     entitlements_file=None,
-    icon=['assets\\icon.ico'],
+    icon=['assets\\branding\\icon.ico'],
 )
