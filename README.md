@@ -18,11 +18,11 @@ Inspired by CDDTreborn's Tekken 8 Mod On / Off Switch (Version 2) at https://tek
 ## Updates
 
 
-#### 5th May 2024
+#### 6th May 2024
 
    ![Screenshot of a comment on a GitHub issue showing an image, added in the Markdown, of an Octocat smiling and raising a tentacle.](assets/screenshots/window_setting.png)
    
-   - Added a windows configuration menu. Will add onto this at a later date. Option > Windows Settings:
+   - Added a windows configuration menu. Will add onto this at a later date. Option > Windows Configuration:
 
       - Global Scale (Disabled for now)
       - Font Size
