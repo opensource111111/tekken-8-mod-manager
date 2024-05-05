@@ -7,7 +7,7 @@ Any feedback, bugs or issues please post in the comment section. Thank you.
 
    ![Screenshot of a comment on a GitHub issue showing an image, added in the Markdown, of an Octocat smiling and raising a tentacle.](assets/screenshots/window_setting.png)
    
-   - Added a windows configuration menu. Will add onto this at a later date. Option > Windows Settings:
+   - Added a windows configuration menu. Will add onto this at a later date. Option > Windows Configuration:
 
       - Global Scale (Disabled for now)
       - Font Size
