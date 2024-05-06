@@ -37,7 +37,7 @@ Inspired by CDDTreborn's Tekken 8 Mod On / Off Switch (Version 2) at https://tek
 
 
 
-    ![Screenshot of a comment on a GitHub issue showing an image, added in the Markdown, of an Octocat smiling and raising a tentacle.](assets/screenshots/custom_fonts.png)
+![Screenshot of a comment on a GitHub issue showing an image, added in the Markdown, of an Octocat smiling and raising a tentacle.](assets/screenshots/custom_fonts.png)
 
 
    Custom Fonts
