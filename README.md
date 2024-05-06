@@ -37,6 +37,13 @@ Inspired by CDDTreborn's Tekken 8 Mod On / Off Switch (Version 2) at https://tek
 
 
 
+    ![Screenshot of a comment on a GitHub issue showing an image, added in the Markdown, of an Octocat smiling and raising a tentacle.](assets/screenshots/custom_fonts.png)
+
+
+   Custom Fonts
+   - You can add your own fonts by creating the folders "assets/fonts" in the same location as the program. Paste your font files in the folder "fonts". The font format have to be .ttf or .otf. 
+
+
  
 
 Changelog History: https://github.com/opensource111111/tekken-8-mod-manager/blob/main/changelog.md

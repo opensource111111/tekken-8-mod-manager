@@ -19,9 +19,15 @@ Any feedback, bugs or issues please post in the comment section. Thank you.
       - Background Colour
 
    All setting will be saved in the "tekken8modmanager.ini". The file will be created in the same location as the program.
+   
 
+   ![Screenshot of a comment on a GitHub issue showing an image, added in the Markdown, of an Octocat smiling and raising a tentacle.](assets/screenshots/custom_fonts.png)
 
-   - Clean up of script.
+   Custom Fonts
+   - You can add your own fonts by creating the folders "assets/fonts" in the same location as the program. Paste your font files in the folder "fonts". The font format have to be .ttf or .otf. 
+
+  
+
 
 
 

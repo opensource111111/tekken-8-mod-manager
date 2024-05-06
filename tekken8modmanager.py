@@ -2,8 +2,6 @@ import os
 import sys
 import subprocess
 import configparser
-from math import radians
-import numpy
 
 
 import glfw
@@ -19,6 +17,7 @@ from PIL import Image, ImageOps
 
 
 class description_format:
+    name : str = ""
     aurther : str = ""
     url : str = ""
     description : str = ""
@@ -38,7 +37,6 @@ class mod_list_format:
 
    
 
-
     
 def name_sort(mod_list):
     return mod_list.name.title()
@@ -55,7 +53,7 @@ class mod_manager:
 
         # system path
         self.path : str = ""
-        
+        self.pure_dir : str = ""
 
         #mod data
         self._mod_list : mod_list_format = []
@@ -73,20 +71,8 @@ class mod_manager:
 
 
    
-        
-        """ WIP
-        self.searchbar : str = ""
-        self.highlighted = None
-        """
-
 
        
-
-
-
-
-
-
         
 
     class configs:
@@ -208,12 +194,24 @@ class mod_manager:
 
                 for i in os.listdir(os.path.dirname(os.path.abspath(__file__)) +"/assets/fonts"):
                     font = []
-
+                    
                     for jj in range(13):
                         font.append((i + " " + str(font_size_in_pixels) + "px",io.fonts.add_font_from_file_ttf(os.path.dirname(os.path.abspath(__file__)) +"/assets/fonts/" + i , font_size_in_pixels * font_scaling_factor)))
                         font_size_in_pixels +=2
                     font_size_in_pixels = 2
                     self.fonts.append([i,font])
+
+
+                #hack for user custom fonts
+                if os.path.isdir(self.owner.pure_dir +"/assets/fonts"):
+                    for i in os.listdir(self.owner.pure_dir +"/assets/fonts"):
+                        font = []
+                        
+                        for jj in range(13):
+                            font.append((i + " " + str(font_size_in_pixels) + "px",io.fonts.add_font_from_file_ttf(self.owner.pure_dir +"/assets/fonts/" + i , font_size_in_pixels * font_scaling_factor)))
+                            font_size_in_pixels +=2
+                        font_size_in_pixels = 2
+                        self.fonts.append([i,font])
 
 
                 
@@ -292,7 +290,6 @@ class mod_manager:
         
 
 
-
             #ui messages
             self.about_logo = self.owner.ui_images(self.owner.window_icon)
             self.about_message : str = "Created by Beanman"
@@ -301,645 +298,48 @@ class mod_manager:
             self.path_error_message : str = "This program was not placed inside {0}.".format("Steam\steamapps\common\Tekken 8")
 
 
-            #searchbar
-            self.searchbar = "Search"
-            self.highlight = None
-
-        
-
-
-        def get_decription(self,location):
-            
-            description = configparser.ConfigParser()
-            description_info = description_format()
-    
-            
-            if bool(description.read(location)) == True:
-                
-                description_info.aurther = description.get("Mod","aurther")
-                #print(decription_info.Aurther)
-                description_info.decription = description.get("Mod","decription")
-                #print(decription_info.decription)
-                description_info.url = description.get("Mod","url")
-                #print(decription_info.url)
-            else:
-                description_info = description_format()
-                description_info.aurther = "None"
-                description_info.description = "None"
-                description_info.url = "None"
-
-
-            return description_info
-                    
-            
-        
-          
-
-        def generate_modlist(self):
-            
-            self.owner.clear_images()
-
-            self.owner._mod_list.clear()
-            self.owner.mod_list.clear()
-            self.owner.logicmods_list.clear()   
-            
-
-            
-            if self.show_thumbnail == True: 
-
-                default_icon = self.owner.ui_images() 
-            else: 
-                default_icon = None
-        
-
-
-            if os.path.isdir(self.owner.path):
-                
-
-                for folder in os.listdir(self.owner.path):
-                    
-                    #checking for root mod folders.
-                    if os.path.isdir(self.owner.path + "/" + folder):
-
-                        if folder.lower() == self.owner._mods_folder.lower() or folder.lower() == self.owner.mods_folder.lower() or folder.lower() == self.owner.logicmods_folder.lower():
-                            
-
-                            # look through the root mod folders.
-                            for root, dirnames, filenames  in os.walk(self.owner.path +"/" + folder):
-
-                                    for mod_folder in dirnames:
-
-                                        if os.path.isdir(root + "/" + mod_folder):
-                                    
-                                            if os.listdir(root  + "/" + mod_folder) != []:
-                                                
-                                                if self.toggle_viewmode == False:
-                                                    for i in os.listdir(root  + "/" + mod_folder):
-                                                        if i.endswith("pak") | i.endswith("pak-x") | i.endswith("ucas") | i.endswith("ucas-x") | i.endswith("utoc") | i.endswith("utoc-x"):
-                                                            
-
-                                                            new = mod_list_format()
-                                                            new._type = folder
-                                                            new.name = mod_folder
-                                                            new.location = root  + "/" + mod_folder
-                                                            new.icon = default_icon
-                                                            new.description = self.get_decription( root  + "/" + mod_folder + "/mod.ini")
-                                                        
-                                                            for filecheck in os.listdir(root  + "/" + mod_folder):
-                                                                if filecheck.startswith("thumbnail") and self.show_thumbnail == True:
-                                                                    new.icon = self.owner.ui_images(root  + "/" + mod_folder + "/" + filecheck)
-                                                                
-                                                                if filecheck.endswith("pak") | filecheck.endswith("pak-x") | filecheck.endswith("ucas") | filecheck.endswith("ucas-x") | filecheck.endswith("utoc") | filecheck.endswith("utoc-x"):
-                                                                        
-                                                                    if filecheck.endswith("-x"):
-                                                                            new.active = False
-                                                                            
-                                                                    else:
-                                                                            new.active = True
-                                                                    
-                                                                
-                                                            if folder.lower() == self.owner._mods_folder.lower():        
-                                                                self.owner._mod_list.append(new)
-                                                            
-                                                            if folder.lower() == self.owner.mods_folder.lower():        
-                                                                self.owner.mod_list.append(new)
-                                                                
-                                                            if folder.lower() == self.owner.logicmods_folder.lower():
-                                                                self.owner.logicmods_list.append(new)
-                                                                
-                                                            
-                                                            
-
-                                                            break
-                                                
-                                                else:
-                                                    
-                                                            new = mod_list_format()
-                                                            new._type = folder
-                                                            new.name = mod_folder
-                                                            new.location = root  + "/" + mod_folder
-                                                            new.icon = default_icon
-                                                            new.description = self.get_decription( root  + "/" + mod_folder + "/mod.ini")
-                                                        
-                                                            for filecheck in os.listdir(root  + "/" + mod_folder):
-                                                                """
-                                                                if filecheck.startswith("thumbnail") and self.show_thumbnail == True:
-                                                                    new.icon = self.ui_images(root  + "/" + mod_folder + "/" + filecheck)
-                                                                """
-                                                                if filecheck.endswith("pak") | filecheck.endswith("pak-x") | filecheck.endswith("ucas") | filecheck.endswith("ucas-x") | filecheck.endswith("utoc") | filecheck.endswith("utoc-x"):
-                                                                        
-                                                                    if filecheck.endswith("-x"):
-                                                                            new.active = False
-                                                                            
-                                                                    else:
-                                                                            new.active = True
-                                                                    
-                                                                
-                                                            if folder.lower() == self.owner._mods_folder.lower():        
-                                                                self.owner._mod_list.append(new)
-                                                            
-                                                            if folder.lower() == self.owner.mods_folder.lower():        
-                                                                self.owner.mod_list.append(new)
-                                                                
-                                                
-                                                            if folder.lower() == self.owner.logicmods_folder.lower():
-                                                                self.owner.logicmods_list.append(new)
-
-
-
-
-            
-                self.owner._mod_list.sort(reverse=False,key=name_sort)
-                self.owner.mod_list.sort(reverse=False,key=name_sort)
-                self.owner.logicmods_list.sort(reverse=False,key=name_sort)
-            
-        
-
-
-
-
-        def ui_listview(self):
-                
-        
-            
-            #highlighted = None
          
-          
-                        
-                
-                    
-                #~mods ui list
-                if os.path.isdir(self.owner.path + "/" + self.owner._mods_folder) == True:
-                    
-                    imgui.separator()
-                    imgui.text(self.owner._mods_folder + ": " + str(len(self.owner._mod_list)))
-                    
-                        
-                    
-                    #Toggle Hide
-                    
-                    imgui.same_line()
-               
-                    imgui.indent(imgui.get_window_size()[0]-200 - self.config.selected_size * 2)
-                        
-
-                    if imgui.radio_button("Collapse##Hide ~mods",self.toggle_hide__mods):
-                        self.toggle_hide__mods = not self.toggle_hide__mods
-                        self.config.config_setting("Preset")
-
-
-
-                    # Open button
-                    imgui.same_line()        
-                   
-                    if imgui.button("Open##Open ~mods Folder"):
-                        if sys.platform == "win32":
-
-                            subprocess.Popen(['explorer', "{0}".format(self.owner.path + "\{0}".format(self.owner._mods_folder))])
-
-                        if sys.platform == "linux":
-                            os.system('xdg-open "%s"' % self.path + "/{0}".format(self.__mods_folder))
-
-                    imgui.unindent(imgui.get_window_size()[0]-200 -self.config.selected_size * 2)
-
-
-
-
-                    imgui.separator()
-                    
-
-
-
-                
-                    if self.toggle_hide__mods == False:
-
-                                        
-                        for i in self.owner._mod_list:
-                            
-                            if self.show_thumbnail == True :
-
             
-                                imgui.image(i.icon[0],self.config.thumbnail_size,self.config.thumbnail_size)    
-                                if imgui.is_item_hovered():  
-                                    if imgui.begin_tooltip(): 
-                                            
-                                            imgui.image(i.icon[0],i.icon[1],i.icon[2])
-                                        
-                                    imgui.end_tooltip()
-                            
+            self.filterbar : str = "Filter"
+            
+            self.highlight : mod_list_format = None
+            
+        
 
 
-                                imgui.same_line()
-                            
-                            _, i.active = imgui.checkbox(i.name, i.active)
-                          
-                            #if imgui.is_item_hovered():
-                                    #self.highlight = i
+        
+
+        def main_filter_bar(self):
+            
+            
+            win_w, win_h = glfw.get_window_size(self.window)
+            fb_w, fb_h = glfw.get_framebuffer_size(self.window)
+            scaling = max(float(fb_w) / win_w, float(fb_h) / win_h)
+
+
+            #Filter Bar
+
+            imgui.push_style_color(imgui.COLOR_WINDOW_BACKGROUND,0,0,0)
+            imgui.push_style_var(imgui.STYLE_WINDOW_BORDERSIZE,0.0)
+            imgui.set_next_window_size( scaling * 1000, scaling *  60)
+            imgui.set_next_window_position(0,38)
+            
+            imgui.begin("##filter", False, imgui.WINDOW_NO_TITLE_BAR  | imgui.WINDOW_NO_COLLAPSE | imgui.WINDOW_NO_RESIZE)
+            imgui.push_style_color(imgui.COLOR_FRAME_BACKGROUND,1,1,1,0.04)
+            changed,self.filterbar = imgui.input_text("Filter",self.filterbar)
+            imgui.pop_style_color()
+
                                     
-
-                            if imgui.is_item_edited:
-                                self.activation_list(i.active,i.location) 
-                            
-
-                        if len(self.owner._mod_list) == 0:
-                            imgui.text(self.no_mod_message.format(self.__mods_folder))
-                            imgui.text(self.tip_message)
+            imgui.end()
                                 
-                                
-
-                            
-
-
+            imgui.pop_style_color()
+            imgui.pop_style_var()
             
-                #mods ui list
-                if os.path.isdir(self.owner.path + "/" + self.owner.mods_folder) == True:
-                
-                    imgui.separator()
-                    imgui.text(self.owner.mods_folder + ": " + str(len(self.owner.mod_list)))
+            pass
 
-                    
-
-                    #Hide
-                    imgui.same_line()
-                    imgui.indent(imgui.get_window_size()[0]-200  - self.config.selected_size * 2)
-                    if imgui.radio_button("Collapse##Hide mods",self.toggle_hide_mods):
-                        self.toggle_hide_mods = not self.toggle_hide_mods
-                        self.config.config_setting("Preset")
-
-                    imgui.unindent(imgui.get_window_size()[0]-200  - self.config.selected_size * 2)
-                    
-
-
-
-
-                    #Open button  
-                    
-                    imgui.same_line() 
-                    if imgui.button("Open##Open mods Folder"):
-                        if sys.platform == "win32":
-
-                            subprocess.Popen(['explorer', "{0}".format(self.owner.path + "\{0}".format(self.owner.mods_folder))])
-
-                        if sys.platform == "linux":
-                            os.system('xdg-open "%s"' % self.owner.path + "/{0}".format(self.owner.mods_folder))
-    
-                      
-                    
-        
-
-                    imgui.separator() 
-
-
-
-
-
-                    if self.toggle_hide_mods == False:
-                        
-                            #imgui.indent(20)
-                        for i in self.owner.mod_list:
-
-                            if self.show_thumbnail == True:
-                                
-                                
-                                imgui.image(i.icon[0],self.config.thumbnail_size,self.config.thumbnail_size)  
-                                if imgui.is_item_hovered():  
-                                    if imgui.begin_tooltip():   
-
-                                        imgui.image(i.icon[0],i.icon[1],i.icon[2])
-
-                                    imgui.end_tooltip()
-
-
-                                imgui.same_line()
-                    
-                            _, i.active = imgui.checkbox(i.name, i.active)
-                            #if imgui.is_item_hovered():
-                                #self.highlight = i
-
-                            self.activation_list(i.active,i.location) 
-                                                
-
-
-                        if len(self.owner.mod_list) == 0:
-                            imgui.text(self.no_mod_message.format(self.owner.mods_folder))
-                            imgui.text(self.tip_message)
-                            
-                            
-                
-
-
-
-
-
-                #logicmods ui list
-                if os.path.isdir(self.owner.path + "/" + self.owner.logicmods_folder) == True:
-                    imgui.separator()
-                    imgui.text(self.owner.logicmods_folder + ": " + str(len(self.owner.logicmods_list)))
-                    
-                    
-                
-
-
-                    #Hide 
-                    imgui.same_line()
-                    imgui.indent(imgui.get_window_size()[0]-200  - self.config.selected_size * 2)
-                    if imgui.radio_button("Collapse##Hide logicmods",self.toggle_hide_logicmods):
-                            self.toggle_hide_logicmods = not self.toggle_hide_logicmods
-                            self.config.config_setting("Preset")
-                    imgui.unindent(imgui.get_window_size()[0]-200 - self.config.selected_size * 2)
-
-
-
-
-                    #Open button
-                    imgui.same_line()          
-                    
-                    if imgui.button("Open##Open logicmods Folder"):
-                        if sys.platform == "win32":
-                            subprocess.Popen(['explorer', "{0}".format(self.owner.path + "\{0}".format(self.owner.logicmods_folder))])
-
-                        if sys.platform == "linux":
-                            os.system('xdg-open "%s"' % self.owner.path + "/{0}".format(self.owner.logicmods_folder))
-
-                        
-                   
-                                
-            
-
-
-                    imgui.separator()
-                        
-
-
-
-
-
-                    if self.toggle_hide_logicmods == False:
-
-                        #imgui.indent(20)
-                        for i in self.owner.logicmods_list:
-                                
-                            if self.show_thumbnail == True:
-                                
-                                imgui.image(i.icon[0],self.config.thumbnail_size,self.config.thumbnail_size)   
-                                
-                                if imgui.is_item_hovered():  
-                                    if imgui.begin_tooltip():   
-
-                                        imgui.image(i.icon[0],i.icon[1],i.icon[2])
-
-                                        
-                                    imgui.end_tooltip()
-
-                                imgui.same_line()
-
-
-                            _, i.active = imgui.checkbox(i.name, i.active)
-                            #if imgui.is_item_hovered():
-                               
-                                #self.highlight = i
-
-
-                            self.activation_list(i.active,i.location) 
-                                                
-
-
-                        if len(self.owner.logicmods_list) == 0:
-                            imgui.text(self.no_mod_message.format("logicmods folder"))
-                            imgui.text(self.tip_message)
-                        
-
-        
-
-                
-
-
-
-                    
-        
-
-        
-
-
-        def activation_list(self,state,dir):
-
-
-
-                if os.path.isdir(dir) == True:
-                    for file in os.listdir(dir):
-                        if file.endswith("pak") | file.endswith("pak-x") | file.endswith("ucas") | file.endswith("ucas-x") | file.endswith("utoc") | file.endswith("utoc-x"):
-                                                        
-                            if state == True:
-                                if file.endswith("-x"):
-                                    os.rename(dir +"/" + file, dir +"/" + file.strip("-x"))
-                                    
-                            elif state == False:
-                                if not file.endswith("-x"):
-                                    os.rename(dir +"/" + file, dir +"/" + file +"-x")
-            
-        
-
-
-
-
-        def ui_treeview(self, directory, indent=0):
-
-            
-
-                for item in os.listdir(directory):
-                    item_path = os.path.join(directory, item)
-                    
-
-                
-                    if item.lower() == self.owner._mods_folder.lower():
-                            
-                        _,self.toggle__mods = imgui.checkbox("##"+"mm",self.toggle__mods)
-                        if imgui.is_item_edited():
-            
-                            self.activation_tree(self.toggle__mods,self.path +"/{0}".format(self.__mods_folder)) 
-                        imgui.same_line()
-
-                
-                    if item.lower() == self.owner.mods_folder.lower():
-
-                        _,self.toggle_mods = imgui.checkbox("##"+"m",self.toggle_mods)
-                        if imgui.is_item_edited():
-                                        
-                                
-                            self.activation_tree(self.toggle_mods,self.owner.path +"/{0}".format(self.owner.mods_folder)) 
-                        imgui.same_line()
-                                
-
-                    if item.lower() == self.owner.logicmods_folder.lower():
-
-                        _,self.toggle_logicmods = imgui.checkbox("##"+"l",self.toggle_logicmods)
-                        if imgui.is_item_edited():
-                                        
-                                
-                            self.activation_tree(self.toggle_logicmods,self.owner.path +"/{0}".format(self.owner.logicmods_folder)) 
-                        imgui.same_line()
-                        
-                            
-                
-
-
-
-                    if os.path.isdir(item_path):
-                        
-                            
-                            for i in self.owner._mod_list:
-                                    
-                                    if item == i.name:
-                                        
-                                        _,i.active = imgui.checkbox("##"+i.name,i.active)
-                                        
-                                        if imgui.is_item_edited():
-                                            
-                                            self.toggle__mods  = True
-                                            self.activation_tree(i.active,i.location) 
-                                        imgui.same_line()
-
-                        
-                            for i in self.owner.mod_list:
-                                
-                                    if item == i.name:
-                                    
-                                        _,i.active = imgui.checkbox("##"+i.name,i.active)
-                                        
-                                        if imgui.is_item_edited():
-                                            
-                                            self.toggle_mods = True
-                                            self.activation_tree(i.active,i.location) 
-                                        imgui.same_line()
-
-                        
-
-
-                            for i in self.owner.logicmods_list:
-                                    
-                                    if item == i.name:
-                                        
-                                        _,i.active = imgui.checkbox("##"+i.name,i.active)
-                                        
-                                        if imgui.is_item_edited():
-                                            
-                                            self.toggle_logicmods = True
-                                            self.activation_tree(i.active,i.location) 
-                                        imgui.same_line()
-
-
-
-                            
-                            
-
-                        
-                            
-                            if imgui.tree_node( "Directory: " + item, imgui.TREE_NODE_OPEN_ON_ARROW ):
-                                imgui.indent(5)
-                            
-                                #files
-                                for i in os.listdir(item_path):
-                                        
-                                        if os.path.isfile(item_path +"/" + i):
-                                            imgui.indent(33)
-                                            imgui.text("File: " + i)
-                                        
-                                            imgui.indent(-33)
-                                
-                            
-                                self.ui_treeview(item_path, indent+1)
-                        
-
-                                imgui.tree_pop()
-                                imgui.indent(-5)
-                            
-                        
-
-            
-                     
-    
-            
-        
-    
 
 
         
-        def activation_tree(self,state,directory, indent = 0):
-            
-        
-            for item in os.listdir(directory):
-                item_path = os.path.join(directory, item)
-            
-                    
-
-                if os.path.isdir(item_path):
-                    
-                    
-                    for i in self.owner._mod_list:
-                            
-                            if item == i.name:
-                                
-                                i.active = state
-
-
-                    
-                    for i in self.owner.mod_list:
-                            
-                            if item == i.name:
-                                
-                                i.active = state  
-                
-
-                    
-                    for i in self.owner.logicmods_list:
-                            
-                            if item == i.name:
-                                
-                                i.active = state
-
-
-
-                    #print(f"{'  ' * indent}Directory: {item}")
-                    
-                
-                    for i in os.listdir(item_path):
-                        if os.path.isfile(item_path +"/" + i):
-                            #print(f"{'  ' * (indent+1)}File: {i}")
-                            pass
-
-                
-                    self.activation_tree(state,item_path)
-
-
-
-            
-                else:
-                    
-
-                    
-                
-                    if os.path.isfile(item_path):
-                            file = item
-                            if file.endswith("pak") | file.endswith("pak-x") | file.endswith("ucas") | file.endswith("ucas-x") | file.endswith("utoc") | file.endswith("utoc-x"):
-                                                                    
-                                if state == True:
-                                        if file.endswith("-x"):
-                                            os.rename(directory +"/" + file, directory +"/" + file.strip("-x"))
-                                                
-                                        else:
-                                            pass
-                                    
-                                if state == False:
-                                        if file.endswith("-x"):
-                                            pass
-                                        else:
-                                            
-                                            os.rename(directory +"/" + file, directory +"/" + file +"-x")
-
-    
-        
-
-
 
 
         def main_window_bar(self):
@@ -951,7 +351,7 @@ class mod_manager:
                 
             
 
-            
+             
                 #Options 
                 if imgui.begin_menu("Options"):
     
@@ -1188,7 +588,650 @@ class mod_manager:
 
 
 
+
+
+        def get_decription(self,location):
+            
+            description = configparser.ConfigParser()
+            description_info = description_format()
+    
+            
+            if bool(description.read(location)) == True:
+                description_info.name = description.get("Mod","name", fallback="none")
+                #print(decription_info.name)
+                description_info.aurther = description.get("Mod","aurther", fallback="none")
+                #print(decription_info.Aurther)
+                description_info.decription = description.get("Mod","decription", fallback= "none")
+                #print(decription_info.decription)
+                description_info.url = description.get("Mod","url", fallback="none")
+                #print(decription_info.url)
+            
+
+            return description_info
+                    
+            
         
+          
+
+        def generate_modlist(self):
+            
+            self.owner.clear_images()
+
+            self.owner._mod_list.clear()
+            self.owner.mod_list.clear()
+            self.owner.logicmods_list.clear()   
+            
+
+            
+            if self.show_thumbnail == True: 
+
+                default_icon = self.owner.ui_images() 
+            else: 
+                default_icon = None
+        
+
+
+            if os.path.isdir(self.owner.path):
+                
+
+                for folder in os.listdir(self.owner.path):
+                    
+                    #checking for root mod folders.
+                    if os.path.isdir(self.owner.path + "/" + folder):
+
+                        if folder.lower() == self.owner._mods_folder.lower() or folder.lower() == self.owner.mods_folder.lower() or folder.lower() == self.owner.logicmods_folder.lower():
+                            
+
+                            # look through the root mod folders.
+                            for root, dirnames, filenames  in os.walk(self.owner.path +"/" + folder):
+
+                                    for mod_folder in dirnames:
+
+                                        if os.path.isdir(root + "/" + mod_folder):
+                                    
+                                            if os.listdir(root  + "/" + mod_folder) != []:
+                                                
+                                                if self.toggle_viewmode == False:
+                                                    for i in os.listdir(root  + "/" + mod_folder):
+                                                        if i.endswith("pak") | i.endswith("pak-x") | i.endswith("ucas") | i.endswith("ucas-x") | i.endswith("utoc") | i.endswith("utoc-x"):
+                                                            
+
+                                                            new = mod_list_format()
+                                                            new._type = folder
+                                                            new.name = mod_folder
+                                                            new.location = root  + "/" + mod_folder
+                                                            new.icon = default_icon
+                                                            new.description = self.get_decription( root  + "/" + mod_folder + "/mod.ini")
+                                                        
+                                                            for filecheck in os.listdir(root  + "/" + mod_folder):
+                                                                if filecheck.startswith("thumbnail") and self.show_thumbnail == True:
+                                                                    new.icon = self.owner.ui_images(root  + "/" + mod_folder + "/" + filecheck)
+                                                                
+                                                                if filecheck.endswith("pak") | filecheck.endswith("pak-x") | filecheck.endswith("ucas") | filecheck.endswith("ucas-x") | filecheck.endswith("utoc") | filecheck.endswith("utoc-x"):
+                                                                        
+                                                                    if filecheck.endswith("-x"):
+                                                                            new.active = False
+                                                                            
+                                                                    else:
+                                                                            new.active = True
+                                                                    
+                                                                
+                                                            if folder.lower() == self.owner._mods_folder.lower():        
+                                                                self.owner._mod_list.append(new)
+                                                            
+                                                            if folder.lower() == self.owner.mods_folder.lower():        
+                                                                self.owner.mod_list.append(new)
+                                                                
+                                                            if folder.lower() == self.owner.logicmods_folder.lower():
+                                                                self.owner.logicmods_list.append(new)
+                                                                
+                                                            
+                                                            
+
+                                                            break
+                                                
+                                                else:
+                                                    
+                                                            new = mod_list_format()
+                                                            new._type = folder
+                                                            new.name = mod_folder
+                                                            new.location = root  + "/" + mod_folder
+                                                            new.icon = default_icon
+                                                            new.description = self.get_decription( root  + "/" + mod_folder + "/mod.ini")
+                                                        
+                                                            for filecheck in os.listdir(root  + "/" + mod_folder):
+                                                                """
+                                                                if filecheck.startswith("thumbnail") and self.show_thumbnail == True:
+                                                                    new.icon = self.ui_images(root  + "/" + mod_folder + "/" + filecheck)
+                                                                """
+                                                                if filecheck.endswith("pak") | filecheck.endswith("pak-x") | filecheck.endswith("ucas") | filecheck.endswith("ucas-x") | filecheck.endswith("utoc") | filecheck.endswith("utoc-x"):
+                                                                        
+                                                                    if filecheck.endswith("-x"):
+                                                                            new.active = False
+                                                                            
+                                                                    else:
+                                                                            new.active = True
+                                                                    
+                                                                
+                                                            if folder.lower() == self.owner._mods_folder.lower():        
+                                                                self.owner._mod_list.append(new)
+                                                            
+                                                            if folder.lower() == self.owner.mods_folder.lower():        
+                                                                self.owner.mod_list.append(new)
+                                                                
+                                                
+                                                            if folder.lower() == self.owner.logicmods_folder.lower():
+                                                                self.owner.logicmods_list.append(new)
+
+
+
+
+            
+                self.owner._mod_list.sort(reverse=False,key=name_sort)
+                self.owner.mod_list.sort(reverse=False,key=name_sort)
+                self.owner.logicmods_list.sort(reverse=False,key=name_sort)
+            
+        
+
+
+
+
+        def ui_listview(self):
+                
+        
+            
+            
+         
+          
+                        
+                
+                    
+                #~mods ui list
+                if os.path.isdir(self.owner.path + "/" + self.owner._mods_folder) == True:
+                    
+                    imgui.separator()
+                    imgui.text(self.owner._mods_folder + ": " + str(len(self.owner._mod_list)))
+                    
+                        
+                    
+                    #Toggle Hide
+                    
+                    imgui.same_line()
+               
+                    imgui.indent(imgui.get_window_size()[0]-200 - self.config.selected_size * 2)
+                        
+
+                    if imgui.radio_button("Collapse##Hide ~mods",self.toggle_hide__mods):
+                        self.toggle_hide__mods = not self.toggle_hide__mods
+                        self.config.config_setting("Preset")
+
+
+
+                    # Open button
+                    imgui.same_line()        
+                   
+                    if imgui.button("Open##Open ~mods Folder"):
+                        if sys.platform == "win32":
+
+                            subprocess.Popen(['explorer', "{0}".format(self.owner.path + "\{0}".format(self.owner._mods_folder))])
+
+                        if sys.platform == "linux":
+                            os.system('xdg-open "%s"' % self.path + "/{0}".format(self.__mods_folder))
+
+                    imgui.unindent(imgui.get_window_size()[0]-200 -self.config.selected_size * 2)
+
+
+
+
+                    imgui.separator()
+                    
+
+
+
+                
+                    if self.toggle_hide__mods == False:
+
+                                        
+                        for i in self.owner._mod_list:
+                            
+                            if self.show_thumbnail == True :
+
+            
+                                imgui.image(i.icon[0],self.config.thumbnail_size,self.config.thumbnail_size)    
+                                if imgui.is_item_hovered():  
+                                    if imgui.begin_tooltip(): 
+                                            
+                                            imgui.image(i.icon[0],i.icon[1],i.icon[2])
+                                        
+                                    imgui.end_tooltip()
+                            
+
+
+                                imgui.same_line()
+                            
+                            _, i.active = imgui.checkbox(i.name, i.active)
+                          
+                            if imgui.is_item_hovered():
+                                    self.highlight = i
+                                    
+
+                            if imgui.is_item_edited:
+                                self.activation_list(i.active,i.location) 
+                            
+
+                        if len(self.owner._mod_list) == 0:
+                            imgui.text(self.no_mod_message.format(self.__mods_folder))
+                            imgui.text(self.tip_message)
+                                
+                                
+
+                            
+
+
+            
+                #mods ui list
+                if os.path.isdir(self.owner.path + "/" + self.owner.mods_folder) == True:
+                
+                    imgui.separator()
+                    imgui.text(self.owner.mods_folder + ": " + str(len(self.owner.mod_list)))
+
+                    
+
+                    #Hide
+                    imgui.same_line()
+                    imgui.indent(imgui.get_window_size()[0]-200  - self.config.selected_size * 2)
+                    if imgui.radio_button("Collapse##Hide mods",self.toggle_hide_mods):
+                        self.toggle_hide_mods = not self.toggle_hide_mods
+                        self.config.config_setting("Preset")
+
+                    imgui.unindent(imgui.get_window_size()[0]-200  - self.config.selected_size * 2)
+                    
+
+
+
+
+                    #Open button  
+                    
+                    imgui.same_line() 
+                    if imgui.button("Open##Open mods Folder"):
+                        if sys.platform == "win32":
+
+                            subprocess.Popen(['explorer', "{0}".format(self.owner.path + "\{0}".format(self.owner.mods_folder))])
+
+                        if sys.platform == "linux":
+                            os.system('xdg-open "%s"' % self.owner.path + "/{0}".format(self.owner.mods_folder))
+    
+                      
+                    
+        
+
+                    imgui.separator() 
+
+
+
+
+
+                    if self.toggle_hide_mods == False:
+                        
+                            #imgui.indent(20)
+                        for i in self.owner.mod_list:
+
+                            if self.show_thumbnail == True:
+                                
+                                
+                                imgui.image(i.icon[0],self.config.thumbnail_size,self.config.thumbnail_size)  
+                                if imgui.is_item_hovered():  
+                                    if imgui.begin_tooltip():   
+
+                                        imgui.image(i.icon[0],i.icon[1],i.icon[2])
+
+                                    imgui.end_tooltip()
+
+
+                                imgui.same_line()
+                    
+                            _, i.active = imgui.checkbox(i.name, i.active)
+                            if imgui.is_item_hovered():
+                                self.highlight = i
+
+                            self.activation_list(i.active,i.location) 
+                                                
+
+
+                        if len(self.owner.mod_list) == 0:
+                            imgui.text(self.no_mod_message.format(self.owner.mods_folder))
+                            imgui.text(self.tip_message)
+                            
+                            
+                
+
+
+
+
+
+                #logicmods ui list
+                if os.path.isdir(self.owner.path + "/" + self.owner.logicmods_folder) == True:
+                    imgui.separator()
+                    imgui.text(self.owner.logicmods_folder + ": " + str(len(self.owner.logicmods_list)))
+                    
+                    
+                
+
+
+                    #Hide 
+                    imgui.same_line()
+                    imgui.indent(imgui.get_window_size()[0]-200  - self.config.selected_size * 2)
+                    if imgui.radio_button("Collapse##Hide logicmods",self.toggle_hide_logicmods):
+                            self.toggle_hide_logicmods = not self.toggle_hide_logicmods
+                            self.config.config_setting("Preset")
+                    imgui.unindent(imgui.get_window_size()[0]-200 - self.config.selected_size * 2)
+
+
+
+
+                    #Open button
+                    imgui.same_line()          
+                    
+                    if imgui.button("Open##Open logicmods Folder"):
+                        if sys.platform == "win32":
+                            subprocess.Popen(['explorer', "{0}".format(self.owner.path + "\{0}".format(self.owner.logicmods_folder))])
+
+                        if sys.platform == "linux":
+                            os.system('xdg-open "%s"' % self.owner.path + "/{0}".format(self.owner.logicmods_folder))
+
+                        
+                   
+                                
+            
+
+
+                    imgui.separator()
+                        
+
+
+
+
+
+                    if self.toggle_hide_logicmods == False:
+
+                        #imgui.indent(20)
+                        for i in self.owner.logicmods_list:
+                                
+                            if self.show_thumbnail == True:
+                                
+                                imgui.image(i.icon[0],self.config.thumbnail_size,self.config.thumbnail_size)   
+                                
+                                if imgui.is_item_hovered():  
+                                    if imgui.begin_tooltip():   
+
+                                        imgui.image(i.icon[0],i.icon[1],i.icon[2])
+
+                                        
+                                    imgui.end_tooltip()
+
+                                imgui.same_line()
+
+
+                            _, i.active = imgui.checkbox(i.name, i.active)
+                            if imgui.is_item_hovered():
+                               
+                                self.highlight = i
+
+
+                            self.activation_list(i.active,i.location) 
+                                                
+
+
+                        if len(self.owner.logicmods_list) == 0:
+                            imgui.text(self.no_mod_message.format("logicmods folder"))
+                            imgui.text(self.tip_message)
+                        
+
+        
+        
+
+
+        def activation_list(self,state,dir):
+
+
+
+                if os.path.isdir(dir) == True:
+                    for file in os.listdir(dir):
+                        if file.endswith("pak") | file.endswith("pak-x") | file.endswith("ucas") | file.endswith("ucas-x") | file.endswith("utoc") | file.endswith("utoc-x"):
+                                                        
+                            if state == True:
+                                if file.endswith("-x"):
+                                    os.rename(dir +"/" + file, dir +"/" + file.strip("-x"))
+                                    
+                            elif state == False:
+                                if not file.endswith("-x"):
+                                    os.rename(dir +"/" + file, dir +"/" + file +"-x")
+            
+        
+
+
+
+
+        def ui_treeview(self, directory, indent=0):
+
+
+                for item in os.listdir(directory):
+                    item_path = os.path.join(directory, item)
+                    
+
+                
+                    if item.lower() == self.owner._mods_folder.lower():
+                            
+                        _,self.toggle__mods = imgui.checkbox("##"+"mm",self.toggle__mods)
+                        if imgui.is_item_edited():
+            
+                            self.activation_tree(self.toggle__mods,self.path +"/{0}".format(self.__mods_folder)) 
+                        imgui.same_line()
+
+                
+                    if item.lower() == self.owner.mods_folder.lower():
+
+                        _,self.toggle_mods = imgui.checkbox("##"+"m",self.toggle_mods)
+                        if imgui.is_item_edited():
+                                        
+                                
+                            self.activation_tree(self.toggle_mods,self.owner.path +"/{0}".format(self.owner.mods_folder)) 
+                        imgui.same_line()
+                                
+
+                    if item.lower() == self.owner.logicmods_folder.lower():
+
+                        _,self.toggle_logicmods = imgui.checkbox("##"+"l",self.toggle_logicmods)
+                        if imgui.is_item_edited():
+                                        
+                                
+                            self.activation_tree(self.toggle_logicmods,self.owner.path +"/{0}".format(self.owner.logicmods_folder)) 
+                        imgui.same_line()
+                        
+                            
+                
+
+
+
+                    if os.path.isdir(item_path):
+                        
+                            
+                            for i in self.owner._mod_list:
+                                    
+                                    if item == i.name:
+                                        
+                                        _,i.active = imgui.checkbox("##"+i.name,i.active)
+                                        
+                                        if imgui.is_item_edited():
+                                            
+                                            self.toggle__mods  = True
+                                            self.activation_tree(i.active,i.location) 
+                                        imgui.same_line()
+
+                        
+                            for i in self.owner.mod_list:
+                                
+                                    if item == i.name:
+                                    
+                                        _,i.active = imgui.checkbox("##"+i.name,i.active)
+                                        
+                                        if imgui.is_item_edited():
+                                            
+                                            self.toggle_mods = True
+                                            self.activation_tree(i.active,i.location) 
+                                        imgui.same_line()
+
+                        
+
+
+                            for i in self.owner.logicmods_list:
+                                    
+                                    if item == i.name:
+                                        
+                                        _,i.active = imgui.checkbox("##"+i.name,i.active)
+                                        
+                                        if imgui.is_item_edited():
+                                            
+                                            self.toggle_logicmods = True
+                                            self.activation_tree(i.active,i.location) 
+                                        imgui.same_line()
+
+
+
+                            
+                            
+
+                        
+                            
+                            if imgui.tree_node( "Directory: " + item, imgui.TREE_NODE_OPEN_ON_ARROW ):
+                                imgui.indent(5)
+                            
+                                #files
+                                for i in os.listdir(item_path):
+                                        
+                                        if os.path.isfile(item_path +"/" + i):
+                                            imgui.indent(33)
+                                            imgui.text("File: " + i)
+                                        
+                                            imgui.indent(-33)
+                                
+                            
+                                self.ui_treeview(item_path, indent+1)
+                        
+
+                                imgui.tree_pop()
+                                imgui.indent(-5)
+                            
+                        
+
+
+        
+        def activation_tree(self,state,directory, indent = 0):
+            
+        
+            for item in os.listdir(directory):
+                item_path = os.path.join(directory, item)
+            
+                    
+
+                if os.path.isdir(item_path):
+                    
+                    
+                    for i in self.owner._mod_list:
+                            
+                            if item == i.name:
+                                
+                                i.active = state
+
+
+                    
+                    for i in self.owner.mod_list:
+                            
+                            if item == i.name:
+                                
+                                i.active = state  
+                
+
+                    
+                    for i in self.owner.logicmods_list:
+                            
+                            if item == i.name:
+                                
+                                i.active = state
+
+
+
+                    #print(f"{'  ' * indent}Directory: {item}")
+                    
+                
+                    for i in os.listdir(item_path):
+                        if os.path.isfile(item_path +"/" + i):
+                            #print(f"{'  ' * (indent+1)}File: {i}")
+                            pass
+
+                
+                    self.activation_tree(state,item_path)
+
+
+
+            
+                else:
+                    
+
+                    
+                
+                    if os.path.isfile(item_path):
+                            file = item
+                            if file.endswith("pak") | file.endswith("pak-x") | file.endswith("ucas") | file.endswith("ucas-x") | file.endswith("utoc") | file.endswith("utoc-x"):
+                                                                    
+                                if state == True:
+                                        if file.endswith("-x"):
+                                            os.rename(directory +"/" + file, directory +"/" + file.strip("-x"))
+                                                
+                                        else:
+                                            pass
+                                    
+                                if state == False:
+                                        if file.endswith("-x"):
+                                            pass
+                                        else:
+                                            
+                                            os.rename(directory +"/" + file, directory +"/" + file +"-x")
+
+    
+        
+
+
+
+        def main_infoviewbox(self):
+            
+            
+            
+            #imgui.set_next_window_position(glfw.get_window_size(self.window)[0]-200,0)
+            with imgui.begin("" + "Info",False | imgui.WINDOW_NO_BRING_TO_FRONT_ON_FOCUS  |imgui.WINDOW_NO_TITLE_BAR | imgui.WINDOW_NO_RESIZE | imgui.WINDOW_NO_COLLAPSE):
+              
+                if self.highlight == None:
+                    pass
+                else:
+                    
+                    imgui.indent(50)
+                    imgui.image(self.highlight.icon[0],self.highlight.icon[1]*1.5,self.highlight.icon[2]*1.5)
+
+
+                    imgui.unindent(50)
+                    imgui.separator()
+                    imgui.push_font(self.config.fonts[2][1][12][1])
+                    #imgui.set_window_font_scale(3)   
+                    imgui.text("Name: " + self.highlight.description.name)    
+                    imgui.text("Aurther: " + self.highlight.description.aurther)
+                    imgui.text("Description: " + self.highlight.description.description)
+                    imgui.text("URL: " + self.highlight.description.url)
+                    imgui.text("Type: " + self.highlight.description._type)
+                    imgui.pop_font()
+           
+
+
+
 
 
         def main_window_box(self):
@@ -1200,34 +1243,15 @@ class mod_manager:
 
 
 
-            """
-            #Search Bar
-
-            imgui.push_style_color(imgui.COLOR_WINDOW_BACKGROUND,0,0,0)
-            imgui.push_style_var(imgui.STYLE_WINDOW_BORDERSIZE,0.0)
-            imgui.set_next_window_size( scaling * 1000, scaling *  60)
-            imgui.set_next_window_position(0,38)
-            
-            imgui.begin("##search", False, imgui.WINDOW_NO_TITLE_BAR  | imgui.WINDOW_NO_COLLAPSE | imgui.WINDOW_NO_RESIZE)
-            imgui.push_style_color(imgui.COLOR_FRAME_BACKGROUND,1,1,1,0.04)
-            changed,self.searchbar = imgui.input_text("SEARCH",self.searchbar)
-            imgui.pop_style_color()
-
-                                    
-            imgui.end()
-                                
-            imgui.pop_style_color()
-            imgui.pop_style_var()
-            """
-            
 
 
 
-            imgui.set_next_window_size(scaling * (glfw.get_window_size(self.window)[0]),scaling *  (glfw.get_window_size(self.window)[1]-20))
-            imgui.set_next_window_position(0,30)
+            imgui.set_next_window_size(scaling * (glfw.get_window_size(self.window)[0]),scaling *  (glfw.get_window_size(self.window)[1]-26))
+            imgui.set_next_window_position(0,26)
             
 
             imgui.push_style_var(imgui.STYLE_WINDOW_BORDERSIZE,0.0)
+            
             with imgui.begin("##" + "manager",False,imgui.WINDOW_NO_TITLE_BAR | imgui.WINDOW_NO_BRING_TO_FRONT_ON_FOCUS | imgui.WINDOW_ALWAYS_AUTO_RESIZE | imgui.WINDOW_NO_MOVE | imgui.WINDOW_NO_COLLAPSE):
          
             
@@ -1247,23 +1271,6 @@ class mod_manager:
 
             
             
-            """
-            imgui.set_next_window_position(glfw.get_window_size(self.window)[0]-200,0)
-            with imgui.begin("" + "Info",False | imgui.WINDOW_NO_BRING_TO_FRONT_ON_FOCUS  |imgui.WINDOW_NO_TITLE_BAR | imgui.WINDOW_NO_RESIZE | imgui.WINDOW_NO_COLLAPSE):
-              
-                if self.highlight == None:
-                    pass
-                else:
-                   
-                    imgui.image(self.highlight.icon[0],self.highlight.icon[1],self.highlight.icon[2])
-                            
-                    imgui.text("Aurther: " + self.highlight.description.aurther)
-                    imgui.text("Description: " + self.highlight.description.description)
-                    imgui.text("URL: " + self.highlight.description.url)
-                    imgui.text("Type: " + self.highlight.description._type)
-
-            """
-            
 
 
 
@@ -1276,16 +1283,17 @@ class mod_manager:
             imgui.push_style_color(imgui.COLOR_FRAME_BACKGROUND_HOVERED,*self.config.button_colour)
             imgui.push_style_color(imgui.COLOR_CHECK_MARK,1,1,1)
             imgui.push_style_color(imgui.COLOR_WINDOW_BACKGROUND,*self.config.bg_colour)
-    
+
             
             imgui.push_font(self.config.selected_font) 
 
             if os.path.isdir(self.owner.path) == True:
 
 
-
+                #self.main_filter_bar()
                 self.main_window_bar()
                 self.main_window_box()
+                #self.main_infoviewbox()
                 
             
             else:
@@ -1304,6 +1312,7 @@ class mod_manager:
             imgui.pop_style_color()
             imgui.pop_style_color()
             imgui.pop_style_color()
+         
 
 
 
@@ -1418,8 +1427,10 @@ class mod_manager:
                 
                 if sys.platform == "win32":
                     self.path = os.path.dirname(sys.executable) + "\Polaris\Content\Paks"
+                    self.pure_dir = os.path.dirname(sys.executable)
                 elif sys.platform == "linux":
                     self.path = os.path.dirname(sys.executable) + "/Polaris/Content/Paks"
+                    self.pure_dir = os.path.dirname(sys.executable)
 
             else:
                 
@@ -1427,8 +1438,10 @@ class mod_manager:
                 
                 if sys.platform == "win32":
                     self.path =  os.path.dirname(os.path.abspath(__file__)) + "\Polaris\Content\Paks"
+                    self.pure_dir = "None"
                 elif sys.platform == "linux":
                     self.path =  os.path.dirname(os.path.abspath(__file__)) + "/Polaris/Content/Paks"
+                    self.pure_dir = "None"
                 
             
 
