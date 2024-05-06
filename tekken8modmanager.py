@@ -54,6 +54,10 @@ class mod_manager:
         # system path
         self.path : str = ""
         self.pure_dir : str = ""
+        self.window_icon  = None
+        self.banner = None
+
+
 
         #mod data
         self._mod_list : mod_list_format = []
@@ -291,7 +295,7 @@ class mod_manager:
 
 
             #ui messages
-            self.about_logo = self.owner.ui_images(self.owner.window_icon)
+            self.about_logo = self.owner.ui_images(self.owner.banner)
             self.about_message : str = "Created by Beanman"
             self.no_mod_message : str = "No mods were found inside the {0} folder"
             self.tip_message : str = "Tip: Please make sure that each mod has its own separate folder."
@@ -1450,17 +1454,19 @@ class mod_manager:
             if getattr(sys, 'frozen', False) and hasattr(sys, '_MEIPASS'):
                     
                     self.window_icon = os.path.abspath(os.path.dirname(__file__)) + "\\assets\\branding\icon.ico"
-                    
+                    self.banner = os.path.abspath(os.path.dirname(__file__)) + "\\assets\\branding\\banner.png"
                 
             else:
                 
                     
                     if sys.platform == "win32":
                         self.window_icon =  os.path.dirname(os.path.abspath(__file__)) +"/assets/branding/icon.ico"
-                        
+                        self.banner = os.path.abspath(os.path.dirname(__file__)) + "/assets/branding/banner.png"
+
                     elif sys.platform == "linux":
 
                         self.window_icon =  os.path.dirname(os.path.abspath(__file__)) +"/assets/branding/icon.ico"
+                        self.banner = os.path.abspath(os.path.dirname(__file__)) + "/assets/branding/banner.png"
                         
 
 
