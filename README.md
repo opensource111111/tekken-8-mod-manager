@@ -17,33 +17,39 @@ Inspired by CDDTreborn's Tekken 8 Mod On / Off Switch (Version 2) at https://tek
 
 ## Updates
 
-
-#### 6th May 2024
-
-   ![Screenshot of a comment on a GitHub issue showing an image, added in the Markdown, of an Octocat smiling and raising a tentacle.](assets/screenshots/window_setting.png)
-   
-   - Added a windows configuration menu. Will add onto this at a later date. Option > Windows Configuration:
-
-      - Global Scale (Disabled for now)
-      - Font Size
-      - Font Style
-      - Thumbnail Scale
-      - Show Thumbnail
-      - Start Maximised Window
-      - Button Colour
-      - Background Colour
-
-   All setting will be saved in the "tekken8modmanager.ini". The file will be created in the same location as the program.
+Any feedback, bugs or issues, please post in the comment section. Thank you.
 
 
 
-![Screenshot of a comment on a GitHub issue showing an image, added in the Markdown, of an Octocat smiling and raising a tentacle.](assets/screenshots/custom_fonts.png)
+####  12th May 2024
+
+   - Removed the ~mods,mods,logicmods folder requirement. It will now search for any folder/subfolder inside the Pak folder.
+
+   - Added a category filter box at the top of the window to help organize your mod collection. 
+         
+         Available categories:
+         - All
+         - Character Customization
+         - Stage
+         - Sound
+         - UI/HUD
+         - Movesets/Animations
+         - Miscellaneous
 
 
-   Custom Fonts
-   - You can add your own fonts by creating the folders "assets/fonts" in the same location as the program. Paste your font files in the folder "fonts". The font format have to be .ttf or .otf. 
+   - Added a details box/panel to show details of the mods such as name, auther etc which can be edited in the program. This will create an mod.ini at the location of the mod. The mod.ini can be created manually also.
+
+   Example:
+
+         [Mod]
+         name= "T8"
+         author= "John"
+         description= "example"
+         url= "www.example.com"
+         category= "All"
 
 
+   - Thumbnail supported file types: .jpg , .jpeg, .png, .webp, .bmp
  
 
 Changelog History: https://github.com/opensource111111/tekken-8-mod-manager/blob/main/changelog.md
@@ -101,8 +107,8 @@ example:
   ### Option 2: Run from script (Windows / Linux)
 
       
-   1. <span style="color:Yellow;"> Windows </span> -  Install Python: https://www.python.org/
-
+   1. <span style="color:Yellow;"> Windows </span> -  Install Python 3.11.9: https://www.python.org/downloads/release/python-3119/
+   2. <span style="color:Yellow;"> Windows </span> - Microsoft C++ Build Tools:  https://visualstudio.microsoft.com/visual-cpp-build-tools/
    2. <span style="color:LightBlue;"> Linux </span> - Open Terminal / Windows - Open Windows command prompt
       
       Install required pacakges using these commands:
@@ -111,7 +117,7 @@ example:
             - pip install glfw
             - pip install numpy
             - pip install PyOpenGL PyOpenGL_accelerate
-            - pip install imgui
+            - pip install imgui[full]
             - pip install pillow
          
 
