@@ -5,7 +5,7 @@ a = Analysis(
     ['tekken8modmanager.py'],
     pathex=[],
     binaries=[('dep/glfw-3.4.bin.WIN64/lib-mingw-w64/glfw3.dll', '.'),('dep/glfw-3.4.bin.WIN64/lib-mingw-w64/libglfw3.a', ',')],
-    datas=[('assets/branding/*', 'assets/branding/'), ('assets/fonts/*', 'assets/fonts/')],
+    datas=[('assets/branding/*', 'assets/branding/'), ('assets/fonts/*', 'assets/fonts/'), ('assets/override_icons/*', 'assets/override_icons/')],
     hiddenimports=[],
     hookspath=[],
     hooksconfig={},
