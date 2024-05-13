@@ -1,32 +1,52 @@
 
 ![banner](assets/branding/banner_bbg.png)
 
-
-## Description
-A Tekken 8 mod manager to turn on / off your mods.
-
-Source code can be found here: [https://github.com/opensource111111/tekken-8-mod-manager](https://github.com/opensource111111/tekken-8-mod-manager)
-
-Inspired by CDDTreborn's Tekken 8 Mod On / Off Switch (Version 2) at https://tekkenmods.com/mod/3312/tekken-8-mod-on-off-switch-version-2
-
-
 ![Screenshot of a comment on a GitHub issue showing an image, added in the Markdown, of an Octocat smiling and raising a tentacle.](assets/screenshots/screenshot.png)
 
 
 
+## Description
+A mod manager Inpired by [CCDTreborn's 8 Mod On / Off Switch (Version 2)](https://tekkenmods.com/mod/3312/tekken-8-mod-on-off-switch-version-2)
+to your mod turn on / off with a switch.
 
-## Updates
+
+
+Source code: [https://github.com/opensource111111/tekken-8-mod-manager](https://github.com/opensource111111/tekken-8-mod-manager)
+
+
 
 Any feedback, bugs or issues, please post in the comment section. Thank you.
 
 
 
-####  12th May 2024
+#
+#
 
-   - Removed the ~mods,mods,logicmods folder requirement. It will now search for any folder/subfolder inside the Pak folder.
 
-   - Added a category filter box at the top of the window to help organize your mod collection. 
-         
+
+## Updates
+
+Changelog History: https://github.com/opensource111111/tekken-8-mod-manager/blob/main/changelog.md
+
+
+
+
+  - ### 12th May 2024
+
+1. Removed the ~mods, mods and logicmods folder requirement. The program will now search for any folder/subfolder inside the Pak folder that have .pak files inside them. 
+   
+<span style="color:orange;"> Please make sure that each mod has their own separate folder.
+ </span>
+
+![e.g](assets/screenshots/s.png)
+
+
+    
+
+
+2. Added a category filter box at the top of the window to help organize your mod collection. 
+   ![filter.png](assets/screenshots/filter.png)
+
          Available categories:
          - All
          - Character Customization
@@ -36,8 +56,7 @@ Any feedback, bugs or issues, please post in the comment section. Thank you.
          - Movesets/Animations
          - Miscellaneous
 
-
-   - Added a details box/panel to show details of the mods such as name, auther etc which can be edited in the program. This will create an mod.ini at the location of the mod. The mod.ini can be created manually also.
+3. Added a details box/panel to show details of the mods such as name, auther etc which can be edited in the program. This will create an mod.ini at the location of the mod. The mod.ini can be created manually also.
 
    Example:
 
@@ -49,36 +68,31 @@ Any feedback, bugs or issues, please post in the comment section. Thank you.
          category= "All"
 
 
-   - Thumbnail supported file types: .jpg , .jpeg, .png, .webp, .bmp
+4. Thumbnail supported file types: .jpg , .jpeg, .png, .webp, .bmp
  
 
-Changelog History: https://github.com/opensource111111/tekken-8-mod-manager/blob/main/changelog.md
 
 
+
+#
+#
 
 
 
 ## How it works.
 
-Searches for the folders ~mods, mods and logicmods inside "Steam\steamapps\common\Tekken 8\Polaris\Content\Paks" and lists every mod inside theses folders. 
+- Searches for the folders/subfolders inside "Steam\steamapps\common\Tekken 8\Polaris\Content\Paks" that have .pak files inside and them lists them inside the program to be able to switch them on/off. 
 
-The program adds or removes "-x" at the end of each file (.utoc, .ucas, .pak) to enabled/disabled.
+
+- The program adds or removes "-x" at the end of each file (.utoc, .ucas, .pak) to enabled/disabled.
 	
    - Enabled = Filenames not ending with "-x"
    - Disabled = Filenames ending with "-x"
 
 
 
- <span style="color:orange;"> 
- 
- ## Please make sure that each mod has it own separate folder or you will get an error.
-
-example: 
-
-![e.g](assets/screenshots/s.png)
-
- </span>
-
+#
+#
 
 
 
@@ -97,21 +111,22 @@ example:
    ![folder](assets/screenshots/place_inside_tekken8_folder.png)
 
 
-   The Windows excutable was compiled using pyinstaller.
 
-      pyinstaller tekken8modmanager.spec
+   Note: The Windows executable was compiled using pyinstaller.
+      
+        pyinstaller tekken8modmanager.spec
 
 
 #
+
 
   ### Option 2: Run from script (Windows / Linux)
 
       
    1. <span style="color:Yellow;"> Windows </span> -  Install Python 3.11.9: https://www.python.org/downloads/release/python-3119/
-   2. <span style="color:Yellow;"> Windows </span> - Microsoft C++ Build Tools:  https://visualstudio.microsoft.com/visual-cpp-build-tools/
    2. <span style="color:LightBlue;"> Linux </span> - Open Terminal / Windows - Open Windows command prompt
       
-      Install required pacakges using these commands:
+      Install required packages using these commands:
 
             - pip install pip
             - pip install glfw
