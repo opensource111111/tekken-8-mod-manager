@@ -34,6 +34,8 @@
 A mod manager inspired by [CCDTreborn's 8 Mod On / Off Switch (Version 2)](https://tekkenmods.com/mod/3312/tekken-8-mod-on-off-switch-version-2)
 to enable/disable your mods with a switch.
 
+Release: https://tekkenmods.com/mod/3873/tekken-8-mod-manager
+
 Source code: [https://github.com/opensource111111/tekken-8-mod-manager](https://github.com/opensource111111/tekken-8-mod-manager)
 
 
