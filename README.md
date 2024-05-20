@@ -5,85 +5,93 @@
 
 
 
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+
+
+
+# Index
+1. [Description](#Description)
+2. [Updates](#Latest_Update)
+3. [How It Works](#How_It_Works)
+4. [Features](#Features)
+5. [Instructions](#Installation)
+6. [Credits](#Credits)
+
+
+
+
+
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+
+
+
+
 ## Description
 A mod manager inspired by [CCDTreborn's 8 Mod On / Off Switch (Version 2)](https://tekkenmods.com/mod/3312/tekken-8-mod-on-off-switch-version-2)
-to turn your mods on / off with a switch.
-
-
+to enable/disable your mods with a switch.
 
 Source code: [https://github.com/opensource111111/tekken-8-mod-manager](https://github.com/opensource111111/tekken-8-mod-manager)
 
 
-
-Any feedback, bugs or issues, please post in the comment section. Thank you.
-
-
-
-#
-#
+Any feedback, bugs or issues, please post in the comment section. Thank you. :)
 
 
 
-## Updates
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+
+
+
+
+## Latest_Update
+
+
+### 20th May 2024
+
+
+   1. Added enable/disable all buttons
+   2. Add an enabled/disabled mod counter to the top of the ui. 
+   3. Added the ability to create you own presets
+   Enable multiple mods that are part of the presets you apply. 
+   ![bar.png](assets/screenshots/bar.png)
+
+   4. Switching between listview and treeview can be done instantly now. 
+   5. Added a splash screen.
+
+
+
+
 
 Changelog History: https://github.com/opensource111111/tekken-8-mod-manager/blob/main/changelog.md
 
 
 
 
-  - ### 12th May 2024
-
-1. Removed the ~mods, mods and logicmods folder requirement. The program will now search for any folder/subfolder inside the Pak folder that have .pak files inside them. 
-   
-<span style="color:orange;"> Please make sure that each mod has their own separate folder.
- </span>
-
-![e.g](assets/screenshots/s.png)
-
-
-    
-
-
-2. Added a category filter box at the top of the window to help organize your mod collection. 
-   ![filter.png](assets/screenshots/filter.png)
-
-         Available categories:
-         - All
-         - Character Customization
-         - Stage
-         - Sound
-         - UI/HUD
-         - Movesets/Animations
-         - Miscellaneous
-
-3. Added a details box/panel to show details of the mods such as name, auther etc which can be edited in the program. This will create an mod.ini at the location of the mod. The mod.ini can be created manually also.
-
-   Example:
-
-         [Mod]
-         name= "T8"
-         author= "John"
-         description= "example"
-         url= "www.example.com"
-         category= "All"
-
-
-4. Thumbnail supported file types: .jpg , .jpeg, .png, .webp, .bmp
- 
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
 
 
 
 
-#
-#
+## How_It_Works
+
+- Searches for folders/subfolders inside "Steam\steamapps\common\Tekken 8\Polaris\Content\Paks" that have .pak files inside and then lists them inside the program to then be able to switch them on/off. 
+
+- Recommended folders to create are ~mods , mods and logicmods. To keep things organized, I recommend to have a separate folders for each mod. By doing this you can turn on/off mods seperately but thats up to you.
+
+   examples: 
+
+   ![e.g](assets/screenshots/recommended.png)
 
 
 
-## How it works.
-
-- Searches for the folders/subfolders inside "Steam\steamapps\common\Tekken 8\Polaris\Content\Paks" that have .pak files inside and them lists them inside the program to be able to switch them on/off. 
-
-
+  
 - The program adds or removes "-x" at the end of each file (.utoc, .ucas, .pak) to enabled/disabled.
 	
    - Enabled = Filenames not ending with "-x"
@@ -91,18 +99,39 @@ Changelog History: https://github.com/opensource111111/tekken-8-mod-manager/blob
 
 
 
-#
-#
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
 
 
 
-## Install Instruction
+
+## Features
+
+   1. Two view modes.
+      - List - Enable/Disable individual mods in there separator folders 
+      - Tree: Enable/Disable Individual mods including there sub folders.
+
+   2. Details panel displaing a thumbnail and details of the mod current selected.
+
+   3. Window configuration menu.
+
+   4. A filter search bar, enable/disable buttons and create your own presets.
+  
+
+
+
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+
+
+
+## Installation
    
    ### Option 1: Run from executable. (Windows Only)
 
    1. Unzip the exe file from the zip file. You will most likely get a virus warning which will then quarantine the file. Any virus warning you may have are false positives. 
-
-
 
 
    2. Place the executable in "Steam\steamapps\common\Tekken 8" and run.
@@ -132,7 +161,7 @@ Changelog History: https://github.com/opensource111111/tekken-8-mod-manager/blob
             - pip install glfw
             - pip install numpy
             - pip install PyOpenGL PyOpenGL_accelerate
-            - pip install imgui[full]
+            - pip install imgui
             - pip install pillow
          
 
@@ -157,9 +186,24 @@ Changelog History: https://github.com/opensource111111/tekken-8-mod-manager/blob
 
 
 
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
 
 
-## Credits
+
+## Credits:
+
+
+glfw:  https://pypi.org/project/glfw/
+
+numpy: https://github.com/numpy/numpy
+
+PyOpenGL: https://pypi.org/project/PyOpenGL/
+
+imgui: https://pypi.org/project/imgui/
+
+pillow: https://pypi.org/project/pillow/
 
 TARGET FONT BY Iconian Fonts : https://www.fonts4free.net/tarrget-font.html#
 
