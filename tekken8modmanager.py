@@ -15,6 +15,7 @@ import shutil
 
 
 import glfw
+
 import imgui
 
 from imgui.integrations.glfw import GlfwRenderer
@@ -43,7 +44,7 @@ class DescriptionFormat:
 
     category: str = ""
 
-    override_param = []
+    #override_param = None
 
     presets = []
 
@@ -58,9 +59,9 @@ class ModListFormat:
 
     folder: str = ""
 
-    is_empty_folder: bool = True
+    is_empty_folder: bool
 
-    active: bool = False
+    active: bool
 
     icon: list
 
@@ -347,8 +348,11 @@ class Configs:
             for i in configfile.sections():
 
                 if i == "Manager":
+                    header = "Manager"
+                if i == "Preset":
+                    header = "Preset"
 
-                    self.maximised = configfile.getboolean('Manager', 'maximised', fallback=False)
+                    self.maximised = configfile.getboolean(header, 'maximised', fallback=False)
 
 
     def ui_check(self):
@@ -444,11 +448,7 @@ class Configs:
 
 
 
-
-
-
-
-    def config_app_setting(self):
+    def config_save_app_setting(self):
 
         configfile = configparser.ConfigParser()
 
@@ -506,17 +506,9 @@ class Configs:
 
         io.font_global_scale /= font_scaling_factor
 
-        #hack
-        f = ""
-        if sys.platform == "win32":
-            f = "\\assets\\fonts"
-
-                                       
-        if sys.platform == "linux":
-            f = "/assets/fonts"  
         
-      
-        for i in os.listdir(os.path.dirname(os.path.abspath(__file__)) + f):
+        _path = os.path.join(os.path.join(os.path.dirname(os.path.abspath(__file__)),"assets"),"fonts")
+        for i in os.listdir(_path):
 
             font = []
 
@@ -525,8 +517,8 @@ class Configs:
 
                 for jj in range(15):
 
-
-                    font.append((i + " " + str(font_size_in_pixels) + "px", io.fonts.add_font_from_file_ttf(os.path.dirname(os.path.abspath(__file__)) + "/assets/fonts/" + i,font_size_in_pixels * font_scaling_factor)))
+                    font_path = os.path.join(_path,i)
+                    font.append((i + " " + str(font_size_in_pixels) + "px", io.fonts.add_font_from_file_ttf(font_path,font_size_in_pixels * font_scaling_factor)))
 
                     font_size_in_pixels += 2
 
@@ -537,40 +529,27 @@ class Configs:
 
 
 
+        if sys.platform =="win32":
+           
+            # hack for user custom fonts
+            _path = os.path.join(os.path.join(self.owner.pure_dir,"assets"),"fonts")
+            if os.path.isdir(_path):
 
-        # hack for user custom fonts
+                for i in os.listdir(_path):
 
-        #hack
-        c = ""
-        if sys.platform == "win32":
-            c = "\\assets\\fonts\\"
+                    font = []
 
-                                       
-        if sys.platform == "linux":
-            c = "/assets/fonts/"  
-        
+                    if i.endswith(".otf") or i.endswith(".ttf"):
 
-        if os.path.isdir(self.owner.pure_dir + f):
+                        for jj in range(15):
+                            font_path = os.path.join(_path, i)
+                            font.append((i + " " + str(font_size_in_pixels) + "px", io.fonts.add_font_from_file_ttf(font_path,font_size_in_pixels * font_scaling_factor)))
 
-            for i in os.listdir(self.owner.pure_dir + f):
+                            font_size_in_pixels += 2
 
-                font = []
+                        font_size_in_pixels = 2
 
-                if i.endswith(".otf") or i.endswith(".ttf"):
-
-                    for jj in range(15):
-
-                        font.append((i + " " + str(font_size_in_pixels) + "px",
-
-                                     io.fonts.add_font_from_file_ttf(self.owner.pure_dir + c + i,
-
-                                                                     font_size_in_pixels * font_scaling_factor)))
-
-                        font_size_in_pixels += 2
-
-                    font_size_in_pixels = 2
-
-                    self.fonts.append([i, font])
+                        self.fonts.append([i, font])
 
 
 
@@ -688,7 +667,7 @@ class Configs:
         #self.owner.ui.conflict_notification = False
        
 
-        self.config_app_setting()
+        self.config_save_app_setting()
 
 
 
@@ -700,7 +679,7 @@ class Configs:
         description = configparser.ConfigParser()
 
         description_info = DescriptionFormat()
-
+        description_info.presets = []
 
         #convert to new location format
        
@@ -757,6 +736,7 @@ class Configs:
             if description.get("Mod", "presets",fallback="") == "":
 
                 description_info.presets = []
+               
 
             else:
 
@@ -781,7 +761,7 @@ class Configs:
 
         listToStr = ' '.join([str(elem) for elem in mod.description.presets])
 
-        listToStr2 = ' '.join([str(elem) for elem in mod.description.override_param])
+        #listToStr2 = ' '.join([str(elem) for elem in mod.description.override_param])
 
 
        
@@ -872,6 +852,9 @@ class Configs:
 
                         new.description = self.owner.config.get_description(os.path.join(root, i))
 
+                        new.is_empty_folder = True
+
+                        new.active = False
                         
                      
 
@@ -1228,7 +1211,7 @@ class WindowUI:
                 if imgui.button("Create"):
                     self.presets.append(self.preset_input)
 
-                    self.owner.config.config_app_setting()
+                    self.owner.config.config_save_app_setting()
                     imgui.close_current_popup()
 
 
@@ -1270,7 +1253,7 @@ class WindowUI:
 
                         self.presets_select = len(self.presets) - 1
 
-                        self.owner.config.config_app_setting()
+                        self.owner.config.config_save_app_setting()
 
                     imgui.close_current_popup()
 
@@ -1347,7 +1330,7 @@ class WindowUI:
 
                     self.presets[self.presets_select] = self.preset_input
 
-                    self.owner.config.config_app_setting()
+                    self.owner.config.config_save_app_setting()
                     imgui.close_current_popup()
 
 
@@ -1448,7 +1431,7 @@ class WindowUI:
 
                         if changed:
 
-                            self.owner.config.config_app_setting()
+                            self.owner.config.config_save_app_setting()
 
 
                         # Show thumbnail button
@@ -1462,7 +1445,7 @@ class WindowUI:
 
                         if changed:
 
-                            self.owner.config.config_app_setting()
+                            self.owner.config.config_save_app_setting()
 
 
                         # Scale Thumbnail
@@ -1474,7 +1457,7 @@ class WindowUI:
 
                         if imgui.is_item_edited():
 
-                            self.owner.config.config_app_setting()
+                            self.owner.config.config_save_app_setting()
 
 
                         # Docking description box
@@ -1486,7 +1469,7 @@ class WindowUI:
 
                         if changed:
 
-                            self.owner.config.config_app_setting()
+                            self.owner.config.config_save_app_setting()
 
                         """
 
@@ -1540,7 +1523,7 @@ class WindowUI:
 
                         if changed:
 
-                            self.owner.config.config_app_setting()
+                            self.owner.config.config_save_app_setting()
 
 
                         # Change Background Colour
@@ -1556,7 +1539,7 @@ class WindowUI:
 
                         if changed:
 
-                            self.owner.config.config_app_setting()
+                            self.owner.config.config_save_app_setting()
 
 
                         self.ui_spacing(5)
@@ -1592,7 +1575,7 @@ class WindowUI:
 
                                         self.owner.config.config_font_type()
 
-                                        self.owner.config.config_app_setting()
+                                        self.owner.config.config_save_app_setting()
 
 
                                     # Set the initial focus when opening the combo (scrolling + keyboard navigation focus)
@@ -1627,7 +1610,7 @@ class WindowUI:
 
                                         self.owner.config.config_font_type()
 
-                                        self.owner.config.config_app_setting()
+                                        self.owner.config.config_save_app_setting()
                            
 
                                     # Set the initial focus when opening the combo (scrolling + keyboard navigation focus)
@@ -1642,7 +1625,7 @@ class WindowUI:
                         changed, self.owner.config.font_colour = imgui.color_edit4("##font_colour",*self.owner.config.font_colour,imgui.COLOR_EDIT_NO_ALPHA)
 
                         if changed:
-                            self.owner.config.config_app_setting()
+                            self.owner.config.config_save_app_setting()
 
 
 
@@ -1686,7 +1669,7 @@ class WindowUI:
                     self.toggle_edit_information = False
 
 
-                    self.owner.config.config_app_setting()
+                    self.owner.config.config_save_app_setting()
 
 
                 if tree_view:
@@ -1698,7 +1681,7 @@ class WindowUI:
                     self.toggle_edit_information = False
 
 
-                    self.owner.config.config_app_setting()
+                    self.owner.config.config_save_app_setting()
 
                 imgui.end_menu()
 
@@ -1951,12 +1934,12 @@ class WindowUI:
 
                     if sys.platform == "win32":
 
-                        subprocess.Popen(['explorer', "{0}".format(self.highlight.location +"\\")])
-
+                        subprocess.Popen(['explorer', "{0}".format(self.highlight.location)])
+                      
 
                     if sys.platform == "linux":
                        
-                        os.system('xdg-open "%s"' % "{0}".format(self.highlight.location + "/"))
+                        os.system('xdg-open "%s"' % "{0}".format(self.highlight.location))
 
                 imgui.unindent(
 
@@ -2434,14 +2417,14 @@ class WindowUI:
 
                         if file.endswith("-x"):
 
-                            os.rename(i.location + "/" + file, i.location + "/" + file.strip("-x"))
+                            os.rename(os.path.join(i.location, file),os.path.join(i.location, file.strip("-x")))
 
 
                     if i.active == False:
 
                         if not file.endswith("-x"):
 
-                            os.rename(i.location + "/" + file, i.location + "/" + file + "-x")
+                            os.rename(os.path.join(i.location,file), os.path.join(i.location, file + "-x"))
 
         #self.owner.config.conflict.generate_conflict_list()
     
@@ -2581,7 +2564,7 @@ class WindowUI:
 
                             if file.endswith("-x"):
 
-                                os.rename(directory + "/" + file, directory + "/" + file.strip("-x"))
+                                os.rename(os.path.join(directory, file), os.path.join(directory,file.strip("-x")))
 
 
                             else:
@@ -2596,7 +2579,7 @@ class WindowUI:
                             else:
 
 
-                                os.rename(directory + "/" + file, directory + "/" + file + "-x")
+                                os.rename(os.path.join(directory,file),os.path.join(directory, file + "-x"))
 
                 #self.owner.config.conflict.generate_conflict_list()
 
@@ -2984,7 +2967,7 @@ class ModManager:
         # Apply setting to ui
 
         self.config.ui_check()
-        self.config.config_app_setting()
+        self.config.config_save_app_setting()
 
 
         # Generate mods list before program starts

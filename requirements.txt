@@ -1,0 +1,6 @@
+asarPy==1.0.1
+glfw==2.7.0
+imgui==2.0.0
+numpy==1.26.4
+pillow==10.3.0
+PyOpenGL==3.1.7
