@@ -5,7 +5,7 @@ a = Analysis(
     ['tekken8modmanager.py'],
     pathex=[],
     binaries=[('dep/glfw-3.4.bin.WIN64/lib-mingw-w64/glfw3.dll', '.'),('dep/glfw-3.4.bin.WIN64/lib-mingw-w64/libglfw3.a', ',')],
-    datas=[('assets/branding/*', 'assets/branding/'), ('assets/fonts/*', 'assets/fonts/'), ('assets/override_icons/*', 'assets/override_icons/')],
+    datas=[('assets/branding/*', 'assets/branding/'), ('assets/fonts/*', 'assets/fonts/')],
     hiddenimports=[],
     hookspath=[],
     hooksconfig={},
@@ -15,9 +15,16 @@ a = Analysis(
 )
 pyz = PYZ(a.pure)
 
+splash = Splash('assets/branding/banner_bbg.png',
+                binaries=a.binaries,
+                datas=a.datas)
+
+
 exe = EXE(
     pyz,
     a.scripts,
+    splash,
+    splash.binaries,
     a.binaries,
     a.datas,
     [],
@@ -35,4 +42,7 @@ exe = EXE(
     codesign_identity=None,
     entitlements_file=None,
     icon=['assets\\branding\\icon.ico'],
+
+
 )
+

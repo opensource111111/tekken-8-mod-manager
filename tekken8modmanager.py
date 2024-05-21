@@ -506,10 +506,17 @@ class Configs:
 
         io.font_global_scale /= font_scaling_factor
 
+        #hack
+        f = ""
+        if sys.platform == "win32":
+            f = "\\assets\\fonts"
 
-
-
-        for i in os.listdir(os.path.dirname(os.path.abspath(__file__)) + "/assets/fonts"):
+                                       
+        if sys.platform == "linux":
+            f = "/assets/fonts"  
+        
+      
+        for i in os.listdir(os.path.dirname(os.path.abspath(__file__)) + f):
 
             font = []
 
@@ -533,9 +540,19 @@ class Configs:
 
         # hack for user custom fonts
 
-        if os.path.isdir(self.owner.pure_dir + "/assets/fonts"):
+        #hack
+        c = ""
+        if sys.platform == "win32":
+            c = "\\assets\\fonts\\"
 
-            for i in os.listdir(self.owner.pure_dir + "/assets/fonts"):
+                                       
+        if sys.platform == "linux":
+            c = "/assets/fonts/"  
+        
+
+        if os.path.isdir(self.owner.pure_dir + f):
+
+            for i in os.listdir(self.owner.pure_dir + f):
 
                 font = []
 
@@ -545,7 +562,7 @@ class Configs:
 
                         font.append((i + " " + str(font_size_in_pixels) + "px",
 
-                                     io.fonts.add_font_from_file_ttf(self.owner.pure_dir + "/assets/fonts/" + i,
+                                     io.fonts.add_font_from_file_ttf(self.owner.pure_dir + c + i,
 
                                                                      font_size_in_pixels * font_scaling_factor)))
 
@@ -686,23 +703,23 @@ class Configs:
 
 
         #convert to new location format
+       
+        if os.path.isfile(os.path.join(location, "mod.ini")):
 
-        if os.path.isfile(location + "/mod.ini"):
-
-            shutil.move(location + "/mod.ini",location + "/profile/mod.ini")
-
+            shutil.move(os.path.join(location, "mod.ini"), os.path.join(os.path.join(location,"profile"),"mod.ini"))
+         
 
         for filecheck in os.listdir(location):
 
             if filecheck.endswith(".jpg") or filecheck.endswith( ".jpeg") or filecheck.endswith(".png") or filecheck.endswith(".webp") or filecheck.endswith(".bmp"):
-
-                shutil.move(location + "/" + filecheck, location + "/profile/" + filecheck)
+                
+                shutil.move(os.path.join(location, filecheck), os.path.join(os.path.join(location, "profile"), filecheck))
 
         
 
         #normal operation
-
-        if description.read(location + "/profile/mod.ini"):
+       
+        if description.read(os.path.join(os.path.join(location,"profile"),"mod.ini")):
 
             description_info.name = description.get("Mod", "name", fallback="").replace('"', "")
 
@@ -767,7 +784,8 @@ class Configs:
         listToStr2 = ' '.join([str(elem) for elem in mod.description.override_param])
 
 
-        with open(location + "/" + 'profile/mod.ini', 'w') as descrp:
+       
+        with open(os.path.join(os.path.join(location, "profile"),"mod.ini"), 'w') as descrp:
 
             description['Mod'] = {
 
@@ -779,7 +797,7 @@ class Configs:
 
                 'url': '"' + str(mod.description.url) + '"',
 
-                'data': '"' + str(mod.description.date) + '"',
+                'date': '"' + str(mod.description.date) + '"',
 
                 'version': '"' + str(mod.description.version) + '"',
 
@@ -824,20 +842,22 @@ class Configs:
                 for i in os.listdir(root):
 
 
-                    if os.path.isdir(root + "/" + i) and i != "profile":
+                    if os.path.isdir(os.path.join(root, i)) and i != "profile":
+                              
 
-
-                        for file in os.listdir(root + "/" + i):
+                        for file in os.listdir(os.path.join(root, i)):
                             
 
                             # create profile folder
 
                             if (file.endswith("pak") or file.endswith("pak-x") or file.endswith("ucas") or file.endswith("ucas-x") or file.endswith("utoc") or file.endswith("utoc-x")):
+                                   
 
-                                    if os.path.isdir(root + "/" + i + "/profile") == False:
+                                    if os.path.isdir(os.path.join(os.path.join(root, i),"profile")) == False:
+                                            os.mkdir(os.path.join(os.path.join(root, i),"profile"))
+                                        
 
-                                        os.mkdir(root + "/" + i + "/profile")
-
+                                        
                                 
 
                         new = ModListFormat()
@@ -845,18 +865,18 @@ class Configs:
                         new.folder = root
 
                         new.name = i
-
-                        new.location = root + "/" + i
+                         
+                        new.location = os.path.join(root, i)
 
                         new.icon = [default_icon]
 
-                        new.description = self.owner.config.get_description(root + "/" + i)
+                        new.description = self.owner.config.get_description(os.path.join(root, i))
 
                         
                      
 
-
-                        for file in os.listdir(root + "/" + i):
+                
+                        for file in os.listdir(os.path.join(root, i)):
 
                             if (file.endswith("pak") or file.endswith("pak-x") or file.endswith("ucas") or file.endswith("ucas-x") or file.endswith("utoc") or file.endswith("utoc-x")):
 
@@ -877,13 +897,15 @@ class Configs:
 
                         temp_image_collection = []
 
-                        if os.path.isdir(root + "/" + i + "/profile"):
-
-                            for filecheck in os.listdir(root + "/" + i + "/profile"):
+                        
+                        
+                        if os.path.isdir(os.path.join(os.path.join(root, i), "profile")):
+                                
+                            for filecheck in os.listdir(os.path.join(os.path.join(root, i), "profile")):
 
                                 if filecheck.endswith(".jpg") or filecheck.endswith(".jpeg") or filecheck.endswith(".png") or filecheck.endswith(".webp") or filecheck.endswith(".bmp"):
 
-                                    temp_image_collection.append(self.owner.ui_images(root + "/" + i + "/profile/" + filecheck))
+                                    temp_image_collection.append(self.owner.ui_images(os.path.join(os.path.join(os.path.join(root, i), "profile"),filecheck)))
 
 
                         if temp_image_collection != []:
@@ -894,8 +916,8 @@ class Configs:
 
                         # check active mod
 
-                        for filecheck in os.listdir(root + "/" + i):
-
+                        for filecheck in os.listdir(os.path.join(root, i)):
+                            
                             if filecheck.endswith("pak") or filecheck.endswith("pak-x") or filecheck.endswith("ucas") or filecheck.endswith("ucas-x") or filecheck.endswith("utoc") or filecheck.endswith("utoc-x"):
 
                                 if filecheck.endswith("-x"):
@@ -1929,12 +1951,12 @@ class WindowUI:
 
                     if sys.platform == "win32":
 
-                        subprocess.Popen(['explorer', "{0}".format(self.highlight.location.replace("/", "\\"))])
+                        subprocess.Popen(['explorer', "{0}".format(self.highlight.location +"\\")])
 
 
                     if sys.platform == "linux":
-
-                        os.system('xdg-open "%s"' % "{0}".format(self.highlight.location.replace("\\", "/")))
+                       
+                        os.system('xdg-open "%s"' % "{0}".format(self.highlight.location + "/"))
 
                 imgui.unindent(
 
@@ -2030,7 +2052,7 @@ class WindowUI:
 
                                                                                        self.highlight.description.date)
 
-
+                       
 
 
 
@@ -2865,23 +2887,31 @@ class ModManager:
 
             print('running in a PyInstaller bundle')
 
-
             import pyi_splash
-
             pyi_splash.close()
 
+        
 
             if sys.platform == "win32":
 
-                self.path = os.path.dirname(sys.executable) + "\Polaris\Content\Paks"
+                self.path = os.path.dirname(sys.executable) + "\\Polaris\\Content\\Paks"
 
                 self.pure_dir = os.path.dirname(sys.executable)
+
+                self.window_icon = os.path.abspath(os.path.dirname(__file__)) + "\\assets\\branding\\icon.ico"
+
+                self.banner = os.path.abspath(os.path.dirname(__file__)) + "\\assets\\branding\\banner.png"
+
 
             elif sys.platform == "linux":
 
                 self.path = os.path.dirname(sys.executable) + "/Polaris/Content/Paks"
 
                 self.pure_dir = os.path.dirname(sys.executable)
+                
+                self.window_icon = os.path.dirname(os.path.abspath(__file__)) + "/assets/branding/icon.ico"
+
+                self.banner = os.path.abspath(os.path.dirname(__file__)) + "/assets/branding/banner.png"
 
 
         else:
@@ -2892,38 +2922,23 @@ class ModManager:
 
             if sys.platform == "win32":
 
-                self.path = os.path.dirname(os.path.abspath(__file__)) + "\Polaris\Content\Paks"
-
-
-            elif sys.platform == "linux":
-
-                self.path = os.path.dirname(os.path.abspath(__file__)) + "/Polaris/Content/Paks"
-
-
-        if getattr(sys, 'frozen', False) and hasattr(sys, '_MEIPASS'):
-
-
-            self.window_icon = os.path.abspath(os.path.dirname(__file__)) + "\\assets\\branding\\icon.ico"
-
-            self.banner = os.path.abspath(os.path.dirname(__file__)) + "\\assets\\branding\\banner.png"
-
-
-        else:
-
-
-            if sys.platform == "win32":
-
-                self.window_icon = os.path.dirname(os.path.abspath(__file__)) + "\\assets\\branding\\icon.ico"
-
+                self.path = os.path.dirname(os.path.abspath(__file__)) + "\\Polaris\\Content\\Paks"
+                self.window_icon = os.path.abspath(os.path.dirname(__file__)) + "\\assets\\branding\\icon.ico"
                 self.banner = os.path.abspath(os.path.dirname(__file__)) + "\\assets\\branding\\banner.png"
 
 
             elif sys.platform == "linux":
 
-
+                self.path = os.path.dirname(os.path.abspath(__file__)) + "/Polaris/Content/Paks"
                 self.window_icon = os.path.dirname(os.path.abspath(__file__)) + "/assets/branding/icon.ico"
-
                 self.banner = os.path.abspath(os.path.dirname(__file__)) + "/assets/branding/banner.png"
+
+        
+
+           
+
+
+
 
 
         img = Image.open(self.window_icon)
@@ -2974,7 +2989,6 @@ class ModManager:
 
         # Generate mods list before program starts
         self.config.generate_modlist()
-
 
 
         # Loop until the user closes the window

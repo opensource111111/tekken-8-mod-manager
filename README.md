@@ -17,6 +17,8 @@
 3. [How It Works](#How_It_Works)
 4. [Features](#Features)
 5. [Instructions](#Installation)
+6. [KnowIssues](#Know_Issues)
+7. [FAQ](#FAQ)
 6. [Credits](#Credits)
 
 
@@ -33,8 +35,6 @@
 ## Description
 A mod manager inspired by [CCDTreborn's 8 Mod On / Off Switch (Version 2)](https://tekkenmods.com/mod/3312/tekken-8-mod-on-off-switch-version-2)
 to enable/disable your mods with a switch.
-
-Release: https://tekkenmods.com/mod/3873/tekken-8-mod-manager
 
 Source code: [https://github.com/opensource111111/tekken-8-mod-manager](https://github.com/opensource111111/tekken-8-mod-manager)
 
@@ -59,7 +59,7 @@ Any feedback, bugs or issues, please post in the comment section. Thank you. :)
    1. Added enable/disable all buttons
    2. Add an enabled/disabled mod counter to the top of the ui. 
    3. Added the ability to create you own presets
-   Enable multiple mods that are part of the presets you apply. 
+   Enable multiple mods that are part of the presets you apply. Make sure that there are no spaces in your preset names
    ![bar.png](assets/screenshots/bar.png)
 
    4. Switching between listview and treeview can be done instantly now. 
@@ -148,7 +148,8 @@ Changelog History: https://github.com/opensource111111/tekken-8-mod-manager/blob
         pyinstaller tekken8modmanager.spec
 
 
-#
+
+<p>&nbsp;</p>
 
 
   ### Option 2: Run from script (Windows / Linux)
@@ -191,6 +192,27 @@ Changelog History: https://github.com/opensource111111/tekken-8-mod-manager/blob
 <p>&nbsp;</p>
 <p>&nbsp;</p>
 <p>&nbsp;</p>
+
+
+
+
+
+
+
+ # Known_Issues
+ - 
+
+
+<p>&nbsp;</p>
+
+
+ # FAQ
+ - 
+
+<p>&nbsp;</p>
+
+
+
 
 
 
