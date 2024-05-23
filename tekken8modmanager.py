@@ -12,8 +12,6 @@ import webbrowser
 
 import shutil
 
-
-
 import glfw
 
 import imgui
@@ -23,8 +21,6 @@ from imgui.integrations.glfw import GlfwRenderer
 from OpenGL.GL import *
 
 from PIL import Image
-
-
 
 
 
@@ -44,9 +40,9 @@ class DescriptionFormat:
 
     category: str = ""
 
-    #override_param = None
+    presets: list
 
-    presets = []
+    override_parameter: list
 
 
 
@@ -71,10 +67,9 @@ class ModListFormat:
 
 
 
+
 def name_sort(mod_list):
     return mod_list.name.title()
-
-
 
 
 
@@ -105,11 +100,11 @@ class ConflictManagement:
 
         mod1.description.override_param = []
 
-        mod1.description.override_param.append("zafina_item_preset1")
+        mod1.description.override_param.append("zafina::preset1")
 
-        mod1.description.override_param.append("zafina_item_preset2")
+        mod1.description.override_param.append("zafina::preset2")
 
-        mod1.description.override_param.append("zafina_item_preset4")
+        mod1.description.override_param.append("zafina::preset4")
 
 
         mod2 = ModListFormat()
@@ -120,9 +115,9 @@ class ConflictManagement:
 
         mod2.description.override_param = []
 
-        mod2.description.override_param.append("zafina_item_preset1")
+        mod2.description.override_param.append("zafina::preset1")
 
-        mod2.description.override_param.append("zafina_item_preset2")
+        mod2.description.override_param.append("zafina::preset2")
 
 
 
@@ -137,13 +132,13 @@ class ConflictManagement:
 
             mod.conflict = []
             temp_conflicts  = []
-
+            
 
 
             for compare in self.modlist_ref:
 
                 if mod.is_empty_folder == False and compare.is_empty_folder == False:
-
+                   
                     if (mod != compare) and (mod.active == True and compare.active == True):
 
                         sim1 = []
@@ -151,16 +146,16 @@ class ConflictManagement:
 
 
 
-                        if mod.description.override_param != []:
+                        if mod.description.override_parameter!= []:
+                            
+                            
+
+                            if compare.description.override_parameter != []:
 
 
 
-                            if compare.description.override_param != []:
-
-
-
-                                sim1 = list(set(mod.description.override_param) & set(compare.description.override_param))
-
+                                sim1 = list(set(mod.description.override_parameter) & set(compare.description.override_parameter))
+                             
 
 
                                 if sim1 != []:
@@ -262,11 +257,12 @@ class ConflictManagement:
 
 
                         for info in mod.conflict:
-
-
+                          
+                            imgui.image(info[0].icon[0][0], self.owner.ui.thumbnail_size*0.5, self.owner.ui.thumbnail_size*0.5)
+                            imgui.same_line()
                             imgui.text(info[0].name)
 
-                            imgui.indent(20)
+                            imgui.indent(40)
 
                             imgui.text("Reason:")
 
@@ -277,7 +273,7 @@ class ConflictManagement:
                                 imgui.spacing()
                                 imgui.spacing()
 
-                        imgui.indent(-20)
+                            imgui.indent(-40)
                         imgui.spacing()
                         imgui.spacing()
                         imgui.separator()
@@ -285,7 +281,7 @@ class ConflictManagement:
                         imgui.text("Optional: ")
                         imgui.same_line()
 
-                        imgui.text_colored("Click Button To Disable Conflicting Mods",214, 220, 0, 1)
+                        imgui.text_colored("Click the button to disable conflicting mods",214, 220, 0, 1)
 
 
 
@@ -329,7 +325,7 @@ class Configs:
 
         #conflict
 
-        #self.conflict = ConflictManagement(self.owner)
+        self.conflict = ConflictManagement(self.owner)
 
 
 
@@ -433,7 +429,7 @@ class Configs:
 
                     #warning
 
-                    #self.owner.ui.conflict_notification = configfile.getboolean(header, 'warning', fallback=True)
+                    self.owner.ui.conflict_notification = configfile.getboolean(header, 'warning', fallback=True)
 
 
                     # docked
@@ -443,7 +439,7 @@ class Configs:
 
                     #presets
 
-                    self.owner.ui.presets = configfile.get(header, 'presets',fallback="Default").split()
+                    self.owner.ui.presets = configfile.get(header, 'presets', fallback="Default").split()
 
 
 
@@ -479,9 +475,9 @@ class Configs:
 
                                     'docked': str(self.owner.ui.docked),
 
-                                    'presets': listToStr}
+                                    'presets': listToStr,
 
-                                    #'warning': str(self.owner.ui.conflict_notification),
+                                    'warning': str(self.owner.ui.conflict_notification)}
 
 
             configfile.write(config)
@@ -664,7 +660,7 @@ class Configs:
 
         self.owner.ui.thumbnail_size = 50
 
-        #self.owner.ui.conflict_notification = False
+        self.owner.ui.conflict_notification = True
        
 
         self.config_save_app_setting()
@@ -721,16 +717,17 @@ class Configs:
             description_info.category = description.get("Mod", "category", fallback="").replace('"', "")
       
 
-            """
-            if description.get("Mod", "override_param", fallback="") == "":
+           
+            if description.get("Mod", "override_parameter", fallback="") == "":
 
-                description_info.override_param = []
+                description_info.override_parameter = []
+
 
             else:
 
-                description_info.override_param = description.get("Mod", "override_param", fallback="").split()
-
-            """
+                description_info.override_parameter = description.get("Mod", "override_parameter", fallback="").lower().split()
+               
+            
 
 
             if description.get("Mod", "presets",fallback="") == "":
@@ -761,7 +758,7 @@ class Configs:
 
         listToStr = ' '.join([str(elem) for elem in mod.description.presets])
 
-        #listToStr2 = ' '.join([str(elem) for elem in mod.description.override_param])
+        listToStr2 = ' '.join([str(elem) for elem in mod.description.override_parameter])
 
 
        
@@ -783,11 +780,12 @@ class Configs:
 
                 'category': '"' + str(mod.description.category) + '"',
 
-                'presets': listToStr
+                'presets': listToStr,
 
+                'override_parameter': listToStr2
             }
 
-               #'override_param': listToStr2,
+              
 
 
 
@@ -919,8 +917,8 @@ class Configs:
 
         self.mod_list.sort(reverse=False, key=name_sort)
 
-        #self.conflict.modlist_ref = self.mod_list
-        #self.conflict.generate_conflict_list()
+        self.conflict.modlist_ref = self.mod_list
+        self.conflict.generate_conflict_list()
 
         #self.conflict.show()
 
@@ -948,9 +946,7 @@ class WindowUI:
 
         self.show_window_setting: bool = False
 
-        self.category = ["All", "Character Customization", "Stage", "Sound", "UI/HUD", "Movesets/Animations",
-
-                         "Miscellaneous"]
+        self.category = ["All", "Character Customization", "Stage", "Sound", "UI/HUD", "Movesets/Animations","Miscellaneous"]
 
         self.filter_bar: str = self.category[0]
 
@@ -964,8 +960,6 @@ class WindowUI:
 
         self.edit_information_select_index: int = 0
 
-        #self.toggle_hints: bool = True
-
         self.button_colour = 0, 0.290, 0.783, 1
 
         self.bg_colour = 0, 0, 0, 1
@@ -977,9 +971,7 @@ class WindowUI:
 
         self.about_message: str = "Created by Beanman"
 
-        self.path_error_message: str = "This program was not placed in the right location. Please close the program and place inside {0}.".format(
-
-            "Steam/steamapps/common/Tekken 8")
+        self.path_error_message: str = "This program was not placed in the right location. Please close the program and place inside {0}.".format("Steam/steamapps/common/Tekken 8")
 
         self.source_code = "https://github.com/opensource111111/tekken-8-mod-manager"
 
@@ -1000,9 +992,43 @@ class WindowUI:
 
         self.presets_select = 0
 
-
+        self.save = True
 
         self.conflict_notification: bool = False
+
+
+
+        # lerp transition
+        self.t = 0
+        self.slide = 0
+        self.show = False
+
+
+
+
+    
+    def ui_slide_transition(self,a,b,t):
+      
+       
+        self.t+=t
+        self.slide = a + self.t *(b - a)
+
+       
+        if self.slide >= b:
+            self.slide = b
+            self.t = 1
+        
+        if self.slide <= 0:
+            self.slide = 0
+            self.t = 0
+        
+
+        
+       
+          
+            
+     
+
 
 
     def main_filter_bar(self):
@@ -1085,7 +1111,6 @@ class WindowUI:
 
                             self.filter_bar = self.category[i]
 
-
                         # Set the initial focus when opening the combo (scrolling + keyboard navigation focus)
 
                         if is_selected:
@@ -1144,13 +1169,7 @@ class WindowUI:
 
 
 
-
-
-
         # Presets
-
-
-        #imgui.indent(300)
 
         imgui.text("Presets: ")
         imgui.same_line()
@@ -1191,7 +1210,7 @@ class WindowUI:
 
 
 
-        imgui.set_next_window_size_constraints((300, 100), (300, 100))
+        imgui.set_next_window_size_constraints((400, 150), (400, 150))
 
         with imgui.begin_popup_modal("Add New Preset",
 
@@ -1202,17 +1221,29 @@ class WindowUI:
                 # Window & UI
                 imgui.separator()
 
-                change,self.preset_input = imgui.input_text("##presets",self.preset_input)
 
-                #print(self.preset_input)
+
+
+                if self.preset_input.find(" ") != -1:
+                    colour = 0.8,0,0,1
+                else:
+                    colour = self.owner.config.font_colour
+                imgui.push_style_color(imgui.COLOR_TEXT, *colour)
+                imgui.set_next_item_width(380)
+                change,self.preset_input = imgui.input_text("##presets",self.preset_input)
+                imgui.pop_style_color()
+
+                if self.preset_input.find(" ") != -1:
+                    imgui.text_colored("No spacing allowed in preset name!",0.8,0,0,1)
 
                 imgui.separator()
 
                 if imgui.button("Create"):
-                    self.presets.append(self.preset_input)
+                    if self.preset_input!= "" and self.preset_input.find(" ") ==-1:
+                        self.presets.append(self.preset_input)
 
-                    self.owner.config.config_save_app_setting()
-                    imgui.close_current_popup()
+                        self.owner.config.config_save_app_setting()
+                        imgui.close_current_popup()
 
 
 
@@ -1300,7 +1331,7 @@ class WindowUI:
                 self.preset_input = self.presets[self.presets_select]
 
 
-        imgui.set_next_window_size_constraints((300, 100), (300, 100))
+        imgui.set_next_window_size_constraints((400, 150), (400, 150))
 
         with imgui.begin_popup_modal("Rename",
 
@@ -1310,28 +1341,36 @@ class WindowUI:
 
                 # Window & UI
                 imgui.separator()
-
-
+                
+                if self.preset_input.find(" ") != -1:
+                    colour = 0.8,0,0,1
+                else:
+                    colour = self.owner.config.font_colour
+                imgui.push_style_color(imgui.COLOR_TEXT, *colour)
+                imgui.set_next_item_width(380)
                 change, self.preset_input = imgui.input_text("##rename", self.preset_input)
+                imgui.pop_style_color()
+             
+                if self.preset_input.find(" ") != -1:
+                    imgui.text_colored("No spacing allowed in preset name!",0.8,0,0,1)
 
-                # print(self.preset_input)
 
                 imgui.separator()
 
                 if imgui.button("Change"):
+                    if self.preset_input!= "" and self.preset_input.find(" ") ==-1:
+                        for f in self.owner.config.mod_list:
 
-                    for f in self.owner.config.mod_list:
+                            if self.presets[self.presets_select] in f.description.presets:
 
-                        if self.presets[self.presets_select] in f.description.presets:
+                                f.description.presets[f.description.presets.index(self.presets[self.presets_select])] = self.preset_input
 
-                            f.description.presets[f.description.presets.index(self.presets[self.presets_select])] = self.preset_input
+                                self.owner.config.update_description(f.location, f)
 
-                            self.owner.config.update_description(f.location, f)
+                        self.presets[self.presets_select] = self.preset_input
 
-                    self.presets[self.presets_select] = self.preset_input
-
-                    self.owner.config.config_save_app_setting()
-                    imgui.close_current_popup()
+                        self.owner.config.config_save_app_setting()
+                        imgui.close_current_popup()
 
 
 
@@ -1360,7 +1399,6 @@ class WindowUI:
 
         imgui.same_line()
 
-        imgui.indent(590)
 
         imgui.text("Enabled: " + str(e))
         imgui.same_line()
@@ -1486,7 +1524,7 @@ class WindowUI:
                         """
 
                         
-                        """
+                       
                         imgui.text("Mod Conflict Notification:")
                         imgui.same_line()
 
@@ -1494,9 +1532,10 @@ class WindowUI:
 
                         if changed:
 
-                            self.owner.config.config_app_setting()
+                            self.owner.config.config_save_app_setting()
+                        
 
-                        """
+                       
 
 
 
@@ -1664,22 +1703,12 @@ class WindowUI:
 
                     self.toggle_viewmode = False
 
-                    self.highlight = None
-
-                    self.toggle_edit_information = False
-
-
                     self.owner.config.config_save_app_setting()
 
 
                 if tree_view:
 
                     self.toggle_viewmode = True
-
-                    self.highlight = None
-
-                    self.toggle_edit_information = False
-
 
                     self.owner.config.config_save_app_setting()
 
@@ -1760,15 +1789,7 @@ class WindowUI:
                         imgui.end_tooltip()
 
 
-                #self.ui_spacing(5)
-
-                #imgui.text("Credits")
-
-                #imgui.bullet_text("imgui")
-
-                #imgui.bullet_text("glfw")
-
-                #imgui.bullet_text("pillow")
+              
 
 
 
@@ -1803,11 +1824,16 @@ class WindowUI:
             if imgui.button("Refresh List"):
 
                 self.highlight = None
-
+                self.show = False
+                self.slide = 0
+                self.t = 0
+                self.toggle_edit_information = False
                 self.owner.config.generate_modlist()
 
 
         imgui.pop_style_var()
+
+
 
 
     def ui_spacing(self, value):
@@ -1828,9 +1854,9 @@ class WindowUI:
 
         if self.highlight != None:
 
-
+            
             if self.docked:
-
+        
                 imgui.set_next_window_size(self.scaling() * self.font_padding,
 
                                            glfw.get_window_size(self.owner.window)[1] - 26)
@@ -2094,42 +2120,51 @@ class WindowUI:
                                             imgui.set_item_default_focus()
 
 
-                        """
+                        
                         # override
 
                         imgui.table_next_row()
 
                         imgui.table_set_column_index(0)
-
-                        imgui.text("Override Param:")
+                        
+                      
+                        
+                        imgui.text("Override Parameter:")
                         imgui.same_line()
 
-                        if imgui.button("+##ef"):
+                        if imgui.button("+##add-parameter"):
 
-                            self.highlight.description.override_param.append("")
+                            self.highlight.description.override_parameter.append("")
 
                         imgui.table_set_column_index(1)
                         
+                        self.save = True
+                        for i in range(len(self.highlight.description.override_parameter)):
 
-                        for i in range(len(self.highlight.description.override_param)):
+                            if self.highlight.description.override_parameter[i].find(" ") != -1:
 
+                                colour = 0.8, 0, 0, 1
+                                self.save = False
+                            else:
+                                colour = self.owner.config.font_colour
+
+                            imgui.push_style_color(imgui.COLOR_TEXT, *colour)
                             imgui.set_next_item_width(230)
-
-                            changed, self.highlight.description.override_param[i] = imgui.input_text("##cbb" + str(i),self.highlight.description.override_param[i])
-                            
+                            changed, self.highlight.description.override_parameter[i] = imgui.input_text("##parameter-text" + str(i),self.highlight.description.override_parameter[i])
+                            imgui.pop_style_color()
                             
                             imgui.same_line()
 
-                            if imgui.button("-##ef"+ str(i)):
+                            if imgui.button("-##remove-parameter"+ str(i)):
 
-                                if self.highlight.description.override_param[i] in self.highlight.description.override_param:
+                                if self.highlight.description.override_parameter[i] in self.highlight.description.override_parameter:
 
-                                    self.highlight.description.override_param.remove(self.highlight.description.override_param[i])
+                                    self.highlight.description.override_parameter.remove(self.highlight.description.override_parameter[i])
 
                                     break
 
                        
-                        """
+                      
 
 
                         
@@ -2141,15 +2176,15 @@ class WindowUI:
 
 
                     self.ui_spacing(5)
+
                     
-
                     if imgui.button("Save"):
+                            if self.save:
+                                self.owner.config.update_description(self.highlight.location,self.highlight)
 
-                        self.owner.config.update_description(self.highlight.location,self.highlight)
+                                self.toggle_edit_information = False
 
-                        self.toggle_edit_information = False
-
-                        #self.owner.config.conflict.generate_conflict_list()
+                                self.owner.config.conflict.generate_conflict_list()
 
                     imgui.same_line()
 
@@ -2158,8 +2193,9 @@ class WindowUI:
 
                         self.highlight.description = self.owner.config.get_description(self.highlight.location)
 
-
                         self.toggle_edit_information = False
+
+                        self.save = True
 
 
 
@@ -2305,10 +2341,16 @@ class WindowUI:
 
 
                     if imgui.button("Close##" + self.highlight.name + "Close"):
+                        self.show = False
 
-                        self.highlight.show_descripion = False
+                        #self.highlight = None
 
-                        self.highlight = None
+                    if imgui.is_key_pressed(glfw.KEY_ESCAPE):
+                        self.show = False
+
+
+                        #self.highlight = None
+
 
 
         imgui.pop_style_color()
@@ -2361,6 +2403,7 @@ class WindowUI:
 
 
                         self.highlight = i
+                        self.show = True
 
 
                     if self.highlight == None:
@@ -2386,15 +2429,15 @@ class WindowUI:
 
                     self.activation_list(i)
 
-                    #self.owner.config.conflict.generate_conflict_list()
+                    self.owner.config.conflict.generate_conflict_list()
                 
                 
                 
-                """
+          
                 if self.conflict_notification:
 
                     self.owner.config.conflict.ui_conflict_warning(i)
-                """
+            
     
     
     
@@ -2426,7 +2469,7 @@ class WindowUI:
 
                             os.rename(os.path.join(i.location,file), os.path.join(i.location, file + "-x"))
 
-        #self.owner.config.conflict.generate_conflict_list()
+        self.owner.config.conflict.generate_conflict_list()
     
     
 
@@ -2457,11 +2500,11 @@ class WindowUI:
                             self.activation_tree(i.active, i.location)
 
 
-                        """
+                        
                         if self.conflict_notification:
 
                             self.owner.config.conflict.ui_conflict_warning(i)
-                        """
+                      
 
 
                         imgui.same_line()
@@ -2499,7 +2542,7 @@ class WindowUI:
                                 self.highlight = i
 
                                 self.image_scrollwheel = 0
-                    
+                                self.show = True
 
 
 
@@ -2541,7 +2584,7 @@ class WindowUI:
                         i.active = state
 
 
-                #self.owner.config.conflict.generate_conflict_list()
+                self.owner.config.conflict.generate_conflict_list()
 
                 self.activation_tree(state, item_path)
 
@@ -2581,7 +2624,7 @@ class WindowUI:
 
                                 os.rename(os.path.join(directory,file),os.path.join(directory, file + "-x"))
 
-                #self.owner.config.conflict.generate_conflict_list()
+                self.owner.config.conflict.generate_conflict_list()
 
 
 
@@ -2603,17 +2646,6 @@ class WindowUI:
     def main_window_box(self):
 
 
-        padding = 0
-
-        if self.docked == True:
-
-            if self.highlight != None:
-
-                padding = self.font_padding
-
-            else:
-
-                padding = 0
 
 
 
@@ -2623,7 +2655,7 @@ class WindowUI:
         imgui.set_next_window_position(0, 28 * (self.owner.config.selected_size * 0.1))
 
 
-        with imgui.begin("##" + "filterbar", False, imgui.WINDOW_NO_SAVED_SETTINGS | imgui.WINDOW_NO_TITLE_BAR | imgui.WINDOW_ALWAYS_AUTO_RESIZE | imgui.WINDOW_NO_MOVE | imgui.WINDOW_NO_COLLAPSE | imgui.WINDOW_NO_BRING_TO_FRONT_ON_FOCUS):
+        with imgui.begin("##" + "filterbar", False, imgui.WINDOW_NO_TITLE_BAR | imgui.WINDOW_ALWAYS_AUTO_RESIZE | imgui.WINDOW_NO_MOVE | imgui.WINDOW_NO_COLLAPSE | imgui.WINDOW_NO_BRING_TO_FRONT_ON_FOCUS):
 
 
             self.main_filter_bar()
@@ -2633,7 +2665,8 @@ class WindowUI:
 
 
 
-        imgui.set_next_window_size(self.scaling() * (glfw.get_window_size(self.owner.window)[0]) - padding,
+        imgui.set_next_window_size(self.scaling() * (glfw.get_window_size(self.owner.window)[0]) - self.font_padding
+,
 
                                    self.scaling() * (glfw.get_window_size(self.owner.window)[1] - 25))
         
@@ -2672,7 +2705,18 @@ class WindowUI:
 
     def run(self):
 
+        if self.show:
+            self.ui_slide_transition(0,530,0.3)
+        else:
+            self.ui_slide_transition(0,530,-0.3)
+            if self.slide == 0:
+                self.highlight = None
+        
 
+
+        self.font_padding = self.slide * (self.owner.config.selected_size * 0.1)
+       
+      
         imgui.push_style_color(imgui.COLOR_FRAME_BACKGROUND, 54 * 0.003, 63 * 0.003, 93 * 0.003, 1)
 
         imgui.push_style_var(imgui.STYLE_FRAME_ROUNDING, 5)
@@ -2696,8 +2740,14 @@ class WindowUI:
 
         imgui.push_font(self.owner.config.selected_font)
 
-        if os.path.isdir(self.owner.path) == True:
 
+
+
+
+        if os.path.isdir(self.owner.path) == True:
+          
+
+         
 
             self.main_window_bar()
 
@@ -2714,6 +2764,9 @@ class WindowUI:
             if imgui.button("Close##Close Window"):
 
                 glfw.set_window_should_close(self.owner.window, glfw.TRUE)
+
+
+
             imgui.end()
         imgui.pop_font()
 
@@ -2963,6 +3016,7 @@ class ModManager:
 
         self.ui = WindowUI(self)
 
+   
 
         # Apply setting to ui
 
