@@ -35,7 +35,7 @@
         - character - character specific (e.g azucena::preset-1)
         - stage
         - avatar
-        - misc
+        - others
 
 
 
@@ -46,7 +46,6 @@
         - sound-name
         - character-custom-item-name
         - stage-name
-        - misc-change
 
 
 
@@ -113,6 +112,9 @@
         avatar::ski-mask-panda
 
 
+### others
+- Remove SSS
+          others::remove-sss
 
 
 
