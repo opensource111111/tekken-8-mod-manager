@@ -73,7 +73,7 @@
 
         zafina::astrologer's-earrings
         
-        jack8::voicesfx
+        jack8::voice-sfx
 
 
 
