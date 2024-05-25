@@ -60,7 +60,7 @@ Any feedback, bugs or issues, please post in the comment section. Thank you. :)
 ## Latest_Update
 
 
-### May 2024
+### 25th May 2024
 
    1. Added a function for managing conflicting mods. [Document here](https://gitf.com)
 
