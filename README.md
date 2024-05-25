@@ -1,7 +1,14 @@
+<div style="text-align: center;">
 
-![banner](assets/branding/banner_bbg.png)
 
-![Screenshot of a comment on a GitHub issue showing an image, added in the Markdown, of an Octocat smiling and raising a tentacle.](assets/screenshots/screenshot.png)
+![banner](assets/branding/banner_bbg.png) 
+
+
+![screenshot](assets/screenshots/screenshot1.png)
+
+
+</div>
+
 
 
 
@@ -26,14 +33,14 @@
 
 
 <p>&nbsp;</p>
-<p>&nbsp;</p>
-<p>&nbsp;</p>
+
+
 
 
 
 
 ## Description
-A mod manager inspired by [CCDTreborn's 8 Mod On / Off Switch (Version 2)](https://tekkenmods.com/mod/3312/tekken-8-mod-on-off-switch-version-2)
+An open sourced mod manager inspired by [CCDTreborn's 8 Mod On / Off Switch (Version 2)](https://tekkenmods.com/mod/3312/tekken-8-mod-on-off-switch-version-2)
 to enable/disable your mods with a switch.
 
 Source code: [https://github.com/opensource111111/tekken-8-mod-manager](https://github.com/opensource111111/tekken-8-mod-manager)
@@ -53,14 +60,33 @@ Any feedback, bugs or issues, please post in the comment section. Thank you. :)
 ## Latest_Update
 
 
+### May 2024
+
+   1. Added a function for managing conflicting mods. [Document here](https://gitf.com)
+
+   ![bar.png](assets/screenshots/conflict/example1.png)
+
+   ![bar.png](assets/screenshots/conflict/example2.png)
+
+   <video src="assets/screenshots/conflict/conflicts.mp4" width="800" height="400" controls></video>
+
+
+
 ### 20th May 2024
 
+   ![bar.png](assets/screenshots/features/bar.png)
 
-   1. Added enable/disable all buttons
+   1. Added enable/disable all buttons.
    2. Add an enabled/disabled mod counter to the top of the ui. 
-   3. Added the ability to create you own presets
-   Enable multiple mods that are part of the presets you apply. Make sure that there are no spaces in your preset names
-   ![bar.png](assets/screenshots/bar.png)
+   3. Added the ability to create/rename you own presets.
+   Enable multiple mods that are part of the preset you apply.
+   
+
+   <video src="assets/screenshots/features/presets.mp4" width="800" height="200" controls></video>
+
+   
+
+
 
    4. Switching between listview and treeview can be done instantly now. 
    5. Added a splash screen.
@@ -89,7 +115,7 @@ Changelog History: https://github.com/opensource111111/tekken-8-mod-manager/blob
 
    examples: 
 
-   ![e.g](assets/screenshots/recommended.png)
+   ![e.g](assets/screenshots/instructions/recommended.png)
 
 
 
@@ -139,7 +165,7 @@ Changelog History: https://github.com/opensource111111/tekken-8-mod-manager/blob
    2. Place the executable in "Steam\steamapps\common\Tekken 8" and run.
    
    
-   ![folder](assets/screenshots/place_inside_tekken8_folder.png)
+   ![folder](assets/screenshots/instructions/place_inside_tekken8_folder.png)
 
 
 
@@ -171,14 +197,14 @@ Changelog History: https://github.com/opensource111111/tekken-8-mod-manager/blob
    3. Place the "tekken8modmanager.py" script and "assets" folder inside "Steam\steamapps\common\Tekken 8".
      
 
-   ![folder2](assets/screenshots/place_script_inside_folder.png)
+   ![folder2](assets/screenshots/instructions/place_script_inside_folder.png)
 
 
    
    <span style="color:Yellow;"> Windows </span> - Right click file to open the context menu and open with 
    Python.
 
-   ![folder2](assets/screenshots/open_with_python.png)
+   ![folder2](assets/screenshots/instructions/open_with_python.png)
 
 
 

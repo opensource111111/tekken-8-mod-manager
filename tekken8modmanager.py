@@ -264,7 +264,7 @@ class ConflictManagement:
 
                             imgui.indent(40)
 
-                            imgui.text("Reason:")
+                            imgui.text("Reasons:")
 
 
                             for r in info[1]:
