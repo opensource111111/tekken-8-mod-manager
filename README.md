@@ -62,7 +62,7 @@ Any feedback, bugs or issues, please post in the comment section. Thank you. :)
 
 ### 25th May 2024
 
-   1. Added a function for managing conflicting mods. [Document here](https://gitf.com)
+   1. Added a function for managing conflicting mods. [Document here](docs/how_to_conflict_mods.md)
 
    ![bar.png](assets/screenshots/conflict/example1.png)
 
