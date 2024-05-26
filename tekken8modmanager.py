@@ -315,7 +315,7 @@ class Configs:
 
         self.fonts: list = []
 
-        self.font_colour = 1, 1, 1, 1
+        self.font_colour: tuple = 1, 1, 1, 1
 
 
         self.style = None
@@ -333,7 +333,7 @@ class Configs:
         self.maximised: bool = False
 
 
-        #conflict
+        # conflict
 
         self.conflict = ConflictManagement(self.owner)
 
@@ -380,79 +380,79 @@ class Configs:
                     if i == "Preset":
                         header = "Preset"
 
-                    self.owner.ui.toggle_viewmode = configfile.getboolean(header, 'viewmode', fallback=False)
+            self.owner.ui.toggle_viewmode = configfile.getboolean(header, 'viewmode', fallback=False)
 
-                    self.owner.ui.show_thumbnail = configfile.getboolean(header, 'thumbnail', fallback=True)
-
-
-                    self.owner.ui.thumbnail_size = configfile.getint(header, 'thumbnail_size', fallback=50)
+            self.owner.ui.show_thumbnail = configfile.getboolean(header, 'thumbnail', fallback=True)
 
 
-                    # colours
-
-                    temp = configfile.get(header, 'font_colour', fallback=(1, 1, 1, 1))
-
-                    if temp != (1, 1, 1, 1):
-
-                        temp2 = temp.replace("(", "").replace(")", "").replace("[", "").replace("]", "").replace(
-
-                            ",", "").split()
-
-                        self.font_colour = list(map(float, temp2))
+            self.owner.ui.thumbnail_size = configfile.getint(header, 'thumbnail_size', fallback=50)
 
 
-                    temp = configfile.get(header, 'button_colour', fallback=(0, 0.290, 0.783, 1))
+            # colours
 
-                    if temp != (0, 0.290, 0.783, 1):
+            temp = configfile.get(header, 'font_colour', fallback=(1, 1, 1, 1))
 
-                        temp2 = temp.replace("(", "").replace(")", "").replace("[", "").replace("]", "").replace(
+            if temp != (1, 1, 1, 1):
+
+                temp2 = temp.replace("(", "").replace(")", "").replace("[", "").replace("]", "").replace(
 
                             ",", "").split()
 
-                        self.owner.ui.button_colour = list(map(float, temp2))
+                self.font_colour = list(map(float, temp2))
 
 
-                    temp = configfile.get(header, 'bg_colour', fallback=(0, 0, 0, 1))
+            temp = configfile.get(header, 'button_colour', fallback=(0, 0.290, 0.783, 1))
 
-                    if temp != (0, 0, 0, 1):
+            if temp != (0, 0.290, 0.783, 1):
 
-                        temp2 = temp.replace("(", "").replace(")", "").replace("[", "").replace("]", "").replace(
+                temp2 = temp.replace("(", "").replace(")", "").replace("[", "").replace("]", "").replace(
 
                             ",", "").split()
 
-                        self.owner.ui.bg_colour = list(map(float, temp2))
+                self.owner.ui.button_colour = list(map(float, temp2))
 
 
-                    # font
+            temp = configfile.get(header, 'bg_colour', fallback=(0, 0, 0, 1))
 
-                    self.selected = configfile.getint(header, 'font_index', fallback=4)
+            if temp != (0, 0, 0, 1):
 
-                    self.selected_size = configfile.getint(header, 'font_size_index', fallback=9)
+                temp2 = temp.replace("(", "").replace(")", "").replace("[", "").replace("]", "").replace(
 
-                    self.config_font_type()
+                            ",", "").split()
 
-
-                    # UI Scale(WIP)
-
-                    self.dpi_scale = configfile.getfloat(header, 'dpi_scale', fallback=1.0)
-
-                    self._imgui_scale_all_sizes(self.style, self.dpi_scale, self.dpi_scale)
+                self.owner.ui.bg_colour = list(map(float, temp2))
 
 
+            # font
 
-                    #warning
+            self.selected = configfile.getint(header, 'font_index', fallback=4)
 
-                    self.owner.ui.conflict_notification = configfile.getboolean(header, 'warning', fallback=True)
+            self.selected_size = configfile.getint(header, 'font_size_index', fallback=9)
 
-
-                    # docked
-
-                    self.owner.ui.docked = configfile.getboolean(header, 'docked', fallback=False)
+            self.config_font_type()
 
 
-                    #presets
+            # UI Scale(WIP)
 
-                    self.owner.ui.presets = configfile.get(header, 'presets', fallback="Default").split()
+            self.dpi_scale = configfile.getfloat(header, 'dpi_scale', fallback=1.0)
+
+            self._imgui_scale_all_sizes(self.style, self.dpi_scale, self.dpi_scale)
+
+
+
+            #warning
+
+            self.owner.ui.conflict_notification = configfile.getboolean(header, 'warning', fallback=True)
+
+
+            # docked
+
+            self.owner.ui.docked = configfile.getboolean(header, 'docked', fallback=False)
+
+
+            #presets
+
+            self.owner.ui.presets = configfile.get(header, 'presets', fallback="Default").split()
 
 
 
