@@ -60,15 +60,8 @@ Any feedback, bugs or issues, please post in the comment section. Thank you. :)
 ## Latest_Update
 
 
-### 25th May 2024
-
-   1. Added a function for managing conflicting mods. [Document here](docs/how_to_conflict_mods.md)
-
-   ![bar.png](assets/screenshots/conflict/example1.png)
-
-   ![bar.png](assets/screenshots/conflict/example2.png)
-
-   <video src="assets/screenshots/conflict/conflicts.mp4" width="800" height="400" controls></video>
+### 26th May 2024
+1. fixed issue with the decription format causing errors on uses.
 
 
 
