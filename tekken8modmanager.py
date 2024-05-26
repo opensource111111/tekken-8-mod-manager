@@ -14,6 +14,8 @@ import shutil
 
 import re
 
+import logging
+
 import glfw
 
 import imgui
@@ -689,68 +691,89 @@ class Configs:
         description_info = DescriptionFormat()
         description_info.presets = []
 
-        #convert to new location format
-       
-        if os.path.isfile(os.path.join(location, "mod.ini")):
 
-            shutil.move(os.path.join(location, "mod.ini"), os.path.join(os.path.join(location,"profile"),"mod.ini"))
-         
+        # create profile folder
+        for file in os.listdir(location):
+                 
+            if (file.endswith("pak") or file.endswith("pak-x") or file.endswith("ucas") or file.endswith("ucas-x") or file.endswith("utoc") or file.endswith("utoc-x")):
+                if os.path.exists(os.path.join(location,"profile")):
+                    valid_folder = os.path.join(location, "profile")
+                    logging.warning("Profile folder exists in {0}".format(valid_folder))
+                else:
+                    logging.warning("Profile folder will be created in {0}".format(location))
+                    os.mkdir(os.path.join(location,"profile"))
+                    if os.path.exists(os.path.join(location,"profile")):
+                        logging.warning("Profile folder was created!")
 
-        for filecheck in os.listdir(location):
+                break   
 
-            if filecheck.endswith(".jpg") or filecheck.endswith( ".jpeg") or filecheck.endswith(".png") or filecheck.endswith(".webp") or filecheck.endswith(".bmp"):
-                
-                shutil.move(os.path.join(location, filecheck), os.path.join(os.path.join(location, "profile"), filecheck))
 
         
 
-        #normal operation
-       
-        if description.read(os.path.join(os.path.join(location,"profile"),"mod.ini")):
-
-            description_info.name = description.get("Mod", "name", fallback="").replace('"', "")
-
-
-            description_info.author = description.get("Mod", "author", fallback="").replace('"', "")
-    
-
-            description_info.date = description.get("Mod", "date", fallback="").replace('"', "")
-
-
-            description_info.version = description.get("Mod", "version", fallback="").replace('"', "")
-
-
-            description_info.description = description.get("Mod", "description", fallback="").replace('"', "")
- 
-
-            description_info.url = description.get("Mod", "url", fallback="").replace('"', "")
-    
-
-            description_info.category = description.get("Mod", "category", fallback="").replace('"', "")
-      
-
-            """
-            if description.get("Mod", "override_parameter", fallback="") == "":
-
-                description_info.override_parameter = []
-
-
-
-            else:
-
-                description_info.override_parameter = description.get("Mod", "override_parameter", fallback="").lower().split()
-               
+        #convert to new location format
+        if os.path.exists(os.path.join(location, "profile")):
             
-            """
+            if os.path.isfile(os.path.join(location, "mod.ini")):
 
-            if description.get("Mod", "presets",fallback="") == "":
+                shutil.move(os.path.join(location, "mod.ini"), os.path.join(os.path.join(location,"profile"),"mod.ini"))
+            
+           
+            for filecheck in os.listdir(location):
 
-                description_info.presets = []
-               
 
-            else:
+                if filecheck.endswith(".jpg") or filecheck.endswith( ".jpeg") or filecheck.endswith(".png") or filecheck.endswith(".webp") or filecheck.endswith(".bmp"):
+                    
+                    shutil.move(os.path.join(location, filecheck), os.path.join(os.path.join(location, "profile"), filecheck))
 
-                description_info.presets = description.get("Mod", "presets").split()
+            
+
+            
+            #normal operation
+            if description.read(os.path.join(os.path.join(location,"profile"),"mod.ini")):
+
+                description_info.name = description.get("Mod", "name", fallback="").replace('"', "")
+
+
+                description_info.author = description.get("Mod", "author", fallback="").replace('"', "")
+        
+
+                description_info.date = description.get("Mod", "date", fallback="").replace('"', "")
+
+
+                description_info.version = description.get("Mod", "version", fallback="").replace('"', "")
+
+
+                description_info.description = description.get("Mod", "description", fallback="").replace('"', "")
+    
+
+                description_info.url = description.get("Mod", "url", fallback="").replace('"', "")
+        
+
+                description_info.category = description.get("Mod", "category", fallback="").replace('"', "")
+        
+
+                """
+                if description.get("Mod", "override_parameter", fallback="") == "":
+
+                    description_info.override_parameter = []
+
+
+
+                else:
+
+                    description_info.override_parameter = description.get("Mod", "override_parameter", fallback="").lower().split()
+                
+                
+                """
+
+                if description.get("Mod", "presets",fallback="") == "":
+
+                    description_info.presets = []
+                
+
+                else:
+
+                    description_info.presets = description.get("Mod", "presets").split()
 
 
 
@@ -773,36 +796,37 @@ class Configs:
         #listToStr2 = ' '.join([str(elem) for elem in mod.description.override_parameter])
 
 
-       
-        with open(os.path.join(os.path.join(location, "profile"),"mod.ini"), 'w') as descrp:
+        if os.path.exists(os.path.join(os.path.join(location, "profile"),"mod.ini")):
 
-            description['Mod'] = {
+            with open(os.path.join(os.path.join(location, "profile"),"mod.ini"), 'w') as descrp:
 
-                'name': '"' + str(mod.description.name) + '"',
+                description['Mod'] = {
 
-                'author': '"' + str(mod.description.author) + '"',
+                    'name': '"' + str(mod.description.name) + '"',
 
-                'description': '"' + str(mod.description.description) + '"',
+                    'author': '"' + str(mod.description.author) + '"',
 
-                'url': '"' + str(mod.description.url) + '"',
+                    'description': '"' + str(mod.description.description) + '"',
 
-                'date': '"' + str(mod.description.date) + '"',
+                    'url': '"' + str(mod.description.url) + '"',
 
-                'version': '"' + str(mod.description.version) + '"',
+                    'date': '"' + str(mod.description.date) + '"',
 
-                'category': '"' + str(mod.description.category) + '"',
+                    'version': '"' + str(mod.description.version) + '"',
 
-                'presets': listToStr
+                    'category': '"' + str(mod.description.category) + '"',
 
-                #'override_parameter': listToStr2
-            }
+                    'presets': listToStr
 
-              
+                    #'override_parameter': listToStr2
+                }
+
+                
 
 
 
 
-            description.write(descrp)
+                description.write(descrp)
 
 
 
@@ -820,7 +844,7 @@ class Configs:
 
         default_icon = self.owner.ui_images()
 
-
+    
         if os.path.isdir(self.owner.path):
 
 
@@ -834,22 +858,6 @@ class Configs:
 
                     if os.path.isdir(os.path.join(root, i)) and i != "profile":
                               
-
-                        for file in os.listdir(os.path.join(root, i)):
-                            
-
-                            # create profile folder
-
-                            if (file.endswith("pak") or file.endswith("pak-x") or file.endswith("ucas") or file.endswith("ucas-x") or file.endswith("utoc") or file.endswith("utoc-x")):
-                                   
-
-                                    if os.path.isdir(os.path.join(os.path.join(root, i),"profile")) == False:
-                                            os.mkdir(os.path.join(os.path.join(root, i),"profile"))
-                                        
-
-                                        
-                                
-
                         new = ModListFormat()
 
                         new.folder = root
@@ -868,7 +876,7 @@ class Configs:
                         
                      
 
-                
+                        # check  if folder is empty with no files.
                         for file in os.listdir(os.path.join(root, i)):
 
                             if (file.endswith("pak") or file.endswith("pak-x") or file.endswith("ucas") or file.endswith("ucas-x") or file.endswith("utoc") or file.endswith("utoc-x")):
@@ -876,10 +884,10 @@ class Configs:
                                     new.is_empty_folder = False
 
                                     break
-
                             else:
 
                                new.is_empty_folder = True
+
                                     
 
                        
@@ -890,22 +898,23 @@ class Configs:
 
                         temp_image_collection = []
 
-                        
-                        
-                        if os.path.isdir(os.path.join(os.path.join(root, i), "profile")):
-                                
-                            for filecheck in os.listdir(os.path.join(os.path.join(root, i), "profile")):
+                        if os.path.exists(os.path.join(os.path.join(root, i), "profile")):
 
-                                if filecheck.endswith(".jpg") or filecheck.endswith(".jpeg") or filecheck.endswith(".png") or filecheck.endswith(".webp") or filecheck.endswith(".bmp"):
+                            if os.path.isdir(os.path.join(os.path.join(root, i), "profile")):
+                                    
+                                for filecheck in os.listdir(os.path.join(os.path.join(root, i), "profile")):
 
-                                    temp_image_collection.append(self.owner.ui_images(os.path.join(os.path.join(os.path.join(root, i), "profile"),filecheck)))
+                                    if filecheck.endswith(".jpg") or filecheck.endswith(".jpeg") or filecheck.endswith(".png") or filecheck.endswith(".webp") or filecheck.endswith(".bmp"):
+
+                                        temp_image_collection.append(self.owner.ui_images(os.path.join(os.path.join(os.path.join(root, i), "profile"),filecheck)))
 
 
-                        if temp_image_collection != []:
+                            if temp_image_collection != []:
 
-                            new.icon = temp_image_collection 
+                                new.icon = temp_image_collection 
 
-                        
+                            
+
 
                         # check active mod
 
@@ -931,7 +940,6 @@ class Configs:
 
         #self.conflict.modlist_ref = self.mod_list
         #self.conflict.generate_conflict_list()
-
         #self.conflict.show()
 
 
@@ -971,9 +979,9 @@ class WindowUI:
 
         self.edit_information_select_index: int = 0
 
-        self.button_colour = 0, 0.290, 0.783, 1
+        self.button_colour: tuple = 0, 0.290, 0.783, 1
 
-        self.bg_colour = 0, 0, 0, 1
+        self.bg_colour: tuple = 0, 0, 0, 1
 
 
         # ui messages
@@ -984,39 +992,41 @@ class WindowUI:
 
         self.path_error_message: str = "This program was not placed in the right location. Please close the program and place inside {0}.".format("Steam/steamapps/common/Tekken 8")
 
-        self.source_code = "https://github.com/opensource111111/tekken-8-mod-manager"
+        self.source_code: str = "https://github.com/opensource111111/tekken-8-mod-manager"
 
 
 
 
-        self.font_padding = 530 * (self.owner.config.selected_size * 0.1)
+        self.font_padding: int = 530 * (self.owner.config.selected_size * 0.1)
 
 
-        self.image_scrollwheel = 0
+        self.image_scrollwheel: int = 0
 
-        self.stop_scroll = False
+        self.stop_scroll: bool = False
 
 
         self.presets = ["Default"]
 
         self.preset_input: str = ""
 
-        self.presets_select = 0
+        self.presets_select: int = 0
 
-        self.save = True
+        self.save: bool = True
 
         #self.conflict_notification: bool = False
 
 
 
         # lerp transition
-        self.t = 0
-        self.slide = 0
-        self.show = False
+        self.t: int = 0
+        self.slide: int = 0
+        self.show: bool = False
 
         #self.show_suggestion = False
         #self.x = 0
         #self.y = 0
+
+
 
     
     def ui_slide_transition(self,a,b,t):
@@ -1130,8 +1140,6 @@ class WindowUI:
 
 
 
-
-
         # Open Root Directory
         imgui.same_line()
 
@@ -1211,26 +1219,19 @@ class WindowUI:
         # add preset
         imgui.same_line()
 
-        if imgui.button(" + "):
-
+        if imgui.button("+"):
             imgui.open_popup("Add New Preset")
-        imgui.same_line()
 
 
-
-        imgui.set_next_window_size_constraints((400, 150), (400, 150))
-
+        # add new preset popup
+        imgui.set_next_window_size_constraints((400, 130), (400, 130))
         with imgui.begin_popup_modal("Add New Preset",
 
                                      imgui.WINDOW_NO_RESIZE | imgui.WINDOW_NO_DECORATION) as select_popup:
 
             if select_popup.opened:
 
-                # Window & UI
-                imgui.separator()
-
-
-
+                
 
                 if self.preset_input.find(" ") != -1:
                     colour = 0.8,0,0,1
@@ -1244,20 +1245,36 @@ class WindowUI:
                 if self.preset_input.find(" ") != -1:
                     imgui.text_colored("No spacing allowed in preset name!",0.8,0,0,1)
 
+
+
                 imgui.separator()
 
+
+                show_text = False
                 if imgui.button("Create"):
+                   
                     if self.preset_input!= "" and self.preset_input.find(" ") ==-1:
                         self.presets.append(self.preset_input)
 
                         self.owner.config.config_save_app_setting()
                         imgui.close_current_popup()
+                
+                if imgui.is_item_hovered() and self.preset_input == "" :
+                    show_text = True
+
+                imgui.same_line()
+                if imgui.button("Cancel"):
+                    imgui.close_current_popup()
+  
+                
+                if show_text:
+                    imgui.text_colored("Text field is empty!",0.8,0,0,1)
 
 
 
 
 
-
+        imgui.same_line()
         if imgui.button(" - "):
 
             if self.presets[self.presets_select] != "Default":
@@ -1327,6 +1344,7 @@ class WindowUI:
 
 
 
+
         imgui.same_line()
 
 
@@ -1339,15 +1357,15 @@ class WindowUI:
                 self.preset_input = self.presets[self.presets_select]
 
 
-        imgui.set_next_window_size_constraints((400, 150), (400, 150))
 
+        imgui.set_next_window_size_constraints((400, 150), (400, 150))
         with imgui.begin_popup_modal("Rename",
 
                                      imgui.WINDOW_NO_RESIZE | imgui.WINDOW_NO_DECORATION) as select_popup:
 
             if select_popup.opened:
 
-                # Window & UI
+               
                 imgui.separator()
                 
                 if self.preset_input.find(" ") != -1:
@@ -1359,10 +1377,6 @@ class WindowUI:
                 change, self.preset_input = imgui.input_text("##rename", self.preset_input)
                 imgui.pop_style_color()
              
-                if self.preset_input.find(" ") != -1:
-                    imgui.text_colored("No spacing allowed in preset name!",0.8,0,0,1)
-
-
                 imgui.separator()
 
                 if imgui.button("Change"):
@@ -1380,6 +1394,9 @@ class WindowUI:
                         self.owner.config.config_save_app_setting()
                         imgui.close_current_popup()
 
+                
+                if self.preset_input.find(" ") != -1:
+                    imgui.text_colored("No spacing allowed in preset name!",0.8,0,0,1)
 
 
 
@@ -1437,21 +1454,20 @@ class WindowUI:
 
             if imgui.begin_menu("Options"):
 
-
+                imgui.push_style_color(imgui.COLOR_BUTTON,0,0,0,0)
+                
                 if imgui.button("Window Configuration"):
 
                     imgui.open_popup("Window Configuration")
 
-
+                imgui.pop_style_color()
 
 
                 # Option pop-up
 
                 imgui.set_next_window_size_constraints((600, 580), (600, 580))
 
-                with imgui.begin_popup_modal("Window Configuration",
-
-                                             imgui.WINDOW_NO_RESIZE | imgui.WINDOW_NO_DECORATION) as select_popup:
+                with imgui.begin_popup_modal("Window Configuration",imgui.WINDOW_NO_RESIZE | imgui.WINDOW_NO_DECORATION) as select_popup:
 
                     if select_popup.opened:
 
@@ -1461,6 +1477,7 @@ class WindowUI:
                         self.ui_spacing(3)
 
                         imgui.text("Window & UI Settings")
+
                         imgui.separator()
 
 
@@ -1471,6 +1488,7 @@ class WindowUI:
                         # Maximised button
 
                         imgui.text("Start Window Maximised:")
+
                         imgui.same_line()
 
                         changed, self.owner.config.maximised = imgui.checkbox("##Maximised", self.owner.config.maximised)
@@ -1480,23 +1498,26 @@ class WindowUI:
                             self.owner.config.config_save_app_setting()
 
 
+
                         # Show thumbnail button
 
                         imgui.text("Show Thumbnail")
+
                         imgui.same_line()
 
-                        changed, self.owner.ui.show_thumbnail = imgui.checkbox("##pShow Thumbnail",
-
-                                                                         self.owner.ui.show_thumbnail)
+                        changed, self.owner.ui.show_thumbnail = imgui.checkbox("##pShow Thumbnail", self.owner.ui.show_thumbnail)
 
                         if changed:
 
                             self.owner.config.config_save_app_setting()
 
 
+
+
                         # Scale Thumbnail
 
                         imgui.text("Thumbnail Scale")
+
                         imgui.same_line()
 
                         self.owner.ui.thumbnail_size = imgui.slider_int("##Thumbnail_scale", self.owner.ui.thumbnail_size, 50, 100)[1]
@@ -1509,6 +1530,7 @@ class WindowUI:
                         # Docking description box
 
                         imgui.text("Dock Details Panel:")
+
                         imgui.same_line()
 
                         changed, self.owner.ui.docked = imgui.checkbox("##dockinformation", self.owner.ui.docked)
@@ -1517,20 +1539,7 @@ class WindowUI:
 
                             self.owner.config.config_save_app_setting()
 
-                        """
-
-                        # hints
-
-                        imgui.text("Show Button Hints:")
-                        imgui.same_line()
-
-                        changed, self.owner.ui.toggle_hints = imgui.checkbox("#buttonhints", self.owner.ui.toggle_hints)
-
-                        if changed:
-
-                            self.owner.config.config_app_setting()
-                        """
-
+                       
                         
                         """
                         imgui.text("Mod Conflict Notification:")
@@ -1554,19 +1563,18 @@ class WindowUI:
                         # Font setting
 
                         imgui.text("Colour Setting")
+
                         imgui.separator()
+
 
 
                         # Change Button Colour
 
                         imgui.text("Button Colour:")
+
                         imgui.same_line()
 
-                        changed, self.owner.ui.button_colour = imgui.color_edit4("##button_colour",
-
-                                                                                 *self.owner.ui.button_colour,
-
-                                                                                 imgui.COLOR_EDIT_NO_ALPHA)
+                        changed, self.owner.ui.button_colour = imgui.color_edit4("##button_colour", *self.owner.ui.button_colour,imgui.COLOR_EDIT_NO_ALPHA)
 
                         if changed:
 
@@ -1576,13 +1584,10 @@ class WindowUI:
                         # Change Background Colour
 
                         imgui.text("Background Colour:")
+
                         imgui.same_line()
 
-                        changed, self.owner.ui.bg_colour = imgui.color_edit4("##backgound_colour",
-
-                                                                             *self.owner.ui.bg_colour,
-
-                                                                             imgui.COLOR_EDIT_NO_ALPHA)
+                        changed, self.owner.ui.bg_colour = imgui.color_edit4("##backgound_colour",*self.owner.ui.bg_colour, imgui.COLOR_EDIT_NO_ALPHA)
 
                         if changed:
 
@@ -1628,11 +1633,14 @@ class WindowUI:
                                     # Set the initial focus when opening the combo (scrolling + keyboard navigation focus)
 
                                     if is_selected:
+
                                         imgui.set_item_default_focus()
+
                         items.clear()
 
 
                         imgui.text("Font Size:")
+
                         imgui.same_line()
 
 
@@ -1667,11 +1675,13 @@ class WindowUI:
 
 
                         imgui.text("Font Colour:")
+
                         imgui.same_line()
 
                         changed, self.owner.config.font_colour = imgui.color_edit4("##font_colour",*self.owner.config.font_colour,imgui.COLOR_EDIT_NO_ALPHA)
 
                         if changed:
+
                             self.owner.config.config_save_app_setting()
 
 
@@ -1691,10 +1701,9 @@ class WindowUI:
 
                 imgui.end_menu()
 
-
-
-
             #------------------------------------------------------------------------------------
+
+
 
 
             # View modes button
@@ -1744,9 +1753,6 @@ class WindowUI:
                     elif self.toggle_about == False:
 
                         self.toggle_about = True
-
-
-
 
 
 
@@ -1849,6 +1855,9 @@ class WindowUI:
         for i in range(value):
             imgui.spacing()
 
+
+
+
     """
     def suggestion_box(self,i):
 
@@ -1888,15 +1897,9 @@ class WindowUI:
             
             if self.docked:
         
-                imgui.set_next_window_size(self.scaling() * self.font_padding,
+                imgui.set_next_window_size(self.scaling() * self.font_padding, glfw.get_window_size(self.owner.window)[1] - 26)
 
-                                           glfw.get_window_size(self.owner.window)[1] - 26)
-
-                imgui.set_next_window_position(
-
-                    self.scaling() * glfw.get_window_size(self.owner.window)[0] - self.font_padding,
-
-                    self.scaling() * 26)
+                imgui.set_next_window_position(self.scaling() * glfw.get_window_size(self.owner.window)[0] - self.font_padding, self.scaling() * 26)
 
 
             flags: int = 0
@@ -1934,6 +1937,7 @@ class WindowUI:
                 imgui.indent(13)
 
                 imgui.text("Details Panel")
+
                 imgui.separator()
 
                 imgui.unindent(13)
@@ -1942,11 +1946,7 @@ class WindowUI:
 
                 imgui.indent(13)
 
-                imgui.image(self.highlight.icon[self.image_scrollwheel][0],
-
-                            self.highlight.icon[self.image_scrollwheel][1],
-
-                            self.highlight.icon[self.image_scrollwheel][2])
+                imgui.image(self.highlight.icon[self.image_scrollwheel][0], self.highlight.icon[self.image_scrollwheel][1], self.highlight.icon[self.image_scrollwheel][2])
 
                 imgui.unindent(13)
 
@@ -2020,9 +2020,7 @@ class WindowUI:
 
                         imgui.set_next_item_width(250)
 
-                        changed, self.highlight.description.name = imgui.input_text("##Name: ",
-
-                                                                                    self.highlight.description.name)
+                        changed, self.highlight.description.name = imgui.input_text("##Name: ", self.highlight.description.name)
 
 
                         imgui.table_next_row()
@@ -2036,9 +2034,7 @@ class WindowUI:
                         imgui.set_next_item_width(250)
 
 
-                        changed, self.highlight.description.author = imgui.input_text("##Created by: ",
-
-                                                                                      self.highlight.description.author)
+                        changed, self.highlight.description.author = imgui.input_text("##Created by: ",self.highlight.description.author)
 
 
                         imgui.table_next_row()
@@ -2052,11 +2048,7 @@ class WindowUI:
                         imgui.set_next_item_width(250)
 
 
-                        changed, self.highlight.description.description = imgui.input_text_multiline("##Description: ",
-
-                                                                                                     self.highlight.description.description,
-
-                                                                                                     imgui.INPUT_TEXT_CALLBACK_RESIZE)
+                        changed, self.highlight.description.description = imgui.input_text_multiline("##Description: ", self.highlight.description.description, imgui.INPUT_TEXT_CALLBACK_RESIZE)
 
 
                         imgui.table_next_row()
@@ -2070,9 +2062,7 @@ class WindowUI:
                         imgui.set_next_item_width(250)
 
 
-                        changed, self.highlight.description.url = imgui.input_text("##URL: ",
-
-                                                                                   self.highlight.description.url)
+                        changed, self.highlight.description.url = imgui.input_text("##URL: ", self.highlight.description.url)
 
 
 
@@ -2088,9 +2078,7 @@ class WindowUI:
                         imgui.set_next_item_width(250)
 
 
-                        changed, self.highlight.description.date = imgui.input_text("##Date: ",
-
-                                                                                       self.highlight.description.date)
+                        changed, self.highlight.description.date = imgui.input_text("##Date: ", self.highlight.description.date)
 
                        
 
@@ -2107,9 +2095,7 @@ class WindowUI:
                         imgui.set_next_item_width(250)
 
 
-                        changed, self.highlight.description.version = imgui.input_text("##Version: ",
-
-                                                                                   self.highlight.description.version)
+                        changed, self.highlight.description.version = imgui.input_text("##Version: ", self.highlight.description.version)
 
 
 
@@ -2668,9 +2654,12 @@ class WindowUI:
 
         fb_w, fb_h = glfw.get_framebuffer_size(self.owner.window)
 
-        scaling = max(float(fb_w) / win_w, float(fb_h) / win_h)
+        #fixed division by 0 error.
+        scaling = max(float(max(0.1,fb_w)) / max(0.1,win_w), float(max(0.1,fb_h)) / max(0.1,win_h))
 
         return scaling
+
+
 
 
     def main_window_box(self):
@@ -2849,7 +2838,6 @@ class ModManager:
 
         self.impl = None
 
-
         self.version: float = 2.0
 
 
@@ -2938,7 +2926,7 @@ class ModManager:
         glfw.window_hint(glfw.MAXIMIZED, self.config.maximised)
 
 
-        self.window = glfw.create_window(810, 800, "Tekken 8 Mod Manager ", None, None)
+        self.window = glfw.create_window(810, 800, "Tekken 8 Mod Manager", None, None)
 
 
         # Check if the program is run from binary or script and which platform.
