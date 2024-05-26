@@ -61,9 +61,13 @@ Any feedback, bugs or issues, please post in the comment section. Thank you. :)
 
 
 ### 26th May 2024
+
 1. Fixed an issue with the description format class causing errors while importing the mod list into the program.
 
 2. Fixed division by 0 error while minimizing window.
+
+
+
 
 
 
