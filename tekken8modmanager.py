@@ -33,6 +33,9 @@ from PIL import Image
 
 class DescriptionFormat:
 
+    """Description format for displaying information on mods"""
+
+    
     name: str = ""
 
     author: str = ""
@@ -49,28 +52,30 @@ class DescriptionFormat:
 
     presets: list = []
 
-    #override_parameter: list
+    override_parameter: list = []
 
 
 
 
 class ModListFormat:
 
-    name: str = ""
+    """Modlist format for storing mod list"""
 
-    location: str = ""
+    name: str = None
 
-    folder: str = ""
+    location: str = None
 
-    is_empty_folder: bool
+    folder: str = None
 
-    active: bool
+    is_empty_folder: bool = True
 
-    icon: list
+    active: bool = False
 
-    description: DescriptionFormat
+    icon: list = None
 
-    #conflict: list
+    description: DescriptionFormat = None
+
+    conflict: list = []
 
 
 
@@ -80,24 +85,19 @@ def name_sort(mod_list):
 
 
 
-"""
-class ConflictManagement:
 
+class ConflictManagement:
 
     def __init__(self, owner):
 
         self.owner = owner
 
-        self.modlist_ref: list
+        self.modlist_ref: list = []
         
-        self.suggestions: list = []
-
+        self.history: list = []
 
 
     def demo(self):
-
-
-
 
         mod1 = ModListFormat()
 
@@ -134,16 +134,16 @@ class ConflictManagement:
 
     def generate_conflict_list(self):
 
-        #self.suggestions = []
+        self.history = []
         for mod in self.modlist_ref:
 
-            mod.conflict = []
+            #mod.conflict = []
             temp_conflicts  = []
             
             if mod.is_empty_folder == False:
                 for sug in mod.description.override_parameter:
-                    if sug not in self.suggestions and sug != "":
-                        self.suggestions.append(sug)
+                    if sug not in self.history and sug != "":
+                        self.history.append(sug)
             
             for compare in self.modlist_ref:
 
@@ -218,7 +218,7 @@ class ConflictManagement:
 
 
 
-    def ui_conflict_warning(self,mod):
+    def ui_conflict_warning(self, mod):
 
         
 
@@ -293,7 +293,7 @@ class ConflictManagement:
 
                         imgui.text_colored("Click the button to disable conflicting mods",214, 220, 0, 1)
 
-"""
+
 
 
 
@@ -335,7 +335,7 @@ class Configs:
 
         #conflict
 
-        #self.conflict = ConflictManagement(self.owner)
+        self.conflict = ConflictManagement(self.owner)
 
 
 
@@ -347,7 +347,7 @@ class Configs:
         configfile = configparser.ConfigParser()
 
         filecheck = configfile.read('tekken8modmanager.ini')
-
+        header = ""
         if filecheck:
 
 
@@ -358,7 +358,7 @@ class Configs:
                 if i == "Preset":
                     header = "Preset"
 
-                    self.maximised = configfile.getboolean(header, 'maximised', fallback=False)
+            self.maximised = configfile.getboolean(header, 'maximised', fallback=False)
 
 
 
@@ -442,7 +442,7 @@ class Configs:
 
                     #warning
 
-                    #self.owner.ui.conflict_notification = configfile.getboolean(header, 'warning', fallback=True)
+                    self.owner.ui.conflict_notification = configfile.getboolean(header, 'warning', fallback=True)
 
 
                     # docked
@@ -487,13 +487,13 @@ class Configs:
 
                                     'docked': str(self.owner.ui.docked),
 
-                                    'presets': listToStr
+                                    'presets': listToStr,
 
-                                    #'warning': str(self.owner.ui.conflict_notification)
+                                    'warning': str(self.owner.ui.conflict_notification)
 
                                     }
 
-
+          
             configfile.write(config)
             
 
@@ -566,8 +566,6 @@ class Configs:
         "layout = [font][fontset][fontsizeindex][fontfile]"
 
         self.selected_font = self.fonts[6][1][9][1]
-
-
 
 
 
@@ -674,7 +672,7 @@ class Configs:
 
         self.owner.ui.thumbnail_size = 50
 
-        #self.owner.ui.conflict_notification = True
+        self.owner.ui.conflict_notification = True
 
 
         self.config_save_app_setting()
@@ -697,13 +695,15 @@ class Configs:
                  
             if (file.endswith("pak") or file.endswith("pak-x") or file.endswith("ucas") or file.endswith("ucas-x") or file.endswith("utoc") or file.endswith("utoc-x")):
                 if os.path.exists(os.path.join(location,"profile")):
-                    valid_folder = os.path.join(location, "profile")
-                    logging.warning("Profile folder exists in {0}".format(valid_folder))
+                    pass
+                    #valid_folder = os.path.join(location, "profile")
+                    #logging.warning("Profile folder exists in {0}".format(valid_folder))
                 else:
-                    logging.warning("Profile folder will be created in {0}".format(location))
+                    #logging.warning("Profile folder will be created in {0}".format(location))
                     os.mkdir(os.path.join(location,"profile"))
                     if os.path.exists(os.path.join(location,"profile")):
-                        logging.warning("Profile folder was created!")
+                        #logging.warning("Profile folder was created!")
+                        pass
 
                 break   
 
@@ -752,25 +752,21 @@ class Configs:
                 description_info.category = description.get("Mod", "category", fallback="").replace('"', "")
         
 
-                """
+
                 if description.get("Mod", "override_parameter", fallback="") == "":
 
                     description_info.override_parameter = []
-
-
 
                 else:
 
                     description_info.override_parameter = description.get("Mod", "override_parameter", fallback="").lower().split()
                 
                 
-                """
 
                 if description.get("Mod", "presets",fallback="") == "":
 
                     description_info.presets = []
                 
-
                 else:
 
                     description_info.presets = description.get("Mod", "presets").split()
@@ -785,15 +781,13 @@ class Configs:
 
     def update_description(self, location: str,mod):
 
-
         description = configparser.ConfigParser()
-
 
         configfile = configparser.ConfigParser()
 
         listToStr = ' '.join([str(elem) for elem in mod.description.presets])
 
-        #listToStr2 = ' '.join([str(elem) for elem in mod.description.override_parameter])
+        listToStr2 = ' '.join([str(elem) for elem in mod.description.override_parameter])
 
 
         if os.path.exists(os.path.join(os.path.join(location, "profile"),"mod.ini")):
@@ -816,9 +810,9 @@ class Configs:
 
                     'category': '"' + str(mod.description.category) + '"',
 
-                    'presets': listToStr
+                    'presets': listToStr,
 
-                    #'override_parameter': listToStr2
+                    'override_parameter': listToStr2
                 }
 
                 
@@ -938,8 +932,8 @@ class Configs:
 
         self.mod_list.sort(reverse=False, key=name_sort)
 
-        #self.conflict.modlist_ref = self.mod_list
-        #self.conflict.generate_conflict_list()
+        self.conflict.modlist_ref = self.mod_list
+        self.conflict.generate_conflict_list()
         #self.conflict.show()
 
 
@@ -1013,7 +1007,7 @@ class WindowUI:
 
         self.save: bool = True
 
-        #self.conflict_notification: bool = False
+        self.conflict_notification: bool = False
 
 
 
@@ -1022,9 +1016,9 @@ class WindowUI:
         self.slide: int = 0
         self.show: bool = False
 
-        #self.show_suggestion = False
-        #self.x = 0
-        #self.y = 0
+        self.show_history = False
+        self.x = 0
+        self.y = 0
 
 
 
@@ -1077,7 +1071,7 @@ class WindowUI:
 
             for i in self.owner.config.mod_list:
 
-                if i.is_empty_folder == False:
+                if i.is_empty_folder is False:
 
                     _all += 1
 
@@ -1499,6 +1493,7 @@ class WindowUI:
 
 
 
+
                         # Show thumbnail button
 
                         imgui.text("Show Thumbnail")
@@ -1541,7 +1536,7 @@ class WindowUI:
 
                        
                         
-                        """
+                        
                         imgui.text("Mod Conflict Notification:")
                         imgui.same_line()
 
@@ -1551,7 +1546,7 @@ class WindowUI:
 
                             self.owner.config.config_save_app_setting()
                         
-                        """
+                    
                        
 
 
@@ -1858,32 +1853,32 @@ class WindowUI:
 
 
 
-    """
-    def suggestion_box(self,i):
+    
+    def history_box(self, i):
 
-            if self.show_suggestion == True:
+            if self.show_history == True:
                 # Suggestions box
                 imgui.push_style_color(imgui.COLOR_WINDOW_BACKGROUND, 0, 0, 0, 0.6)
 
                 imgui.set_next_window_position(self.x, self.y + 30)
-                opened = imgui.begin("Suggestions", False,
+                opened = imgui.begin("History", False,
                                          imgui.WINDOW_NO_COLLAPSE | imgui.WINDOW_NO_FOCUS_ON_APPEARING)
 
-                for v in self.owner.config.conflict.suggestions:
+                for v in self.owner.config.conflict.history:
                     if re.search(i, v):
                         imgui.selectable(v)
 
                         if imgui.is_item_clicked():
                             self.highlight.description.override_parameter[self.highlight.description.override_parameter.index(i)] = v
                             opened = False
-                            self.show_suggestion = False
+                            self.show_history = False
 
                 imgui.end()
                 imgui.pop_style_color()
 
             if imgui.is_key_pressed(glfw.KEY_ENTER):
-                self.show_suggestion = False
-    """
+                self.show_history = False
+    
 
 
     def description_box(self):
@@ -2131,7 +2126,7 @@ class WindowUI:
                                         if is_selected:
                                             imgui.set_item_default_focus()
 
-                        """
+                     
                         
                         # override
 
@@ -2168,11 +2163,11 @@ class WindowUI:
                             changed, self.highlight.description.override_parameter[b] = imgui.input_text("##parameter-text" + str(b),self.highlight.description.override_parameter[b])
 
                             if imgui.is_item_clicked():
-                                self.show_suggestion = True
+                                self.show_history = True
                                 self.x, self.y = imgui.get_item_rect_min()
                             
                             if imgui.is_item_focused():
-                                self.suggestion_box(p)
+                                self.history_box(p)
                             
 
                             imgui.same_line()
@@ -2183,7 +2178,7 @@ class WindowUI:
                             imgui.pop_style_color()
 
 
-                        """
+                        
 
                         imgui.end_table()
 
@@ -2200,7 +2195,7 @@ class WindowUI:
 
                                 self.toggle_edit_information = False
 
-                                #self.owner.config.conflict.generate_conflict_list()
+                                self.owner.config.conflict.generate_conflict_list()
 
                     imgui.same_line()
 
@@ -2359,13 +2354,13 @@ class WindowUI:
                     if imgui.button("Close##" + self.highlight.name + "Close"):
                         self.show = False
 
-                        #self.highlight = None
+                      
 
                     if imgui.is_key_pressed(glfw.KEY_ESCAPE):
                         self.show = False
 
 
-                        #self.highlight = None
+                 
 
 
 
@@ -2445,16 +2440,16 @@ class WindowUI:
 
                     self.activation_list(i)
 
-                    #self.owner.config.conflict.generate_conflict_list()
+                    self.owner.config.conflict.generate_conflict_list()
                 
                 
                 
-                """
+                
                 if self.conflict_notification:
 
                     self.owner.config.conflict.ui_conflict_warning(i)
             
-                """
+            
     
     
 
@@ -2485,7 +2480,7 @@ class WindowUI:
 
                             os.rename(os.path.join(i.location,file), os.path.join(i.location, file + "-x"))
 
-        #self.owner.config.conflict.generate_conflict_list()
+        self.owner.config.conflict.generate_conflict_list()
     
     
 
@@ -2516,12 +2511,12 @@ class WindowUI:
                             self.activation_tree(i.active, i.location)
 
 
-                        """
+                        
                         if self.conflict_notification:
 
                             self.owner.config.conflict.ui_conflict_warning(i)
                       
-                        """
+                        
 
                         imgui.same_line()
 
@@ -2600,7 +2595,7 @@ class WindowUI:
                         i.active = state
 
 
-                #self.owner.config.conflict.generate_conflict_list()
+                self.owner.config.conflict.generate_conflict_list()
 
                 self.activation_tree(state, item_path)
 
@@ -2640,7 +2635,7 @@ class WindowUI:
 
                                 os.rename(os.path.join(directory,file),os.path.join(directory, file + "-x"))
 
-                #self.owner.config.conflict.generate_conflict_list()
+                self.owner.config.conflict.generate_conflict_list()
 
 
 
@@ -2838,7 +2833,8 @@ class ModManager:
 
         self.impl = None
 
-        self.version: float = 2.0
+        self.version: str= "2.0.1"
+
 
 
     def ui_images(self, image=None):
@@ -2884,6 +2880,8 @@ class ModManager:
 
 
         return [texname, width, height]
+
+
 
 
     def clear_images(self):
@@ -3092,10 +3090,15 @@ class ModManager:
         
 
 
-
 program = ModManager()
 
 
 if __name__ == "__main__":
     program.main()
+
+
+
+
+
+
 
