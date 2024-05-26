@@ -225,7 +225,7 @@ Changelog History: https://github.com/opensource111111/tekken-8-mod-manager/blob
 
 
  # Known_Issues
- - 
+ - History box too small
 
 
 <p>&nbsp;</p>
