@@ -23,6 +23,7 @@ from OpenGL.GL import *
 from PIL import Image
 
 
+import re
 
 class DescriptionFormat:
 
@@ -40,9 +41,9 @@ class DescriptionFormat:
 
     category: str = ""
 
-    presets: list
+    presets: list = []
 
-    override_parameter: list
+    override_parameter: list = []
 
 
 
@@ -83,7 +84,7 @@ class ConflictManagement:
 
         self.modlist_ref: list
         
-
+        self.suggestions: list = []
 
 
 
@@ -127,14 +128,17 @@ class ConflictManagement:
 
     def generate_conflict_list(self):
 
-
+        #self.suggestions = []
         for mod in self.modlist_ref:
 
             mod.conflict = []
             temp_conflicts  = []
-            
-
-
+            """
+            if mod.is_empty_folder == False:
+                for sug in mod.description.override_parameter:
+                    if sug not in self.suggestions and sug != "":
+                        self.suggestions.append(sug)
+            """
             for compare in self.modlist_ref:
 
                 if mod.is_empty_folder == False and compare.is_empty_folder == False:
@@ -155,7 +159,7 @@ class ConflictManagement:
 
 
                                 sim1 = list(set(mod.description.override_parameter) & set(compare.description.override_parameter))
-                             
+
 
 
                                 if sim1 != []:
@@ -660,8 +664,8 @@ class Configs:
 
         self.owner.ui.thumbnail_size = 50
 
-        self.owner.ui.conflict_notification = True
-       
+        #self.owner.ui.conflict_notification = True
+
 
         self.config_save_app_setting()
 
@@ -723,6 +727,7 @@ class Configs:
                 description_info.override_parameter = []
 
 
+
             else:
 
                 description_info.override_parameter = description.get("Mod", "override_parameter", fallback="").lower().split()
@@ -738,7 +743,6 @@ class Configs:
             else:
 
                 description_info.presets = description.get("Mod", "presets").split()
-
 
 
 
@@ -1003,8 +1007,9 @@ class WindowUI:
         self.slide = 0
         self.show = False
 
-
-
+        self.show_suggestion = False
+        self.x = 0
+        self.y = 0
 
     
     def ui_slide_transition(self,a,b,t):
@@ -1524,7 +1529,7 @@ class WindowUI:
                         """
 
                         
-                       
+                        """
                         imgui.text("Mod Conflict Notification:")
                         imgui.same_line()
 
@@ -1534,7 +1539,7 @@ class WindowUI:
 
                             self.owner.config.config_save_app_setting()
                         
-
+                        """
                        
 
 
@@ -1841,7 +1846,32 @@ class WindowUI:
         for i in range(value):
             imgui.spacing()
 
+    """
+    def suggestion_box(self,i):
 
+            if self.show_suggestion == True:
+                # Suggestions box
+                imgui.push_style_color(imgui.COLOR_WINDOW_BACKGROUND, 0, 0, 0, 0.6)
+
+                imgui.set_next_window_position(self.x, self.y + 30)
+                opened = imgui.begin("Suggestions", False,
+                                         imgui.WINDOW_NO_COLLAPSE | imgui.WINDOW_NO_FOCUS_ON_APPEARING)
+
+                for v in self.owner.config.conflict.suggestions:
+                    if re.search(i, v):
+                        imgui.selectable(v)
+
+                        if imgui.is_item_clicked():
+                            self.highlight.description.override_parameter[self.highlight.description.override_parameter.index(i)] = v
+                            opened = False
+                            self.show_suggestion = False
+
+                imgui.end()
+                imgui.pop_style_color()
+
+            if imgui.is_key_pressed(glfw.KEY_ENTER):
+                self.show_suggestion = False
+    """
 
 
     def description_box(self):
@@ -2082,9 +2112,6 @@ class WindowUI:
 
 
 
-
-
-
                         imgui.table_next_row()
 
                         imgui.table_set_column_index(0)
@@ -2095,9 +2122,7 @@ class WindowUI:
 
                         imgui.set_next_item_width(250)
 
-                        with imgui.begin_combo("##catergory_edit",
-
-                                               self.category[self.edit_information_select_index]) as combo:
+                        with imgui.begin_combo("##catergory_edit",self.category[self.edit_information_select_index]) as combo:
 
                             if combo.opened:
 
@@ -2119,19 +2144,16 @@ class WindowUI:
                                         if is_selected:
                                             imgui.set_item_default_focus()
 
-
+                        """
                         
                         # override
 
                         imgui.table_next_row()
-
                         imgui.table_set_column_index(0)
-                        
-                      
-                        
-                        imgui.text("Override Parameter:")
-                        imgui.same_line()
 
+                        imgui.text("Override Parameter:")
+
+                        imgui.same_line()
                         if imgui.button("+##add-parameter"):
 
                             self.highlight.description.override_parameter.append("")
@@ -2139,9 +2161,14 @@ class WindowUI:
                         imgui.table_set_column_index(1)
                         
                         self.save = True
-                        for i in range(len(self.highlight.description.override_parameter)):
 
-                            if self.highlight.description.override_parameter[i].find(" ") != -1:
+
+
+
+                        b = 0
+                        for p in self.highlight.description.override_parameter:
+
+                            if p.find(" ") != -1:
 
                                 colour = 0.8, 0, 0, 1
                                 self.save = False
@@ -2150,26 +2177,28 @@ class WindowUI:
 
                             imgui.push_style_color(imgui.COLOR_TEXT, *colour)
                             imgui.set_next_item_width(230)
-                            changed, self.highlight.description.override_parameter[i] = imgui.input_text("##parameter-text" + str(i),self.highlight.description.override_parameter[i])
-                            imgui.pop_style_color()
+
+                            changed, self.highlight.description.override_parameter[b] = imgui.input_text("##parameter-text" + str(b),self.highlight.description.override_parameter[b])
+
+                            if imgui.is_item_clicked():
+                                self.show_suggestion = True
+                                self.x, self.y = imgui.get_item_rect_min()
                             
+                            if imgui.is_item_focused():
+                                self.suggestion_box(p)
+                            
+
                             imgui.same_line()
+                            if imgui.button("-##remove-parameter" + str(b)):
+                                self.highlight.description.override_parameter.remove(p)
 
-                            if imgui.button("-##remove-parameter"+ str(i)):
-
-                                if self.highlight.description.override_parameter[i] in self.highlight.description.override_parameter:
-
-                                    self.highlight.description.override_parameter.remove(self.highlight.description.override_parameter[i])
-
-                                    break
-
-                       
-                      
+                            b+=1
+                            imgui.pop_style_color()
 
 
-                        
+                        """
+
                         imgui.end_table()
-
 
                     imgui.separator()
                     
