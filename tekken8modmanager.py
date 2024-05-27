@@ -2609,7 +2609,7 @@ class WindowUI:
 
 
                                     if imgui.is_item_clicked():
-
+                                        if pattern != "  ":
                                             self.highlight.description.override_parameter[self.highlight.description.override_parameter.index(pattern)] = v
                                             self.show_history = False
                                             break
@@ -2635,7 +2635,9 @@ class WindowUI:
                         if imgui.is_key_pressed(glfw.KEY_ENTER):
 
                             self.show_history = False
-    
+
+                        if imgui.is_item_focused():
+                            self.show_history = False
 
 
 
@@ -3047,7 +3049,8 @@ class WindowUI:
                             if imgui.is_item_focused():
                                 pattern = self.highlight.description.override_parameter[b]
                                 #imgui.set_next_window_position(self.x, self.y + 30)
-                            
+                            else:
+                                pattern = "  "
                             
 
                             imgui.same_line()
