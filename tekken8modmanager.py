@@ -3001,7 +3001,7 @@ class WindowUI:
 
 
                             self.highlight.description.override_parameter.append("")
-
+                            self.show_history = False
 
                         imgui.table_set_column_index(1)
                         
@@ -3055,7 +3055,7 @@ class WindowUI:
                             if imgui.button("-##remove-parameter" + str(b)):
 
                                 self.highlight.description.override_parameter.remove(p)
-
+                                self.show_history = False
 
                             b+=1
 
@@ -3079,7 +3079,8 @@ class WindowUI:
                     if imgui.button("Save"):
 
                             if self.save:
-
+                                self.show_history = False
+                                
                                 self.owner.config.update_description(self.highlight.location,self.highlight)
 
 
@@ -3087,6 +3088,8 @@ class WindowUI:
 
 
                                 self.owner.config.conflict.generate_conflict_list()
+
+                               
 
                     imgui.same_line()
 
@@ -3249,12 +3252,12 @@ class WindowUI:
                         else:
                            
 
-
+                            
                             self.highlight.description.presets.append(self.presets[self.presets_select])
 
 
                             self.owner.config.update_description(self.highlight.location,self.highlight)
-
+                            self.show_history = False
 
 
 
@@ -3289,7 +3292,7 @@ class WindowUI:
 
                                     self.owner.config.update_description(self.highlight.location,self.highlight)
 
-
+                              
 
 
 
