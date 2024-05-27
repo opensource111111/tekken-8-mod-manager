@@ -623,6 +623,10 @@ class Configs:
             self.owner.ui.presets = configfile.get(header, 'presets', fallback="Default").split()
 
 
+            # Round Frame
+
+            self.owner.ui.round = int(configfile.get(header, 'round_frame', fallback=5))
+
 
 
     def config_save_app_setting(self):
@@ -663,6 +667,8 @@ class Configs:
 
 
                                     "bg_colour": str(self.owner.ui.bg_colour),
+
+                                    "round_frame": str(self.owner.ui.round),
 
 
                                     'dpi_scale': str(self.dpi_scale),
@@ -935,6 +941,7 @@ class Configs:
 
         self.owner.ui.conflict_notification = True
 
+        self.owner.ui.round = 5
 
 
         self.config_save_app_setting()
@@ -1355,7 +1362,7 @@ class WindowUI:
 
         self.bg_colour: tuple = 0, 0, 0, 1
 
-
+        self.round: int = 5
 
         # ui messages
 
@@ -2078,7 +2085,7 @@ class WindowUI:
                         # Show thumbnail button
 
 
-                        imgui.text("Show Thumbnail")
+                        imgui.text("Show Thumbnail:")
 
                         imgui.same_line()
 
@@ -2098,7 +2105,7 @@ class WindowUI:
                         # Scale Thumbnail
 
 
-                        imgui.text("Thumbnail Scale")
+                        imgui.text("Thumbnail Scale: ")
 
                         imgui.same_line()
 
@@ -2111,8 +2118,21 @@ class WindowUI:
 
                             self.owner.config.config_save_app_setting()
 
+                        
+                        # Frame
+                        imgui.text("Round Frame:")
+
+                        imgui.same_line()
 
 
+                        self.owner.ui.round = imgui.slider_int("##round", self.owner.ui.round, 0, 15)[1]
+
+
+                        if imgui.is_item_edited():
+
+                            self.owner.config.config_save_app_setting()
+
+                       
                         # Docking description box
 
 
@@ -3790,10 +3810,10 @@ class WindowUI:
         imgui.push_style_color(imgui.COLOR_FRAME_BACKGROUND, 54 * 0.003, 63 * 0.003, 93 * 0.003, 1)
 
 
-        imgui.push_style_var(imgui.STYLE_FRAME_ROUNDING, 5)
+        imgui.push_style_var(imgui.STYLE_FRAME_ROUNDING, self.round)
 
 
-        imgui.push_style_var(imgui.STYLE_WINDOW_ROUNDING, 5)
+        imgui.push_style_var(imgui.STYLE_WINDOW_ROUNDING, self.round)
 
 
         imgui.push_style_color(imgui.COLOR_TEXT, *self.owner.config.font_colour)
