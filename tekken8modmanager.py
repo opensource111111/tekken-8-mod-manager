@@ -12,7 +12,6 @@ import configparser
 import math
 
 
-import weakref
 import webbrowser
 
 
@@ -2562,44 +2561,59 @@ class WindowUI:
 
     
 
-    def history_box(self, pattern: str):
+    def history_box(self,pattern):
+
+            if self.highlight != None:
+
+                if self.show_history == True:
+
+                    # Suggestions box
+
+                    imgui.push_style_color(imgui.COLOR_WINDOW_BACKGROUND, 0, 0, 0, 0.6)
+
+                    
+
+                    imgui.set_next_window_size_constraints((250,200),(250,200))
+                    opened = imgui.begin("Previously used tags", True, imgui.WINDOW_NO_COLLAPSE | imgui.WINDOW_NO_FOCUS_ON_APPEARING )
+                    
+                  
 
 
-            if self.show_history == True:
+                    for v in self.owner.config.conflict.history:
 
-                # Suggestions box
-
-                imgui.push_style_color(imgui.COLOR_WINDOW_BACKGROUND, 0, 0, 0, 0.6)
-
-
-                imgui.set_next_window_position(self.x, self.y + 30)
-
-                opened = imgui.begin("History", False, imgui.WINDOW_NO_COLLAPSE | imgui.WINDOW_NO_FOCUS_ON_APPEARING)
+                            if re.search(pattern, v):
+                                imgui.selectable(v)
 
 
-                for v in self.owner.config.conflict.history:
-
-                    if re.search(pattern, v):
-
-                        imgui.selectable(v)
 
 
-                        if imgui.is_item_clicked():
+                                if imgui.is_item_clicked():
 
-                            self.highlight.description.override_parameter[self.highlight.description.override_parameter.index(pattern)] = v
-
-                            opened = False
-
-                            self.show_history = False
-
-                imgui.end()
-
-                imgui.pop_style_color()
+                                        self.highlight.description.override_parameter[self.highlight.description.override_parameter.index(pattern)] = v
+                                        self.show_history = False
+                                        break
 
 
-            if imgui.is_key_pressed(glfw.KEY_ENTER):
 
-                self.show_history = False
+
+                
+                               
+
+                    
+                    if opened[1] == False:
+                        self.show_history = False
+
+
+                        
+
+                    imgui.end()
+
+                    imgui.pop_style_color()
+
+                
+                if imgui.is_key_pressed(glfw.KEY_ENTER):
+
+                    self.show_history = False
     
 
 
@@ -2767,7 +2781,7 @@ class WindowUI:
 
 
                 if self.toggle_edit_information:
-
+                    pattern = ""
 
 
                     # edit description
@@ -2979,6 +2993,7 @@ class WindowUI:
 
                         b = 0
 
+
                         for p in self.highlight.description.override_parameter:
 
 
@@ -3008,10 +3023,10 @@ class WindowUI:
 
                                 self.x, self.y = imgui.get_item_rect_min()
                             
-
                             if imgui.is_item_focused():
-
-                                self.history_box(p)
+                                pattern = self.highlight.description.override_parameter[b]
+                                #imgui.set_next_window_position(self.x, self.y + 30)
+                            
                             
 
                             imgui.same_line()
@@ -3026,15 +3041,15 @@ class WindowUI:
                             imgui.pop_style_color()
 
 
-                        
+                      
 
 
                         imgui.end_table()
 
                     imgui.separator()
-                    
 
 
+                    self.history_box(pattern)
 
                     self.ui_spacing(5)
 
@@ -3755,11 +3770,11 @@ class WindowUI:
 
         if self.show:
 
-            self.ui_slide_transition(0,530,0.3)
+            self.ui_slide_transition(0,530,0.4)
 
         else:
 
-            self.ui_slide_transition(0,530,-0.3)
+            self.ui_slide_transition(0,530,-0.4)
 
             if self.slide == 0:
 
