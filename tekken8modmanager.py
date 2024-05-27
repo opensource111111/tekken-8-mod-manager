@@ -2573,7 +2573,7 @@ class WindowUI:
 
                     
 
-                    imgui.set_next_window_size_constraints((250,200),(250,200))
+                    #imgui.set_next_window_size_constraints((250,200),(250,200))
                     opened = imgui.begin("Previously used tags", True, imgui.WINDOW_NO_COLLAPSE | imgui.WINDOW_NO_FOCUS_ON_APPEARING )
                     
                   
