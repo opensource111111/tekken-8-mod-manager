@@ -40,7 +40,6 @@ from PIL import Image
 
 
 
-
 class DescriptionFormat:
 
 
@@ -1217,19 +1216,8 @@ class Configs:
 
                             if (file.endswith("pak") or file.endswith("pak-x") or file.endswith("ucas") or file.endswith("ucas-x") or file.endswith("utoc") or file.endswith("utoc-x")):
 
+                                new_mod.is_mod_folder = True
 
-                                    new_mod.is_mod_folder = True
-                                    break
-
-                            else:
-
-                               new_mod.is_mod_folder = False
-                               break
-
-                                    
-
-                       
-                      
 
 
 
@@ -2594,7 +2582,7 @@ class WindowUI:
                     
                     if len(self.owner.config.conflict.history) != 0:
                         imgui.push_style_color(imgui.COLOR_WINDOW_BACKGROUND, 0, 0, 0, 0.6)
-                        #imgui.set_next_window_size_constraints((250,200),(250,200))
+                        # imgui.set_next_window_size_constraints((250,200),(250,200))
                         opened = imgui.begin("Previously used tags", True, imgui.WINDOW_NO_COLLAPSE | imgui.WINDOW_NO_FOCUS_ON_APPEARING )
                         
                     
@@ -2602,17 +2590,17 @@ class WindowUI:
 
                         for v in self.owner.config.conflict.history:
 
-                                if re.search(pattern, v):
-                                    imgui.selectable(v)
+                            if re.search(pattern, v):
+                                imgui.selectable(v)
 
 
 
 
-                                    if imgui.is_item_clicked():
-                                        if pattern != "  ":
-                                            self.highlight.description.override_parameter[self.highlight.description.override_parameter.index(pattern)] = v
-                                            self.show_history = False
-                                            break
+                                if imgui.is_item_clicked():
+                                    if pattern != "  ":
+                                        self.highlight.description.override_parameter[self.highlight.description.override_parameter.index(pattern)] = v
+                                        self.show_history = False
+                                        break
 
 
 
@@ -2621,7 +2609,7 @@ class WindowUI:
                                
 
                         
-                        if opened[1] == False:
+                        if opened[1] is False:
                             self.show_history = False
 
 
@@ -2649,7 +2637,7 @@ class WindowUI:
 
 
 
-        if self.highlight != None:
+        if self.highlight is not None:
 
             
 
@@ -2664,7 +2652,6 @@ class WindowUI:
 
 
             flags: int = 0
-
 
 
             if self.docked:
@@ -2686,8 +2673,7 @@ class WindowUI:
             else:
 
 
-                if self.stop_scroll == True:
-
+                if self.stop_scroll is True:
 
 
                     flags =  imgui.WINDOW_NO_SAVED_SETTINGS  | imgui.WINDOW_NO_TITLE_BAR | imgui.WINDOW_ALWAYS_AUTO_RESIZE | imgui.WINDOW_NO_COLLAPSE | imgui.WINDOW_NO_SCROLL_WITH_MOUSE
@@ -2745,6 +2731,7 @@ class WindowUI:
                     if self.image_scrollwheel >= len(self.highlight.icon):
 
 
+
                         self.image_scrollwheel = 0
 
 
@@ -2781,7 +2768,7 @@ class WindowUI:
 
 
 
-                if imgui.button("Open Folder##Openefeve_Folder"):
+                if imgui.button("Open Folder##Open_mod_Folder"):
 
 
                     if sys.platform == "win32":
@@ -3047,8 +3034,9 @@ class WindowUI:
                                 self.x, self.y = imgui.get_item_rect_min()
                             
                             if imgui.is_item_focused():
+
                                 pattern = self.highlight.description.override_parameter[b]
-                                #imgui.set_next_window_position(self.x, self.y + 30)
+
                             else:
                                 pattern = "  "
                             
@@ -3237,15 +3225,15 @@ class WindowUI:
 
 
 
-                                # Set the initial focus when opening the combo (scrolling + keyboard navigation focus)
-
-
                                 if is_selected:
+
                                     imgui.set_item_default_focus()
+
+
                     imgui.same_line()
 
 
-                    if imgui.button("+##addllgf"):
+                    if imgui.button("+##add_preset"):
 
 
                         if self.presets[self.presets_select] in self.highlight.description.presets:
@@ -3283,7 +3271,7 @@ class WindowUI:
                             imgui.same_line()
 
 
-                            if imgui.button("-##wffwgf" + i):
+                            if imgui.button("-##wremove_preset" + i):
 
 
 
@@ -3293,7 +3281,7 @@ class WindowUI:
                                     self.highlight.description.presets.remove(i)
 
 
-                                    self.owner.config.update_description(self.highlight.location,self.highlight)
+                                    self.owner.config.update_description(self.highlight.location, self.highlight)
 
                               
 
@@ -3359,6 +3347,9 @@ class WindowUI:
 
     def ui_listview(self):
 
+        """
+        Function for viewing mods in list mode.
+        """
 
 
         self.ui_spacing(18)
@@ -3368,12 +3359,11 @@ class WindowUI:
         for i in self.owner.config.mod_list:
 
 
-
-            if (self.filter_bar == "All" or self.filter_bar.lower() == i.description.category.lower()) and i.is_mod_folder is True:
-                
+            if (self.filter_bar == "All" or self.filter_bar.lower() == i.description.category.lower()) and i.is_mod_folder == True:
 
 
-                if self.show_thumbnail == True:
+
+                if self.show_thumbnail is True:
 
 
 
@@ -3400,7 +3390,7 @@ class WindowUI:
 
 
 
-                    if self.highlight == None:
+                    if self.highlight is None:
 
 
 
@@ -3450,7 +3440,7 @@ class WindowUI:
 
 
 
-        if os.path.isdir(mod.location) == True:
+        if os.path.isdir(mod.location) is True:
 
 
 
@@ -3458,29 +3448,20 @@ class WindowUI:
 
 
 
-                if file.endswith("pak") or file.endswith("pak-x") or file.endswith("ucas") or file.endswith(
-
-
-                        "ucas-x") or file.endswith("utoc") or file.endswith("utoc-x"):
+                if file.endswith("pak") or file.endswith("pak-x") or file.endswith("ucas") or file.endswith("ucas-x") or file.endswith("utoc") or file.endswith("utoc-x"):
 
 
 
-                    if mod.active == True:
-
+                    if mod.active is True:
 
                         if file.endswith("-x"):
-
-
                             os.rename(os.path.join(mod.location, file), os.path.join(mod.location, file.strip("-x")))
 
 
 
-                    if mod.active == False:
-
+                    if mod.active is False:
 
                         if not file.endswith("-x"):
-
-
                             os.rename(os.path.join(mod.location,file), os.path.join(mod.location, file + "-x"))
 
 
@@ -3489,14 +3470,14 @@ class WindowUI:
     
 
 
-    def ui_treeview(self, dir: str, indent: int=0):
+    def ui_treeview(self, _dir: str = None, indent: int = 0):
      
 
 
-        for item in os.listdir(dir):
+        for item in os.listdir(_dir):
 
 
-            item_path = os.path.join(dir, item)
+            item_path = os.path.join(_dir, item)
             
    
 
@@ -3522,10 +3503,7 @@ class WindowUI:
 
                             self.activation_tree(i.active, i.location)
 
-                        
-                       
-                           
-                        
+
 
                         if self.conflict_notification:
 
@@ -3541,12 +3519,7 @@ class WindowUI:
                 
 
 
-
-
-
-                #folder
-
-
+                # Remove profile from the search.
                 if item != "profile":
 
 
@@ -3556,11 +3529,12 @@ class WindowUI:
                         imgui.indent(13)
                     
 
-
                         self.ui_treeview(item_path, indent + 1)
 
 
                         imgui.indent(-13)
+
+
                         imgui.tree_pop()
                     
                     
@@ -3571,18 +3545,24 @@ class WindowUI:
 
                         if self.docked:
 
+
                             if imgui.is_item_hovered():
+
 
                                 if item == i.name:
 
-                                    if i.is_mod_folder is True and self.toggle_edit_information == False:
+
+                                    if i.is_mod_folder is True and self.toggle_edit_information is False:
 
 
                                         self.highlight = i
 
+
                                         self.image_scrollwheel = 0
 
+
                                         self.show = True
+
 
                                         break
                             
@@ -3596,7 +3576,7 @@ class WindowUI:
                 if not item.startswith("pakchunk") and not item.startswith("global"):
 
 
-                    #files
+                    # files
 
 
                     imgui.indent(30)
@@ -3614,7 +3594,7 @@ class WindowUI:
 
 
 
-    def activation_tree(self, state: bool, directory: str, indent: int=0):
+    def activation_tree(self, state: bool, directory: str):
 
 
 
@@ -3659,43 +3639,30 @@ class WindowUI:
                     file = item
 
 
-                    if file.endswith("pak") | file.endswith("pak-x") | file.endswith("ucas") | file.endswith(
-
-
-                            "ucas-x") | file.endswith("utoc") | file.endswith("utoc-x"):
+                    if file.endswith("pak") | file.endswith("pak-x") | file.endswith("ucas") | file.endswith("ucas-x") | file.endswith("utoc") | file.endswith("utoc-x"):
 
 
 
-                        if state == True:
+                        if state is True:
 
 
                             if file.endswith("-x"):
 
-
-                                os.rename(os.path.join(directory, file), os.path.join(directory,file.strip("-x")))
-
-
-
-                            else:
-                                pass
+                                os.rename(os.path.join(directory, file), os.path.join(directory, file.strip("-x")))
 
 
 
-                        if state == False:
+                        if state is False:
 
 
-                            if file.endswith("-x"):
-                                pass
+                            if not file.endswith("-x"):
+
+                                os.rename(os.path.join(directory, file), os.path.join(directory, file + "-x"))
 
 
-                            else:
 
 
-
-                                os.rename(os.path.join(directory,file),os.path.join(directory, file + "-x"))
-
-
-                self.owner.config.conflict.generate_conflict_list()
+        self.owner.config.conflict.generate_conflict_list()
 
 
 
@@ -3713,9 +3680,8 @@ class WindowUI:
         fb_w, fb_h = glfw.get_framebuffer_size(self.owner.window)
 
 
-        #fixed division by 0 error.
+        scaling = max(float(max(0.1, fb_w)) / max(0.1, win_w), float(max(0.1, fb_h)) / max(0.1, win_h))
 
-        scaling = max(float(max(0.1,fb_w)) / max(0.1,win_w), float(max(0.1,fb_h)) / max(0.1,win_h))
 
         return scaling
 
@@ -3725,9 +3691,9 @@ class WindowUI:
 
     def main_window_box(self):
 
-
-
-
+        """
+        Main function for program.
+        """
 
 
         imgui.push_style_var(imgui.STYLE_WINDOW_BORDERSIZE, 0.0)
@@ -3738,7 +3704,7 @@ class WindowUI:
 
 
 
-        with imgui.begin("##" + "filterbar", False, imgui.WINDOW_NO_TITLE_BAR | imgui.WINDOW_ALWAYS_AUTO_RESIZE | imgui.WINDOW_NO_MOVE | imgui.WINDOW_NO_COLLAPSE | imgui.WINDOW_NO_BRING_TO_FRONT_ON_FOCUS):
+        with imgui.begin("##filterbar", False, imgui.WINDOW_NO_TITLE_BAR | imgui.WINDOW_ALWAYS_AUTO_RESIZE | imgui.WINDOW_NO_MOVE | imgui.WINDOW_NO_COLLAPSE | imgui.WINDOW_NO_BRING_TO_FRONT_ON_FOCUS):
 
 
 
@@ -3748,7 +3714,7 @@ class WindowUI:
                
 
 
-        imgui.set_next_window_size(self.scaling() * (glfw.get_window_size(self.owner.window)[0]) - self.font_padding,self.scaling() * (glfw.get_window_size(self.owner.window)[1] - 25))
+        imgui.set_next_window_size(self.scaling() * (glfw.get_window_size(self.owner.window)[0]) - self.font_padding, self.scaling() * (glfw.get_window_size(self.owner.window)[1] - 25))
         
 
 
@@ -3756,11 +3722,11 @@ class WindowUI:
         
 
 
-        with imgui.begin("##" + "manager", False,imgui.WINDOW_NO_TITLE_BAR | imgui.WINDOW_ALWAYS_AUTO_RESIZE | imgui.WINDOW_NO_MOVE | imgui.WINDOW_NO_COLLAPSE | imgui.WINDOW_NO_BRING_TO_FRONT_ON_FOCUS):
+        with imgui.begin("##manager", False,imgui.WINDOW_NO_TITLE_BAR | imgui.WINDOW_ALWAYS_AUTO_RESIZE | imgui.WINDOW_NO_MOVE | imgui.WINDOW_NO_COLLAPSE | imgui.WINDOW_NO_BRING_TO_FRONT_ON_FOCUS):
 
 
 
-            if self.toggle_viewmode == True:
+            if self.toggle_viewmode is True:
 
 
                 self.ui_spacing(20)
@@ -3774,14 +3740,14 @@ class WindowUI:
             else:
 
 
+
                 self.ui_spacing(4)
+
 
 
                 self.ui_listview()
 
 
-
-        #box
 
 
         self.description_box()
@@ -3798,19 +3764,25 @@ class WindowUI:
     def run(self):
 
 
+
+
         if self.show:
+
 
             self.ui_slide_transition(0,530,0.4)
 
+
         else:
+
 
             self.ui_slide_transition(0,530,-0.4)
 
+
             if self.slide == 0:
+
 
                 self.highlight = None
         
-
 
 
         self.font_padding = self.slide * (self.owner.config.selected_size * 0.1)
@@ -3853,9 +3825,7 @@ class WindowUI:
 
 
 
-
-
-        if os.path.isdir(self.owner.path) == True:
+        if os.path.isdir(self.owner.path):
           
 
          
@@ -3886,6 +3856,8 @@ class WindowUI:
 
 
             imgui.end()
+
+
         imgui.pop_font()
 
 
@@ -3933,7 +3905,6 @@ class ModManager:
 
         # system path
 
-
         self.path: str = ""
 
 
@@ -3966,7 +3937,7 @@ class ModManager:
         self.impl = None
 
 
-        self.version: str= "2.0.1"
+        self.version: str = "2.0.1"
 
 
 
@@ -3976,6 +3947,7 @@ class ModManager:
 
 
         if image == "":
+
 
 
             image = self.window_icon
@@ -4041,20 +4013,20 @@ class ModManager:
 
 
 
-        for i in self.config.mod_list:
+        for mod in self.config.mod_list:
 
 
-            if len(i.icon) != 0:
+            if len(mod.icon) != 0:
 
 
 
-                for ii in i.icon:
+                for icon in mod.icon:
 
 
-                    glDeleteTextures([ii[0]])
+                    glDeleteTextures([icon[0]])
 
 
-            i.icon = []
+            mod.icon = []
 
     
 
@@ -4197,8 +4169,6 @@ class ModManager:
 
 
         # Make the window's context current
-
-
         glfw.make_context_current(self.window)
 
 
@@ -4207,8 +4177,6 @@ class ModManager:
 
 
         # Initilize imgui context (see documentation)
-
-
         imgui.create_context()
 
 
@@ -4220,9 +4188,9 @@ class ModManager:
 
 
         # Config fonts
-
-
         self.config.style = imgui.get_style()
+
+
         self.config.get_font_collection()
 
 
@@ -4230,18 +4198,16 @@ class ModManager:
 
 
 
+
         # UI class
-
-
         self.ui = WindowUI(self)
 
    
 
 
         # Apply setting to ui
-
-
         self.config.ui_check()
+
 
         self.config.config_save_app_setting()
 
@@ -4252,13 +4218,10 @@ class ModManager:
 
 
 
+
         # Loop until the user closes the window
-
-
         while not glfw.window_should_close(self.window):
 
-
-            # Render here, e.g. using pyOpenGL
 
 
 
@@ -4270,6 +4233,7 @@ class ModManager:
 
 
             imgui.new_frame()
+
 
             self.ui.run()
 
@@ -4286,31 +4250,27 @@ class ModManager:
             imgui.render()
 
 
+
             self.impl.render(imgui.get_draw_data())
 
 
 
             # Swap front and back buffers
-
-
             glfw.swap_buffers(self.window)
 
-            self.impl.process_inputs()
+
 
 
 
             # Poll for and process events
-
-
             glfw.poll_events()
+            self.impl.process_inputs()
 
 
 
 
 
         # Clean up
-
-
         self.impl.shutdown()
 
 
@@ -4319,6 +4279,7 @@ class ModManager:
 
         glfw.terminate()
         
+
 
 
 
