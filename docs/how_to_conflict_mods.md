@@ -12,17 +12,17 @@
 
 - It works by matching common strings values that are inputted into the "override parameter text field in the description panel. You can add as many text fields as you want the describe your mod by click on the + button.
 
-- The strings values are not hard coded into the program, so you can type anything. I have put together recommendtion on how I use this but if you decide that the recommendation are not up to your liking then you can go by any format you want. Just make sure that the string values have no spaces.
+- The strings values are not hard coded into the program. I have put together recommendtion on how I use this but if you decide that the recommendation are not up to your liking then you can go by any values you want. Just make sure that the string values have no spaces.
 
 
 
-### Recommended syntax
+### Recommended
 
         header::the-asset-being-replaced
 
 - Any spacing should use -.
 
-- Use in-game names for describing assets
+- Use in-game names for describing assets.
 
 
 
@@ -42,10 +42,10 @@
 
 2. the-asset-being-replaced 
 
-        - preset-name 
-        - sound-name
-        - character-custom-item-name
-        - stage-name
+        - preset name 
+        - sound name
+        - character custom item name
+        - stage name
 
 
 
