@@ -2581,7 +2581,7 @@ class WindowUI:
 
     
 
-    def history_box(self,pattern):
+    def history_box(self, pattern: str):
 
             if self.highlight != None:
 
@@ -2589,29 +2589,30 @@ class WindowUI:
 
                     # Suggestions box
 
-                    imgui.push_style_color(imgui.COLOR_WINDOW_BACKGROUND, 0, 0, 0, 0.6)
+              
 
                     
-
-                    #imgui.set_next_window_size_constraints((250,200),(250,200))
-                    opened = imgui.begin("Previously used tags", True, imgui.WINDOW_NO_COLLAPSE | imgui.WINDOW_NO_FOCUS_ON_APPEARING )
+                    if len(self.owner.config.conflict.history) != 0:
+                        imgui.push_style_color(imgui.COLOR_WINDOW_BACKGROUND, 0, 0, 0, 0.6)
+                        #imgui.set_next_window_size_constraints((250,200),(250,200))
+                        opened = imgui.begin("Previously used tags", True, imgui.WINDOW_NO_COLLAPSE | imgui.WINDOW_NO_FOCUS_ON_APPEARING )
+                        
                     
-                  
 
 
-                    for v in self.owner.config.conflict.history:
+                        for v in self.owner.config.conflict.history:
 
-                            if re.search(pattern, v):
-                                imgui.selectable(v)
-
-
+                                if re.search(pattern, v):
+                                    imgui.selectable(v)
 
 
-                                if imgui.is_item_clicked():
 
-                                        self.highlight.description.override_parameter[self.highlight.description.override_parameter.index(pattern)] = v
-                                        self.show_history = False
-                                        break
+
+                                    if imgui.is_item_clicked():
+
+                                            self.highlight.description.override_parameter[self.highlight.description.override_parameter.index(pattern)] = v
+                                            self.show_history = False
+                                            break
 
 
 
@@ -2619,21 +2620,21 @@ class WindowUI:
                 
                                
 
-                    
-                    if opened[1] == False:
-                        self.show_history = False
+                        
+                        if opened[1] == False:
+                            self.show_history = False
 
+
+                            
+
+                        imgui.end()
+
+                        imgui.pop_style_color()
 
                         
+                        if imgui.is_key_pressed(glfw.KEY_ENTER):
 
-                    imgui.end()
-
-                    imgui.pop_style_color()
-
-                
-                if imgui.is_key_pressed(glfw.KEY_ENTER):
-
-                    self.show_history = False
+                            self.show_history = False
     
 
 
@@ -3102,6 +3103,8 @@ class WindowUI:
 
                         self.save = True
 
+                        self.show_history = False
+
 
 
 
@@ -3382,6 +3385,7 @@ class WindowUI:
 
                             self.toggle_edit_information = False
 
+                            self.show_history = False
 
 
                         self.highlight = i
@@ -3565,7 +3569,7 @@ class WindowUI:
 
                                 if item == i.name:
 
-                                    if i.is_mod_folder is True:
+                                    if i.is_mod_folder is True and self.toggle_edit_information == False:
 
 
                                         self.highlight = i
@@ -3575,8 +3579,8 @@ class WindowUI:
                                         self.show = True
 
                                         break
-                                
-
+                            
+                            
 
 
             else:
