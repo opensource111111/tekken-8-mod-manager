@@ -65,6 +65,11 @@ Any feedback, bugs or issues, please post in the comment section. Thank you. :)
 
    1. Added a function for managing conflicting mods. [Document here](docs/how_to_conflict_mods.md)
 
+Values can be edited in the details panel.
+
+   ![bar.png](assets/screenshots/conflict/overrideparamater.png)
+
+
    ![bar.png](assets/screenshots/conflict/example1.png)
 
    ![bar.png](assets/screenshots/conflict/example2.png)
