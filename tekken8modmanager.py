@@ -3820,7 +3820,7 @@ class WindowUI:
         imgui.push_style_var(imgui.STYLE_FRAME_ROUNDING, self.round)
 
 
-        imgui.push_style_var(imgui.STYLE_WINDOW_ROUNDING, self.round)
+        imgui.push_style_var(imgui.STYLE_WINDOW_ROUNDING, 5)
 
 
         imgui.push_style_color(imgui.COLOR_TEXT, *self.owner.config.font_colour)
