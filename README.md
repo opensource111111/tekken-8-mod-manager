@@ -60,36 +60,16 @@ Any feedback, bugs or issues, please post in the comment section. Thank you. :)
 ## Latest_Update
 
 
-### 26th May 2024
-
-1. Fixed an issue with the description format class causing errors while importing the mod list into the program.
-
-2. Fixed division by 0 error while minimizing window.
+###  27th May 2024
 
 
+   1. Added a function for managing conflicting mods. [Document here](docs/how_to_conflict_mods.md)
 
+   ![bar.png](assets/screenshots/conflict/example1.png)
 
+   ![bar.png](assets/screenshots/conflict/example2.png)
 
-
-### 20th May 2024
-
-   ![bar.png](assets/screenshots/features/bar.png)
-
-   1. Added enable/disable all buttons.
-   2. Add an enabled/disabled mod counter to the top of the ui. 
-   3. Added the ability to create/rename you own presets.
-   Enable multiple mods that are part of the preset you apply.
-   
-
-   <video src="assets/screenshots/features/presets.mp4" width="800" height="200" controls></video>
-
-   
-
-
-
-   4. Switching between listview and treeview can be done instantly now. 
-   5. Added a splash screen.
-
+   <video src="assets/screenshots/conflict/conflicts.mp4" width="800" height="400" controls></video>
 
 
 
@@ -225,7 +205,7 @@ Changelog History: https://github.com/opensource111111/tekken-8-mod-manager/blob
 
 
  # Known_Issues
- - Clicking on an entry in the "Previously use tag box" while not focused on a override parameter entry will cause the program to crash.
+ - 
 
 
 <p>&nbsp;</p>
