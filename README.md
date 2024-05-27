@@ -225,7 +225,7 @@ Changelog History: https://github.com/opensource111111/tekken-8-mod-manager/blob
 
 
  # Known_Issues
- - History box too small
+ - Clicking on an entry in the "Previously use tag box" while not focused on a override parameter entry will cause the program to crash.
 
 
 <p>&nbsp;</p>
