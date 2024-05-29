@@ -60,15 +60,16 @@ Any feedback, bugs or issues, please post in the comment section. Thank you. :)
 ## Latest_Update
 
 
+### 29th May 2024
+
+ 1. Fixed an issue with mod.ini not being created.
+ 2. A mod.ini file is created for new mods added.
+
+
 ###  27th May 2024
 
 
    1. Added a function for managing conflicting mods. [Document here](docs/how_to_conflict_mods.md)
-
-Values can be edited in the details panel.
-
-   ![bar.png](assets/screenshots/conflict/overrideparamater.png)
-
 
    ![bar.png](assets/screenshots/conflict/example1.png)
 
