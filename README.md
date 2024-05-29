@@ -62,8 +62,8 @@ Any feedback, bugs or issues, please post in the comment section. Thank you. :)
 
 ### 29th May 2024
 
- 1. Fixed an issue with mod.ini not being created.
- 2. A mod.ini file is created for new mods added.
+1. Fixed an issue with mod.ini not being created when clicking the save button in the details panel.
+2. A mod.ini file is created for new mods at start-up or by pressing the refresh list button.
 
 
 ###  27th May 2024
