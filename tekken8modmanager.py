@@ -49,7 +49,7 @@ class DescriptionFormat:
     name: str = ""
 
 
-    author: str = "" 
+    author: str = ""
 
 
     description: str = ""
@@ -106,6 +106,19 @@ class ModListFormat:
     conflict: list = []
 
 
+"""
+
+class DataBase:
+    
+    def __init__(self):
+        self.headers: list = ["ui","stage","character-common",]
+
+        self.stage: list = ["arena", "arena(underground)", "urban-square-(evening)","yakushima","coliseum-of-fate","rebel-hanger", "descent-into-subconscious","sanctum","into-the-stratosphere", "ortiz-farm","selcuded-training-ground", "elegant-palace","midnight-siege","celebration-on-the-seine","urban-sqaure", "stage::fallen-destiny"]
+        self.ui: list = ["health-bar", "time", "heat-engan-bar","mainmenu-character"]
+        #self.sound: list = []
+            
+        self.namingformat: str = "{0}::{1}"
+"""
 
 
 
@@ -1101,7 +1114,7 @@ class Configs:
 
 
 
-        if os.path.exists(os.path.join(os.path.join(location, "profile"),"mod.ini")):
+        if os.path.exists(os.path.join(os.path.join(location, "profile"))):
 
 
             with open(os.path.join(os.path.join(location, "profile"),"mod.ini"), 'w') as descrp:
@@ -2015,7 +2028,9 @@ class WindowUI:
 
 
                     imgui.open_popup("Window Configuration")
-
+                    x,y = glfw.get_window_size(self.owner.window)
+                    imgui.set_next_window_position((x - 600)*0.5,(y - 500) * 0.5)
+                    imgui.set_next_window_size_constraints((600, 580), (600, 580))
 
                 imgui.pop_style_color()
 
@@ -2023,11 +2038,8 @@ class WindowUI:
 
                 # Option pop-up
 
-
-                imgui.set_next_window_size_constraints((600, 580), (600, 580))
-
-
-                with imgui.begin_popup_modal("Window Configuration",imgui.WINDOW_NO_RESIZE | imgui.WINDOW_NO_DECORATION) as select_popup:
+                
+                with imgui.begin_popup_modal("Window Configuration",imgui.WINDOW_NO_RESIZE) as select_popup:
 
 
                     if select_popup.opened:
@@ -2411,8 +2423,7 @@ class WindowUI:
 
                 changed, about = imgui.menu_item("About")
 
-
-
+                
                 if changed:
 
 
@@ -2426,6 +2437,9 @@ class WindowUI:
 
 
                         self.toggle_about = True
+                        x,y = glfw.get_window_size(self.owner.window)
+                        imgui.set_next_window_position((x - 350)*0.5,(y - 230) * 0.5)
+                        imgui.set_next_window_size_constraints((350, 230), (350, 230))
 
 
 
@@ -2447,11 +2461,10 @@ class WindowUI:
                 imgui.push_style_var(imgui.STYLE_WINDOW_BORDERSIZE, 3.0)
 
 
-                imgui.set_next_window_size_constraints((350, 230), (350, 230))
+
 
 
                 imgui.begin("About", False, imgui.WINDOW_NO_SAVED_SETTINGS | imgui.WINDOW_NO_RESIZE | imgui.WINDOW_NO_COLLAPSE)
-
 
 
                 imgui.indent(imgui.get_content_region_available_width() /4)
@@ -2461,7 +2474,6 @@ class WindowUI:
 
 
                 imgui.indent(imgui.get_content_region_available_width() * 0.06)
-
 
 
                 imgui.text_wrapped(self.about_message)
@@ -2708,13 +2720,14 @@ class WindowUI:
                 self.ui_spacing(5)
 
 
-                imgui.indent(13)
 
+                x, y =  imgui.get_window_size()
+                imgui.indent((x - self.highlight.icon[self.image_scrollwheel][1]) * 0.5)
 
                 imgui.image(self.highlight.icon[self.image_scrollwheel][0], self.highlight.icon[self.image_scrollwheel][1], self.highlight.icon[self.image_scrollwheel][2])
 
 
-                imgui.unindent(13)
+                imgui.unindent((x - self.highlight.icon[self.image_scrollwheel][1]) * 0.5)
 
 
 
@@ -2749,6 +2762,11 @@ class WindowUI:
 
                     self.stop_scroll = False
 
+                """
+                imgui.indent(x * 0.4)
+                imgui.text(str(self.image_scrollwheel) + " - " + str(len(self.highlight.icon)-1) )
+                imgui.unindent(x * 0.4)
+                """
 
 
                 self.ui_spacing(5)
@@ -3365,8 +3383,7 @@ class WindowUI:
 
                 if self.show_thumbnail is True:
 
-
-
+                  
                     imgui.push_id(i.name)
 
 
@@ -3431,8 +3448,8 @@ class WindowUI:
 
                     self.owner.config.conflict.ui_conflict_warning(i)
             
-            
-    
+
+                
     
 
 
@@ -3639,7 +3656,7 @@ class WindowUI:
                     file = item
 
 
-                    if file.endswith("pak") | file.endswith("pak-x") | file.endswith("ucas") | file.endswith("ucas-x") | file.endswith("utoc") | file.endswith("utoc-x"):
+                    if file.endswith("pak") or file.endswith("pak-x") or file.endswith("ucas") or file.endswith("ucas-x") or file.endswith("utoc") or file.endswith("utoc-x"):
 
 
 
@@ -3672,7 +3689,9 @@ class WindowUI:
 
     def scaling(self):
 
-
+        """
+            DPI scaing.
+        """
 
         win_w, win_h = glfw.get_window_size(self.owner.window)
 
@@ -3950,28 +3969,30 @@ class ModManager:
 
 
 
-            image = self.window_icon
+            image: str = self.window_icon
 
 
 
         img = Image.open(image).convert("RGBA")
 
 
-        size = (400, 400)
+
+        size: tuple = (400, 400)
 
 
         img.thumbnail(size)
 
 
 
-        imdata = img.tobytes()
+        imdata: object= img.tobytes()
+
 
 
         width, height = img.size
 
 
 
-        texname = glGenTextures(1)
+        texname: int = glGenTextures(1)
 
 
 
@@ -4023,7 +4044,9 @@ class ModManager:
                 for icon in mod.icon:
 
 
+
                     glDeleteTextures([icon[0]])
+
 
 
             mod.icon = []
@@ -4068,8 +4091,7 @@ class ModManager:
 
 
 
-        # Check if the program is run from binary or script and which platform.
-
+        # Check for platform and build status of the program.
 
         if getattr(sys, 'frozen', False) and hasattr(sys, '_MEIPASS'):
 
@@ -4083,36 +4105,38 @@ class ModManager:
 
         
 
-
-            if sys.platform == "win32":
-
-
-                self.path = os.path.dirname(sys.executable) + "\\Polaris\\Content\\Paks"
-
-
-                self.pure_dir = os.path.dirname(sys.executable)
-
-
-                self.window_icon = os.path.abspath(os.path.dirname(__file__)) + "\\assets\\branding\\icon.ico"
-
-
-                self.banner = os.path.abspath(os.path.dirname(__file__)) + "\\assets\\branding\\banner.png"
+            match sys.platform:
 
 
 
-            elif sys.platform == "linux":
+                case "win32":
+               
+
+                    self.path = os.path.dirname(sys.executable) + "\\Polaris\\Content\\Paks"
 
 
-                self.path = os.path.dirname(sys.executable) + "/Polaris/Content/Paks"
+                    self.pure_dir = os.path.dirname(sys.executable)
 
 
-                self.pure_dir = os.path.dirname(sys.executable)
-                
-
-                self.window_icon = os.path.dirname(os.path.abspath(__file__)) + "/assets/branding/icon.ico"
+                    self.window_icon = os.path.abspath(os.path.dirname(__file__)) + "\\assets\\branding\\icon.ico"
 
 
-                self.banner = os.path.abspath(os.path.dirname(__file__)) + "/assets/branding/banner.png"
+                    self.banner = os.path.abspath(os.path.dirname(__file__)) + "\\assets\\branding\\banner.png"
+
+
+                case "linux":
+
+
+                    self.path = os.path.dirname(sys.executable) + "/Polaris/Content/Paks"
+
+
+                    self.pure_dir = os.path.dirname(sys.executable)
+                    
+
+                    self.window_icon = os.path.dirname(os.path.abspath(__file__)) + "/assets/branding/icon.ico"
+
+
+                    self.banner = os.path.abspath(os.path.dirname(__file__)) + "/assets/branding/banner.png"
 
 
 
@@ -4122,29 +4146,30 @@ class ModManager:
 
             print('running in a normal Python process')
 
-
-
-            if sys.platform == "win32":
-
-
-                self.path = os.path.dirname(os.path.abspath(__file__)) + "\\Polaris\\Content\\Paks"
-
-                self.window_icon = os.path.abspath(os.path.dirname(__file__)) + "\\assets\\branding\\icon.ico"
-
-                self.banner = os.path.abspath(os.path.dirname(__file__)) + "\\assets\\branding\\banner.png"
+            match sys.platform:
 
 
 
-            elif sys.platform == "linux":
+                case "win32":
+
+                    self.path = os.path.dirname(os.path.abspath(__file__)) + "\\Polaris\\Content\\Paks"
+
+                    self.window_icon = os.path.abspath(os.path.dirname(__file__)) + "\\assets\\branding\\icon.ico"
+
+                    self.banner = os.path.abspath(os.path.dirname(__file__)) + "\\assets\\branding\\banner.png"
 
 
-                self.path = os.path.dirname(os.path.abspath(__file__)) + "/Polaris/Content/Paks"
 
-                self.window_icon = os.path.dirname(os.path.abspath(__file__)) + "/assets/branding/icon.ico"
+                case "linux":
 
-                self.banner = os.path.abspath(os.path.dirname(__file__)) + "/assets/branding/banner.png"
 
-        
+                    self.path = os.path.dirname(os.path.abspath(__file__)) + "/Polaris/Content/Paks"
+
+                    self.window_icon = os.path.dirname(os.path.abspath(__file__)) + "/assets/branding/icon.ico"
+
+                    self.banner = os.path.abspath(os.path.dirname(__file__)) + "/assets/branding/banner.png"
+
+            
 
            
 
