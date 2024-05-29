@@ -6,6 +6,10 @@
 Any feedback, bugs or issues, please post in the comment section. Thank you.
 
 
+### 29th May 2024
+
+ 1. Fixed an issue with mod.ini not being created.
+
 
 ### 27th May 2024
 
