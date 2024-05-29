@@ -1034,65 +1034,96 @@ class Configs:
             
 
             #normal operation
+            if os.path.exists(os.path.join(os.path.join(location, "profile"),"mod.ini")):
 
-            if description.read(os.path.join(os.path.join(location,"profile"),"mod.ini")):
-
-
-                description_info.name = description.get("Mod", "name", fallback="").replace('"', "")
+                if description.read(os.path.join(os.path.join(location,"profile"),"mod.ini")):
 
 
-
-                description_info.author = description.get("Mod", "author", fallback="").replace('"', "")
-        
-
-
-                description_info.date = description.get("Mod", "date", fallback="").replace('"', "")
+                    description_info.name = description.get("Mod", "name", fallback="").replace('"', "")
 
 
 
-                description_info.version = description.get("Mod", "version", fallback="").replace('"', "")
+                    description_info.author = description.get("Mod", "author", fallback="").replace('"', "")
 
 
 
-                description_info.description = description.get("Mod", "description", fallback="").replace('"', "")
-    
-
-
-                description_info.url = description.get("Mod", "url", fallback="").replace('"', "")
-        
-
-
-                description_info.category = description.get("Mod", "category", fallback="").replace('"', "")
-        
+                    description_info.date = description.get("Mod", "date", fallback="").replace('"', "")
 
 
 
-                if description.get("Mod", "override_parameter", fallback="") == "":
+                    description_info.version = description.get("Mod", "version", fallback="").replace('"', "")
 
 
-                    description_info.override_parameter = []
+
+                    description_info.description = description.get("Mod", "description", fallback="").replace('"', "")
 
 
-                else:
+
+                    description_info.url = description.get("Mod", "url", fallback="").replace('"', "")
 
 
-                    description_info.override_parameter = description.get("Mod", "override_parameter", fallback="").lower().split()
-                
-                
+
+                    description_info.category = description.get("Mod", "category", fallback="").replace('"', "")
 
 
-                if description.get("Mod", "presets",fallback="") == "":
 
 
-                    description_info.presets = []
-                
-
-                else:
+                    if description.get("Mod", "override_parameter", fallback="") == "":
 
 
-                    description_info.presets = description.get("Mod", "presets").split()
+                        description_info.override_parameter = []
 
 
+                    else:
+
+
+                        description_info.override_parameter = description.get("Mod", "override_parameter", fallback="").lower().split()
+
+
+
+
+                    if description.get("Mod", "presets",fallback="") == "":
+
+
+                        description_info.presets = []
+
+
+                    else:
+
+
+                        description_info.presets = description.get("Mod", "presets").split()
+
+            else:
+                # create template file
+                with open(os.path.join(os.path.join(location, "profile"), "mod.ini"), 'w') as descrp:
+
+                    description['Mod'] = {
+
+                        'name': "",
+
+                        'author': "",
+
+                        'description': "",
+
+                        'url': "",
+
+                        'date': "",
+
+                        'version': "",
+
+                        'category': "",
+
+                        'presets': "",
+
+                        'override_parameter': ""
+
+                    }
+
+                    description.write(descrp)
+
+                description_info.override_parameter = []
+
+                description_info.presets = []
 
         return description_info
 
@@ -1114,13 +1145,10 @@ class Configs:
 
 
 
-        if os.path.exists(os.path.join(os.path.join(location, "profile"))):
+        with open(os.path.join(os.path.join(location, "profile"),"mod.ini"), 'w') as descrp:
 
 
-            with open(os.path.join(os.path.join(location, "profile"),"mod.ini"), 'w') as descrp:
-
-
-                description['Mod'] = {
+            description['Mod'] = {
 
 
                     'name': '"' + str(mod.description.name) + '"',
@@ -1149,15 +1177,14 @@ class Configs:
 
                     'override_parameter': listToStr2
 
-                }
-
-                
+            }
 
 
+            description.write(descrp)
+
+    
 
 
-
-                description.write(descrp)
 
 
 
