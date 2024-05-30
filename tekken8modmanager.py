@@ -36,7 +36,7 @@ from OpenGL.GL import *
 from PIL import Image
 
 
-
+from enum import Enum
 
 
 
@@ -106,20 +106,6 @@ class ModListFormat:
     conflict: list = []
 
 
-"""
-
-class DataBase:
-    
-    def __init__(self):
-        self.headers: list = ["ui","stage","character-common",]
-
-        self.stage: list = ["arena", "arena(underground)", "urban-square-(evening)","yakushima","coliseum-of-fate","rebel-hanger", "descent-into-subconscious","sanctum","into-the-stratosphere", "ortiz-farm","selcuded-training-ground", "elegant-palace","midnight-siege","celebration-on-the-seine","urban-sqaure", "stage::fallen-destiny"]
-        self.ui: list = ["health-bar", "time", "heat-engan-bar","mainmenu-character"]
-        #self.sound: list = []
-            
-        self.namingformat: str = "{0}::{1}"
-"""
-
 
 
 def name_sort(mod_list: list):
@@ -144,6 +130,30 @@ class ConflictManagement:
 
         self.history: list = []
 
+
+        """
+        class header(Enum):
+            
+            ui = 1
+            stage = 2
+            character = 3
+            charactercommon = 4
+            sound = 5
+            others = 6
+
+        self.stage: list = ["arena", "arena(underground)", "urban-square-(evening)","yakushima","coliseum-of-fate","rebel-hanger", "descent-into-subconscious","sanctum","into-the-stratosphere", "ortiz-farm","selcuded-training-ground", "elegant-palace","midnight-siege","celebration-on-the-seine","urban-sqaure", "stage::fallen-destiny"]
+        self.ui: list = ["health-bar", "time", "heat-engan-bar","mainmenu-character"]
+        self.sound: list = ["heat-engager"]
+        self.character: list = []
+        self.charactercommon = []
+        self.other = []
+        
+        self.mylist = [self.ui,self.stage,self.character,self.charactercommon,self.sound,self.other]
+            
+        self.namingformat: str = "{0}::{1}"
+        
+        #print(self.namingformat.format(header.ui.name,self.mylist[header.ui.value][0]))
+        """
 
 
     def demo(self):
@@ -622,13 +632,6 @@ class Configs:
 
 
 
-            # docked
-
-
-            self.owner.ui.docked = configfile.getboolean(header, 'docked', fallback=False)
-
-
-
             #presets
 
 
@@ -638,6 +641,11 @@ class Configs:
             # Round Frame
 
             self.owner.ui.round = int(configfile.get(header, 'round_frame', fallback=5))
+
+
+            # search bar
+
+            self.owner.ui.toggle_search_bar = configfile.getboolean(header, 'searchbar', fallback=False)
 
 
 
@@ -686,13 +694,13 @@ class Configs:
                                     'dpi_scale': str(self.dpi_scale),
 
 
-                                    'docked': str(self.owner.ui.docked),
-
-
                                     'presets': listToStr,
 
 
-                                    'warning': str(self.owner.ui.conflict_notification)
+                                    'warning': str(self.owner.ui.conflict_notification),
+
+
+                                    'searchbar': str(self.owner.ui.toggle_search_bar)
 
 
                                     }
@@ -762,47 +770,48 @@ class Configs:
 
 
 
-
-        if sys.platform == "win32":
-           
-
-            # hack for user custom fonts
-
-            _path = os.path.join(os.path.join(self.owner.pure_dir,"assets"),"fonts")
-
-            if os.path.isdir(_path):
+        if getattr(sys, 'frozen', False) and hasattr(sys, '_MEIPASS'):
 
 
-                for i in os.listdir(_path):
+
+            if sys.platform == "win32":
+
+                # hack for user custom fonts
+                _path = os.path.join(os.path.join(self.owner.pure_dir,"assets"),"fonts")
+
+                if os.path.isdir(_path):
 
 
-                    font = []
+                    for i in os.listdir(_path):
 
 
-                    if i.endswith(".otf") or i.endswith(".ttf"):
+                        font = []
 
 
-                        for jj in range(15):
-
-                            font_path = os.path.join(_path, i)
-
-                            font.append((i + " " + str(font_size_in_pixels) + "px", io.fonts.add_font_from_file_ttf(font_path,font_size_in_pixels * font_scaling_factor)))
+                        if i.endswith(".otf") or i.endswith(".ttf"):
 
 
-                            font_size_in_pixels += 2
+                            for jj in range(15):
+
+                                font_path = os.path.join(_path, i)
+
+                                font.append((i + " " + str(font_size_in_pixels) + "px", io.fonts.add_font_from_file_ttf(font_path,font_size_in_pixels * font_scaling_factor)))
 
 
-                        font_size_in_pixels = 2
+                                font_size_in_pixels += 2
 
 
-                        self.fonts.append([i, font])
+                            font_size_in_pixels = 2
+
+
+                            self.fonts.append([i, font])
 
 
 
 
         #layout = [font][fontset][fontsizeindex][fontfile]
 
-
+        # to do: put a fail save if font is not preset revert to default
         self.selected_font = self.fonts[6][1][9][1]
 
 
@@ -936,8 +945,6 @@ class Configs:
         self.dpi_scale = 1.0
 
 
-        self.owner.ui.docked = True
-
 
         self.owner.ui.show_thumbnail = True
 
@@ -954,6 +961,8 @@ class Configs:
         self.owner.ui.conflict_notification = True
 
         self.owner.ui.round = 5
+
+        self.owner.ui.toggle_search_bar = False
 
 
         self.config_save_app_setting()
@@ -1376,9 +1385,6 @@ class WindowUI:
         self.highlight: ModListFormat = None
 
 
-        self.docked: bool = True
-
-
         self.toggle_edit_information: bool = False
 
 
@@ -1455,6 +1461,11 @@ class WindowUI:
 
 
 
+        self.toggle_search_bar: bool = False
+        self.search_bar = ""
+
+
+
     
 
     def ui_slide_transition(self, a: float, b: float, t: float):
@@ -1486,9 +1497,11 @@ class WindowUI:
           
     
 
-    def main_filter_bar(self):
+    def main_tools_bar(self):
 
         
+
+
 
 
         if self.toggle_viewmode == False:
@@ -2023,8 +2036,17 @@ class WindowUI:
 
 
 
+    def main_search_bar(self):
 
+        if self.toggle_search_bar:
+            imgui.set_next_item_width(400)
+            imgui.text("Search: ")
+            imgui.same_line()
+            _, self.search_bar = imgui.input_text("##searchbar",self.search_bar)
 
+            self.ui_spacing(6)
+
+        
 
 
 
@@ -2057,7 +2079,7 @@ class WindowUI:
                     imgui.open_popup("Window Configuration")
                     x,y = glfw.get_window_size(self.owner.window)
                     imgui.set_next_window_position((x - 600)*0.5,(y - 500) * 0.5)
-                    imgui.set_next_window_size_constraints((600, 580), (600, 580))
+                    imgui.set_next_window_size_constraints((600, 350), (600, 350))
 
                 imgui.pop_style_color()
 
@@ -2065,8 +2087,7 @@ class WindowUI:
 
                 # Option pop-up
 
-                
-                with imgui.begin_popup_modal("Window Configuration",imgui.WINDOW_NO_RESIZE) as select_popup:
+                with imgui.begin_popup_modal("Window Configuration",imgui.WINDOW_NO_SAVED_SETTINGS | imgui.WINDOW_NO_RESIZE | imgui.WINDOW_NO_COLLAPSE) as select_popup:
 
 
                     if select_popup.opened:
@@ -2075,314 +2096,322 @@ class WindowUI:
 
                         # Window & UI
 
+                        imgui.begin_tab_bar("windw_config_tabs")
 
-                        self.ui_spacing(3)
+                        if imgui.begin_tab_item("Window & UI Settings").selected:
+                            #self.ui_spacing(3)
 
 
-                        imgui.text("Window & UI Settings")
+                            #imgui.text("Window & UI Settings")
+
+                            #imgui.separator()
+
+
+
+
+
+
+
+                            # Maximised button
+
+
+                            imgui.text("Start Window Maximised:")
+
+                            imgui.same_line()
+
+
+                            changed, self.owner.config.maximised = imgui.checkbox("##Maximised", self.owner.config.maximised)
+
+
+                            if changed:
+
+
+                                self.owner.config.config_save_app_setting()
+
+
+
+
+
+                            # Show thumbnail button
+
+
+                            imgui.text("Show Thumbnail:")
+
+                            imgui.same_line()
+
+
+                            changed, self.owner.ui.show_thumbnail = imgui.checkbox("##pShow Thumbnail", self.owner.ui.show_thumbnail)
+
+
+                            if changed:
+
+
+                                self.owner.config.config_save_app_setting()
+
+
+
+
+
+                            # Scale Thumbnail
+
+
+                            imgui.text("Thumbnail Scale: ")
+
+                            imgui.same_line()
+
+
+                            self.owner.ui.thumbnail_size = imgui.slider_int("##Thumbnail_scale", self.owner.ui.thumbnail_size, 50, 100)[1]
+
+
+                            if imgui.is_item_edited():
+
+
+                                self.owner.config.config_save_app_setting()
+
+
+                            # Frame
+                            imgui.text("Round Frame:")
+
+                            imgui.same_line()
+
+
+                            self.owner.ui.round = imgui.slider_int("##round", self.owner.ui.round, 0, 15)[1]
+
+
+                            if imgui.is_item_edited():
+
+                                self.owner.config.config_save_app_setting()
+
+
+
+
+
+                            # Mod Conflict Notification
+                            imgui.text("Mod Conflict Notification:")
+                            imgui.same_line()
+
+
+                            changed, self.owner.ui.conflict_notification  = imgui.checkbox("##me",self.owner.ui.conflict_notification)
+
+
+                            if changed:
+
+
+                                self.owner.config.config_save_app_setting()
+
+
+
+                            # Show Search Bar
+                            imgui.text("Show Search Bar:")
+                            imgui.same_line()
+
+                            changed, self.owner.ui.toggle_search_bar = imgui.checkbox("##mffe",
+                                                                                          self.owner.ui.toggle_search_bar)
+
+                            if changed:
+                                self.owner.ui.search_bar = ""
+                                self.owner.config.config_save_app_setting()
+
+
+                            self.ui_spacing(5)
+
+
+                            imgui.end_tab_item()
+
+
+
+
+                        if imgui.begin_tab_item("Colour Setting").selected:
+
+
+
+
+                            #imgui.text("Colour Setting")
+
+                            #imgui.separator()
+
+
+
+
+                            # Change Button Colour
+
+
+                            imgui.text("Button Colour:")
+
+                            imgui.same_line()
+
+
+                            changed, self.owner.ui.button_colour = imgui.color_edit4("##button_colour", *self.owner.ui.button_colour,imgui.COLOR_EDIT_NO_ALPHA)
+
+
+                            if changed:
+
+
+                                self.owner.config.config_save_app_setting()
+
+
+
+                            # Change Background Colour
+
+
+                            imgui.text("Background Colour:")
+
+                            imgui.same_line()
+
+
+                            changed, self.owner.ui.bg_colour = imgui.color_edit4("##backgound_colour",*self.owner.ui.bg_colour, imgui.COLOR_EDIT_NO_ALPHA)
+
+
+                            if changed:
+
+
+                                self.owner.config.config_save_app_setting()
+
+
+
+                            self.ui_spacing(5)
+                            imgui.end_tab_item()
+
+
+
+
+
+                        if imgui.begin_tab_item("Font Setting").selected:
+                            # Font setting
+
+
+                            #imgui.text("Font Setting")
+                            #imgui.separator()
+
+
+                            imgui.text("Font Style:")
+                            imgui.same_line()
+
+
+
+                            items = []
+
+
+                            for i in self.owner.config.fonts:
+
+
+                                items.append(i[0])
+
+
+
+                            with imgui.begin_combo("##fontsizecombo", items[self.owner.config.selected]) as combo:
+
+
+                                if combo.opened:
+
+
+                                    for i, item in enumerate(items):
+
+
+                                        is_selected = (i == self.owner.config.selected)
+
+
+                                        if imgui.selectable(item, is_selected)[0]:
+
+
+                                            self.owner.config.selected = i
+
+
+                                            self.owner.config.config_font_type()
+
+
+                                            self.owner.config.config_save_app_setting()
+
+
+
+                                        # Set the initial focus when opening the combo (scrolling + keyboard navigation focus)
+
+
+                                        if is_selected:
+
+                                            imgui.set_item_default_focus()
+
+                            items.clear()
+
+
+
+                            imgui.text("Font Size:")
+
+                            imgui.same_line()
+
+
+
+                            items = []
+
+
+                            for i in self.owner.config.fonts[self.owner.config.selected][1]:
+
+
+                                items.append(i[0])
+
+
+
+                            with imgui.begin_combo("##dffeef", items[self.owner.config.selected_size]) as combos:
+
+
+                                if combos.opened:
+
+
+                                    for i, item in enumerate(items):
+
+
+                                        is_selected = (i == self.owner.config.selected_size)
+
+
+                                        if imgui.selectable(item, is_selected)[0]:
+
+
+                                            self.owner.config.selected_size = i
+
+
+                                            self.owner.config.config_font_type()
+
+
+                                            self.owner.config.config_save_app_setting()
+
+
+
+                                        # Set the initial focus when opening the combo (scrolling + keyboard navigation focus)
+
+
+                                        if is_selected:
+                                            imgui.set_item_default_focus()
+
+
+
+                            imgui.text("Font Colour:")
+
+                            imgui.same_line()
+
+
+                            changed, self.owner.config.font_colour = imgui.color_edit4("##font_colour",*self.owner.config.font_colour,imgui.COLOR_EDIT_NO_ALPHA)
+
+
+                            if changed:
+
+
+                                self.owner.config.config_save_app_setting()
+
+
+
+
+                            self.ui_spacing(5)
+
+                            imgui.end_tab_item()
+
+
+
+                        imgui.end_tab_bar()
+
+
+
 
                         imgui.separator()
-
-
-
-
-
-
-
-                        # Maximised button
-
-
-                        imgui.text("Start Window Maximised:")
-
-                        imgui.same_line()
-
-
-                        changed, self.owner.config.maximised = imgui.checkbox("##Maximised", self.owner.config.maximised)
-
-
-                        if changed:
-
-
-                            self.owner.config.config_save_app_setting()
-
-
-
-
-
-                        # Show thumbnail button
-
-
-                        imgui.text("Show Thumbnail:")
-
-                        imgui.same_line()
-
-
-                        changed, self.owner.ui.show_thumbnail = imgui.checkbox("##pShow Thumbnail", self.owner.ui.show_thumbnail)
-
-
-                        if changed:
-
-
-                            self.owner.config.config_save_app_setting()
-
-
-
-
-
-                        # Scale Thumbnail
-
-
-                        imgui.text("Thumbnail Scale: ")
-
-                        imgui.same_line()
-
-
-                        self.owner.ui.thumbnail_size = imgui.slider_int("##Thumbnail_scale", self.owner.ui.thumbnail_size, 50, 100)[1]
-
-
-                        if imgui.is_item_edited():
-
-
-                            self.owner.config.config_save_app_setting()
-
-                        
-                        # Frame
-                        imgui.text("Round Frame:")
-
-                        imgui.same_line()
-
-
-                        self.owner.ui.round = imgui.slider_int("##round", self.owner.ui.round, 0, 15)[1]
-
-
-                        if imgui.is_item_edited():
-
-                            self.owner.config.config_save_app_setting()
-
-                       
-                        # Docking description box
-
-
-                        imgui.text("Dock Details Panel:")
-
-                        imgui.same_line()
-
-
-                        changed, self.owner.ui.docked = imgui.checkbox("##dockinformation", self.owner.ui.docked)
-
-
-                        if changed:
-
-
-                            self.owner.config.config_save_app_setting()
-
-                       
-                        
-                        
-
-                        imgui.text("Mod Conflict Notification:")
-                        imgui.same_line()
-
-
-                        changed, self.owner.ui.conflict_notification  = imgui.checkbox("##me",self.owner.ui.conflict_notification)
-
-
-                        if changed:
-
-
-                            self.owner.config.config_save_app_setting()
-                        
-                    
-                       
-
-
-
-
-
-                        self.ui_spacing(5)
-
-
-
-                        # Font setting
-
-
-                        imgui.text("Colour Setting")
-
-                        imgui.separator()
-
-
-
-
-                        # Change Button Colour
-
-
-                        imgui.text("Button Colour:")
-
-                        imgui.same_line()
-
-
-                        changed, self.owner.ui.button_colour = imgui.color_edit4("##button_colour", *self.owner.ui.button_colour,imgui.COLOR_EDIT_NO_ALPHA)
-
-
-                        if changed:
-
-
-                            self.owner.config.config_save_app_setting()
-
-
-
-                        # Change Background Colour
-
-
-                        imgui.text("Background Colour:")
-
-                        imgui.same_line()
-
-
-                        changed, self.owner.ui.bg_colour = imgui.color_edit4("##backgound_colour",*self.owner.ui.bg_colour, imgui.COLOR_EDIT_NO_ALPHA)
-
-
-                        if changed:
-
-
-                            self.owner.config.config_save_app_setting()
-
-
-
-                        self.ui_spacing(5)
-
-
-
-                        # Font setting
-
-
-                        imgui.text("Font Setting")
-                        imgui.separator()
-
-
-                        imgui.text("Font Style:")
-                        imgui.same_line()
-
-
-
-                        items = []
-
-
-                        for i in self.owner.config.fonts:
-
-
-                            items.append(i[0])
-
-
-
-                        with imgui.begin_combo("##fontsizecombo", items[self.owner.config.selected]) as combo:
-
-
-                            if combo.opened:
-
-
-                                for i, item in enumerate(items):
-
-
-                                    is_selected = (i == self.owner.config.selected)
-
-
-                                    if imgui.selectable(item, is_selected)[0]:
-
-
-                                        self.owner.config.selected = i
-
-
-                                        self.owner.config.config_font_type()
-
-
-                                        self.owner.config.config_save_app_setting()
-
-
-
-                                    # Set the initial focus when opening the combo (scrolling + keyboard navigation focus)
-
-
-                                    if is_selected:
-
-                                        imgui.set_item_default_focus()
-
-                        items.clear()
-
-
-
-                        imgui.text("Font Size:")
-
-                        imgui.same_line()
-
-
-
-                        items = []
-
-
-                        for i in self.owner.config.fonts[self.owner.config.selected][1]:
-
-
-                            items.append(i[0])
-
-
-
-                        with imgui.begin_combo("##dffeef", items[self.owner.config.selected_size]) as combos:
-
-
-                            if combos.opened:
-
-
-                                for i, item in enumerate(items):
-
-
-                                    is_selected = (i == self.owner.config.selected_size)
-
-
-                                    if imgui.selectable(item, is_selected)[0]:
-
-
-                                        self.owner.config.selected_size = i
-
-
-                                        self.owner.config.config_font_type()
-
-
-                                        self.owner.config.config_save_app_setting()
-                           
-
-
-                                    # Set the initial focus when opening the combo (scrolling + keyboard navigation focus)
-
-
-                                    if is_selected:
-                                        imgui.set_item_default_focus()
-
-
-
-                        imgui.text("Font Colour:")
-
-                        imgui.same_line()
-
-
-                        changed, self.owner.config.font_colour = imgui.color_edit4("##font_colour",*self.owner.config.font_colour,imgui.COLOR_EDIT_NO_ALPHA)
-
-
-                        if changed:
-
-
-                            self.owner.config.config_save_app_setting()
-
-
-
-
-                        self.ui_spacing(5)
-
-
-
-
-                        imgui.separator()
-
 
                         if imgui.button("Reset to Default"):
 
@@ -2418,7 +2447,7 @@ class WindowUI:
 
 
                     self.toggle_viewmode = False
-
+                    self.search_bar = ""
 
                     self.owner.config.config_save_app_setting()
 
@@ -2606,7 +2635,6 @@ class WindowUI:
 
 
 
-    
 
     def history_box(self, pattern: str):
 
@@ -2629,8 +2657,8 @@ class WindowUI:
 
                         for v in self.owner.config.conflict.history:
 
-                            if re.search(pattern, v):
-                                imgui.selectable(v)
+                            if re.search(pattern.lower(), v.lower()):
+                                imgui.selectable(v.lower())
 
 
 
@@ -2668,6 +2696,8 @@ class WindowUI:
 
 
 
+
+
     def description_box(self):
 
 
@@ -2680,50 +2710,35 @@ class WindowUI:
 
             
 
-            if self.docked:
-        
-
-                imgui.set_next_window_size(self.scaling() * self.font_padding, glfw.get_window_size(self.owner.window)[1] - 26)
 
 
-                imgui.set_next_window_position(self.scaling() * glfw.get_window_size(self.owner.window)[0] - self.font_padding, self.scaling() * 26)
+
+            imgui.set_next_window_size(self.scaling() * self.font_padding, glfw.get_window_size(self.owner.window)[1] - 26)
+
+
+            imgui.set_next_window_position(self.scaling() * glfw.get_window_size(self.owner.window)[0] - self.font_padding, self.scaling() * 26)
 
 
 
             flags: int = 0
 
 
-            if self.docked:
 
 
-                if self.stop_scroll == True:
+
+            if self.stop_scroll == True:
 
 
                     flags =  imgui.WINDOW_NO_SAVED_SETTINGS | imgui.WINDOW_NO_TITLE_BAR | imgui.WINDOW_ALWAYS_AUTO_RESIZE | imgui.WINDOW_NO_MOVE | imgui.WINDOW_NO_COLLAPSE | imgui.WINDOW_NO_BRING_TO_FRONT_ON_FOCUS | imgui.WINDOW_NO_SCROLL_WITH_MOUSE
 
 
-                else:
+            else:
 
 
                     flags =  imgui.WINDOW_NO_SAVED_SETTINGS | imgui.WINDOW_NO_TITLE_BAR | imgui.WINDOW_ALWAYS_AUTO_RESIZE | imgui.WINDOW_NO_MOVE | imgui.WINDOW_NO_COLLAPSE | imgui.WINDOW_NO_BRING_TO_FRONT_ON_FOCUS
 
 
 
-            else:
-
-
-                if self.stop_scroll is True:
-
-
-                    flags =  imgui.WINDOW_NO_SAVED_SETTINGS  | imgui.WINDOW_NO_TITLE_BAR | imgui.WINDOW_ALWAYS_AUTO_RESIZE | imgui.WINDOW_NO_COLLAPSE | imgui.WINDOW_NO_SCROLL_WITH_MOUSE
-
-
-
-                else:
-
-
-
-                    flags =  imgui.WINDOW_NO_SAVED_SETTINGS  | imgui.WINDOW_NO_TITLE_BAR | imgui.WINDOW_ALWAYS_AUTO_RESIZE | imgui.WINDOW_NO_COLLAPSE
 
 
 
@@ -3397,8 +3412,10 @@ class WindowUI:
         """
 
 
+
         self.ui_spacing(18)
 
+        self.main_search_bar()
 
 
         for i in self.owner.config.mod_list:
@@ -3407,74 +3424,77 @@ class WindowUI:
             if (self.filter_bar == "All" or self.filter_bar.lower() == i.description.category.lower()) and i.is_mod_folder == True:
 
 
-
-                if self.show_thumbnail is True:
-
-                  
-                    imgui.push_id(i.name)
-
-
-                    if imgui.image_button(i.icon[0][0], self.thumbnail_size, self.thumbnail_size):
-
-
-                        if self.highlight != i:
-
-
-                            self.image_scrollwheel = 0
-
-
-                            self.toggle_edit_information = False
-
-                            self.show_history = False
-
-
-                        self.highlight = i
-
-                        self.show = True
+                if re.search(self.search_bar.lower(), i.name.lower()) or re.search(self.search_bar.lower(), i.description.name.lower()):
 
 
 
-                    if self.highlight is None:
+                    if self.show_thumbnail is True:
+
+
+                        imgui.push_id(i.name)
+
+
+                        if imgui.image_button(i.icon[0][0], self.thumbnail_size, self.thumbnail_size):
+
+
+                            if self.highlight != i:
+
+
+                                self.image_scrollwheel = 0
+
+
+                                self.toggle_edit_information = False
+
+                                self.show_history = False
+
+
+                            self.highlight = i
+
+                            self.show = True
 
 
 
-                        if imgui.is_item_hovered():
-
-
-                            if imgui.begin_tooltip():
-
-
-                                imgui.image(i.icon[0][0], i.icon[0][1], i.icon[0][2])
-
-                                self.mini_description(i)
-                            imgui.end_tooltip()
-
-                    imgui.pop_id()
-
-                    imgui.same_line()
+                        if self.highlight is None:
 
 
 
-                changed, i.active = imgui.checkbox(i.name, i.active)
+                            if imgui.is_item_hovered():
 
 
-                if changed:
+                                if imgui.begin_tooltip():
 
 
-                    self.activation_list(i)
+                                    imgui.image(i.icon[0][0], i.icon[0][1], i.icon[0][2])
+
+                                    self.mini_description(i)
+                                imgui.end_tooltip()
+
+                        imgui.pop_id()
+
+                        imgui.same_line()
 
 
-                    self.owner.config.conflict.generate_conflict_list()
-                
-                
-                
-                
 
-                if self.conflict_notification:
+                    changed, i.active = imgui.checkbox(i.name, i.active)
 
 
-                    self.owner.config.conflict.ui_conflict_warning(i)
-            
+                    if changed:
+
+
+                        self.activation_list(i)
+
+
+                        self.owner.config.conflict.generate_conflict_list()
+
+
+
+
+
+                    if self.conflict_notification:
+
+
+                        self.owner.config.conflict.ui_conflict_warning(i)
+
 
                 
     
@@ -3587,28 +3607,26 @@ class WindowUI:
                     for i in self.owner.config.mod_list:
                         
 
-                        if self.docked:
+
+                        if imgui.is_item_hovered():
 
 
-                            if imgui.is_item_hovered():
+                            if item == i.name:
 
 
-                                if item == i.name:
+                                if i.is_mod_folder is True and self.toggle_edit_information is False:
 
 
-                                    if i.is_mod_folder is True and self.toggle_edit_information is False:
+                                    self.highlight = i
 
 
-                                        self.highlight = i
+                                    self.image_scrollwheel = 0
 
 
-                                        self.image_scrollwheel = 0
+                                    self.show = True
 
 
-                                        self.show = True
-
-
-                                        break
+                                    break
                             
                             
 
@@ -3754,7 +3772,7 @@ class WindowUI:
 
 
 
-            self.main_filter_bar()
+            self.main_tools_bar()
                 
 
                
@@ -3811,7 +3829,6 @@ class WindowUI:
 
 
 
-
         if self.show:
 
 
@@ -3863,6 +3880,8 @@ class WindowUI:
 
 
         imgui.push_style_color(imgui.COLOR_TITLE_BACKGROUND_ACTIVE, *self.owner.ui.button_colour)
+
+        imgui.push_style_color(imgui.COLOR_TAB,*self.owner.ui.button_colour )
 
 
 
@@ -3936,6 +3955,8 @@ class WindowUI:
 
 
         imgui.pop_style_var()
+
+        imgui.pop_style_color()
 
 
 
