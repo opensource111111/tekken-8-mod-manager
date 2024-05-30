@@ -2099,21 +2099,10 @@ class WindowUI:
                         imgui.begin_tab_bar("windw_config_tabs")
 
                         if imgui.begin_tab_item("Window & UI Settings").selected:
-                            #self.ui_spacing(3)
-
-
-                            #imgui.text("Window & UI Settings")
-
-                            #imgui.separator()
-
-
-
-
 
 
 
                             # Maximised button
-
 
                             imgui.text("Start Window Maximised:")
 
@@ -2225,14 +2214,6 @@ class WindowUI:
 
 
 
-
-                            #imgui.text("Colour Setting")
-
-                            #imgui.separator()
-
-
-
-
                             # Change Button Colour
 
 
@@ -2277,13 +2258,10 @@ class WindowUI:
 
 
                         if imgui.begin_tab_item("Font Setting").selected:
+
+
+
                             # Font setting
-
-
-                            #imgui.text("Font Setting")
-                            #imgui.separator()
-
-
                             imgui.text("Font Style:")
                             imgui.same_line()
 
@@ -2411,6 +2389,7 @@ class WindowUI:
 
 
 
+
                         imgui.separator()
 
                         if imgui.button("Reset to Default"):
@@ -2521,35 +2500,31 @@ class WindowUI:
 
 
                 imgui.begin("About", False, imgui.WINDOW_NO_SAVED_SETTINGS | imgui.WINDOW_NO_RESIZE | imgui.WINDOW_NO_COLLAPSE)
+                x, y = imgui.get_window_size()
 
 
-                imgui.indent(imgui.get_content_region_available_width() /4)
+                imgui.indent(x*0.2)
 
 
                 imgui.image(self.about_logo[0], self.about_logo[1] * 0.5, self.about_logo[2] * 0.5)
 
+                imgui.unindent(x*0.2)
 
-                imgui.indent(imgui.get_content_region_available_width() * 0.06)
 
 
+                imgui.indent(x * 0.24)
                 imgui.text_wrapped(self.about_message)
+                imgui.unindent(x * 0.24)
 
 
-
-                imgui.indent(-imgui.get_content_region_available_width() /4)
-
-
-                imgui.indent(imgui.get_content_region_available_width()/3.8)
-
-
-
+                imgui.indent(x * 0.31)
                 if imgui.button("Source Code"):
 
 
                     webbrowser.open(self.source_code, new=2)
 
 
-
+                
                 if imgui.is_item_hovered():
 
 
@@ -2559,38 +2534,23 @@ class WindowUI:
                         imgui.text(self.source_code)
                         imgui.end_tooltip()
 
-
-              
-
-
-
-
-                imgui.indent(-imgui.get_content_region_available_width() /4)
-
-
-                imgui.indent(imgui.get_content_region_available_width() /3.8)
-                
-
+                imgui.unindent(x * 0.31)
 
                 self.ui_spacing(2)
 
 
+                imgui.indent(x * 0.38)
                 if imgui.button("Close"):
 
 
                     self.toggle_about = False
 
+                imgui.unindent(x * 0.38)
 
-
-                imgui.indent(-imgui.get_content_region_available_width() * 0.3)
                 imgui.end()
 
 
                 imgui.pop_style_var()
-
-
-
-            
 
 
             #-------------------------------------------------------------------------------------------
@@ -2599,8 +2559,8 @@ class WindowUI:
 
             # Refresh Button
 
-
-            imgui.set_window_position(20, 0)
+            imgui.text("  |")
+            imgui.set_window_position(19, 0)
 
 
             if imgui.button("Refresh List"):
