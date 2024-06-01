@@ -432,9 +432,7 @@ class Configs:
 
     def __init__(self, owner: object):
 
-
         self.owner = owner
-
 
 
         # font setting vars
@@ -457,9 +455,7 @@ class Configs:
 
 
         self.style: imgui.styled = None
-
-
-        self.dpi_scale: float = 1.0
+        self.vvv = None
 
 
 
@@ -482,7 +478,38 @@ class Configs:
 
         self.conflict = ConflictManagement(self.owner)
 
+    
+    
+    class DefaultWindowValues:
 
+
+        def __init__(self, style: imgui.styled):
+
+            self.window_padding = getattr(style, "window_padding")
+            self.window_rounding=  getattr(style, "window_rounding")
+            self.window_min_size = getattr(style,"window_min_size")
+            self.child_rounding = getattr(style,"child_rounding")
+            self.popup_rounding = getattr(style,"popup_rounding")
+            self.frame_padding = getattr(style,"frame_padding")
+            self.frame_rounding= getattr(style,"frame_rounding")
+            self.item_spacing= getattr(style,"item_spacing")
+            self.item_inner_spacing= getattr(style,"item_inner_spacing")
+            self.cell_padding= getattr(style,"cell_padding")
+            self.touch_extra_padding = getattr(style,"touch_extra_padding")
+            self.indent_spacing= getattr(style,"indent_spacing")
+            self.columns_min_spacing =getattr(style, "columns_min_spacing")
+            self.scrollbar_size = getattr(style,"scrollbar_size")
+            self.scrollbar_rounding = getattr(style,"scrollbar_rounding")
+            self.grab_min_size= getattr(style,"grab_min_size")
+            self.grab_rounding = getattr(style,"grab_rounding")
+            self.log_slider_deadzone = getattr(style,"log_slider_deadzone")
+            self.tab_rounding= getattr(style,"tab_rounding")
+            self.tab_min_width_for_close_button = getattr(style,"tab_min_width_for_close_button")
+            self.display_window_padding=getattr(style,"display_window_padding")
+            self.display_safe_area_padding= getattr(style,"display_safe_area_padding")
+            self.mouse_cursor_scale= getattr(style,"mouse_cursor_scale")
+
+        
 
 
 
@@ -617,11 +644,9 @@ class Configs:
             # UI Scale(WIP)
 
 
-            self.dpi_scale = configfile.getfloat(header, 'dpi_scale', fallback=1.0)
+            self.owner.ui.application_scale = configfile.getfloat(header, 'application_scale', fallback=1.0)
 
-
-            self._imgui_scale_all_sizes(self.style, self.dpi_scale, self.dpi_scale)
-
+            self._imgui_scale_all_sizes(self.style, self.owner.ui.application_scale, self.owner.ui.application_scale)
 
 
 
@@ -691,7 +716,7 @@ class Configs:
                                     "round_frame": str(self.owner.ui.round),
 
 
-                                    'dpi_scale': str(self.dpi_scale),
+                                    'application_scale': str(self.owner.ui.application_scale),
 
 
                                     'presets': listToStr,
@@ -846,8 +871,8 @@ class Configs:
         def scale_it(attrname: str) -> None:
 
 
-            value = getattr(style, attrname)
-
+            value = vars(self.vvv).get(attrname)
+            #print(value)
 
 
             if isinstance(value, imgui.Vec2):
@@ -867,37 +892,48 @@ class Configs:
 
 
 
-        # scale_it("window_padding")
-
-
+        scale_it("window_padding")
         scale_it("window_rounding")
 
 
         scale_it("window_min_size")
 
 
-        scale_it("child_rounding")
-        scale_it("popup_rounding")
+
         scale_it("frame_padding")
         scale_it("frame_rounding")
-        scale_it("item_spacing")
+
+
+
+        scale_it("child_rounding")
+
+        scale_it("popup_rounding")
+
+
+
+        #scale_it("item_spacing")
+
         scale_it("item_inner_spacing")
-        scale_it("cell_padding")
 
-
-        scale_it("touch_extra_padding")
         scale_it("indent_spacing")
+
         scale_it("columns_min_spacing")
 
 
-        scale_it("scrollbar_size")
 
+        scale_it("cell_padding")
+
+        scale_it("touch_extra_padding")
+
+
+
+
+        scale_it("scrollbar_size")
 
         scale_it("scrollbar_rounding")
 
 
         scale_it("grab_min_size")
-
 
         scale_it("grab_rounding")
 
@@ -907,14 +943,14 @@ class Configs:
 
         scale_it("tab_rounding")
 
-
         scale_it("tab_min_width_for_close_button")
 
 
         scale_it("display_window_padding")
 
-
         scale_it("display_safe_area_padding")
+
+
         scale_it("mouse_cursor_scale")
 
 
@@ -942,8 +978,8 @@ class Configs:
         self.maximised = False
 
 
-        self.dpi_scale = 1.0
-
+        self.owner.ui.application_scale = 1.0
+        self._imgui_scale_all_sizes(self.style, self.owner.ui.application_scale, self.owner.ui.application_scale)
 
 
         self.owner.ui.show_thumbnail = True
@@ -1442,7 +1478,7 @@ class WindowUI:
         self.conflict_notification: bool = False
 
 
-
+        self.application_scale = 1.0
 
         # lerp transition
 
@@ -1744,10 +1780,7 @@ class WindowUI:
 
         imgui.set_next_window_size_constraints((400, 130), (400, 130))
 
-        with imgui.begin_popup_modal("Add New Preset",
-
-
-                                     imgui.WINDOW_NO_RESIZE | imgui.WINDOW_NO_DECORATION) as select_popup:
+        with imgui.begin_popup_modal("Add New Preset",imgui.WINDOW_NO_RESIZE | imgui.WINDOW_NO_DECORATION) as select_popup:
 
 
             if select_popup.opened:
@@ -1812,9 +1845,8 @@ class WindowUI:
 
 
 
-
-
         imgui.same_line()
+
 
         if imgui.button(" - "):
 
@@ -1877,9 +1909,9 @@ class WindowUI:
 
 
 
-
-
         imgui.same_line()
+
+
 
 
         if imgui.button("Apply"):
@@ -1908,7 +1940,6 @@ class WindowUI:
 
 
 
-
         imgui.same_line()
 
 
@@ -1929,10 +1960,7 @@ class WindowUI:
 
         imgui.set_next_window_size_constraints((400, 150), (400, 150))
 
-        with imgui.begin_popup_modal("Rename",
-
-
-                                     imgui.WINDOW_NO_RESIZE | imgui.WINDOW_NO_DECORATION) as select_popup:
+        with imgui.begin_popup_modal("Rename",imgui.WINDOW_NO_RESIZE | imgui.WINDOW_NO_DECORATION) as select_popup:
 
 
             if select_popup.opened:
@@ -1998,9 +2026,7 @@ class WindowUI:
 
 
 
-
         # mod counter for each section
-
 
         for i in self.owner.config.mod_list:
 
@@ -2027,8 +2053,6 @@ class WindowUI:
 
         imgui.text("Enabled: " + str(e))
         imgui.same_line()
-
-
         imgui.text("Disabled: " + str(d))
 
 
@@ -2044,7 +2068,7 @@ class WindowUI:
             imgui.same_line()
             _, self.search_bar = imgui.input_text("##searchbar",self.search_bar)
 
-            self.ui_spacing(6)
+            self.ui_spacing(6* int(self.application_scale))
 
         
 
@@ -2099,6 +2123,21 @@ class WindowUI:
                         imgui.begin_tab_bar("windw_config_tabs")
 
                         if imgui.begin_tab_item("Window & UI Settings").selected:
+
+
+                            #Application Scale
+
+                            imgui.text("Application Scale:")
+
+                            imgui.same_line()
+
+
+                            changed, self.owner.ui.application_scale = imgui.slider_float("##ApplicationScale", self.owner.ui.application_scale,1,10,'%.1f')
+
+
+                            if changed:
+                                self.owner.config._imgui_scale_all_sizes(self.owner.config.style, self.application_scale, self.application_scale)
+                                self.owner.config.config_save_app_setting()
 
 
 
@@ -2394,7 +2433,6 @@ class WindowUI:
 
                         if imgui.button("Reset to Default"):
 
-
                             self.owner.config.config_default_settings()
 
 
@@ -2493,7 +2531,7 @@ class WindowUI:
             if self.toggle_about:
 
 
-                imgui.push_style_var(imgui.STYLE_WINDOW_BORDERSIZE, 3.0)
+                imgui.push_style_var(imgui.STYLE_WINDOW_BORDERSIZE, 1.0)
 
 
 
@@ -2584,8 +2622,6 @@ class WindowUI:
 
 
 
-
-
     def ui_spacing(self, space: int):
 
 
@@ -2609,7 +2645,7 @@ class WindowUI:
                     
                     if len(self.owner.config.conflict.history) != 0:
                         imgui.push_style_color(imgui.COLOR_WINDOW_BACKGROUND, 0, 0, 0, 0.6)
-                        # imgui.set_next_window_size_constraints((250,200),(250,200))
+                        imgui.push_style_var(imgui.STYLE_WINDOW_BORDERSIZE, 1.0)
                         opened = imgui.begin("Previously used tags", True, imgui.WINDOW_NO_COLLAPSE | imgui.WINDOW_NO_FOCUS_ON_APPEARING )
                         
                     
@@ -2645,6 +2681,7 @@ class WindowUI:
                         imgui.end()
 
                         imgui.pop_style_color()
+                        imgui.pop_style_var()
 
                         
                         if imgui.is_key_pressed(glfw.KEY_ENTER):
@@ -2661,8 +2698,6 @@ class WindowUI:
     def description_box(self):
 
 
-
-        imgui.push_style_color(imgui.COLOR_WINDOW_BACKGROUND, self.owner.ui.bg_colour[0] * 0.5, self.owner.ui.bg_colour[1] * 0.5, self.owner.ui.bg_colour[2] * 0.5, 1)
 
 
 
@@ -2698,8 +2733,8 @@ class WindowUI:
                     flags =  imgui.WINDOW_NO_SAVED_SETTINGS | imgui.WINDOW_NO_TITLE_BAR | imgui.WINDOW_ALWAYS_AUTO_RESIZE | imgui.WINDOW_NO_MOVE | imgui.WINDOW_NO_COLLAPSE | imgui.WINDOW_NO_BRING_TO_FRONT_ON_FOCUS
 
 
-
-
+            imgui.push_style_color(imgui.COLOR_WINDOW_BACKGROUND, self.owner.ui.bg_colour[0] * 0.5,
+                                   self.owner.ui.bg_colour[1] * 0.5, self.owner.ui.bg_colour[2] * 0.5, 1)
 
 
             with imgui.begin(self.highlight.name + "Details", False, flags):
@@ -2803,10 +2838,9 @@ class WindowUI:
 
                         os.system('xdg-open "%s"' % "{0}".format(self.highlight.location))
 
-                imgui.unindent(
 
 
-                    self.scaling() * imgui.get_window_size()[0] - 150 * (self.owner.config.selected_size * 0.1))
+                imgui.unindent(self.scaling() * imgui.get_window_size()[0] - 150 * (self.owner.config.selected_size * 0.1))
 
 
 
@@ -3328,7 +3362,7 @@ class WindowUI:
 
 
 
-        imgui.pop_style_color()
+            imgui.pop_style_color()
 
 
 
@@ -3373,8 +3407,7 @@ class WindowUI:
 
 
 
-        self.ui_spacing(18)
-
+        self.ui_spacing(18* int(self.application_scale))
         self.main_search_bar()
 
 
@@ -3394,7 +3427,7 @@ class WindowUI:
                         imgui.push_id(i.name)
 
 
-                        if imgui.image_button(i.icon[0][0], self.thumbnail_size, self.thumbnail_size):
+                        if imgui.image_button(i.icon[0][0], self.thumbnail_size* self.application_scale, self.thumbnail_size* self.application_scale):
 
 
                             if self.highlight != i:
@@ -3745,7 +3778,6 @@ class WindowUI:
         imgui.set_next_window_position(0, 28 * (self.owner.config.selected_size * 0.1))
         
 
-
         with imgui.begin("##manager", False,imgui.WINDOW_NO_TITLE_BAR | imgui.WINDOW_ALWAYS_AUTO_RESIZE | imgui.WINDOW_NO_MOVE | imgui.WINDOW_NO_COLLAPSE | imgui.WINDOW_NO_BRING_TO_FRONT_ON_FOCUS):
 
 
@@ -3753,7 +3785,7 @@ class WindowUI:
             if self.toggle_viewmode is True:
 
 
-                self.ui_spacing(20)
+                self.ui_spacing(20 * int(self.application_scale))
 
 
                 self.ui_treeview(self.owner.path)
@@ -3765,7 +3797,7 @@ class WindowUI:
 
 
 
-                self.ui_spacing(4)
+                self.ui_spacing(4 * int(self.application_scale))
 
 
 
@@ -3792,7 +3824,7 @@ class WindowUI:
         if self.show:
 
 
-            self.ui_slide_transition(0,530,0.4)
+            self.ui_slide_transition(0,530 ,0.4)
 
 
         else:
@@ -4220,12 +4252,8 @@ class ModManager:
 
 
 
-        # Config fonts
-        self.config.style = imgui.get_style()
-
-
+        # config font
         self.config.get_font_collection()
-
 
         self.impl.refresh_font_texture()
 
@@ -4236,6 +4264,12 @@ class ModManager:
         self.ui = WindowUI(self)
 
    
+
+
+        # get window defautl scale so we can change.
+        # Config style
+        self.config.style = imgui.get_style()
+        self.config.vvv = self.config.DefaultWindowValues(self.config.style)
 
 
         # Apply setting to ui

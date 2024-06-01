@@ -5,6 +5,13 @@
 
 Any feedback, bugs or issues, please post in the comment section. Thank you.
 
+### 1st June 2024
+1. Added a search bar to list view mode. Enable this option in the window configuration menu.
+2. Added a application scale slide in the window configuration menu.
+3. Remove the dock information panel option in window configuration menu. The Detail panel will be docked by default.
+
+
+
 
 ### 29th May 2024
 
