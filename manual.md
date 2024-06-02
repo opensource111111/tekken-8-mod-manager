@@ -19,7 +19,7 @@
 
 
    - 1.1. Window Configuration Menu.
-   <video src="assets/screenshots/features/ui/config.mp4" width="800" height="400*2" controls></video>
+   ![e.g](assets\screenshots\features\ui\config.gif)
    
 
 <p>&nbsp;</p>
@@ -52,19 +52,21 @@
 
 
       - 1.4.1 - Filter
-         <video src="assets/screenshots/features/ui/filter.mp4" width="800" height="400*2" controls></video>
+         ![e.g](assets\screenshots\features\ui\filter.gif)
+
 
 
       - 1.4.2 - Presets
 
          - Overview
-         <video src="assets/screenshots/features/ui/presets.mp4" width="800" height="400*2" controls></video>
+         ![e.g](assets\screenshots\features\ui\presets.gif)
 
          - Rename Preset
-         <video src="assets/screenshots/features/ui/rename.mp4" width="800" height="400*2" controls></video>
+         ![e.g](assets\screenshots\features\ui\rename.gif)
+
 
          - Add Preset
-          <video src="assets/screenshots/features/ui/addtopresets.mp4" width="800" height="400*2" controls></video>
+          ![e.g](assets\screenshots\features\ui\addtopresets.gif)
 
 
       
@@ -77,7 +79,8 @@
       ![e.g](assets/screenshots/features/ui/detailspanel.png)
 
 
-      <video src="assets/screenshots/features/ui/details panel.mp4" width="800" height="400*2" controls></video>
+      ![e.g](assets\screenshots\features\ui\detailspanel.gif)
+   
 
 
 
