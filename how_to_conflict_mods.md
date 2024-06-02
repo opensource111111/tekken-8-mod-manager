@@ -3,7 +3,7 @@
 ## Managing Mod Conflicts In Tekken 8 Mod Manager
 
 
-![conflict](assets\screenshots\conflict\conflicts.gif)
+![conflict](assets/screenshots/conflict/conflicts.gif)
 
 
 <p>&nbsp;</p>
