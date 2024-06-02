@@ -81,6 +81,9 @@ Any feedback, bugs or issues, please post in the comment section. Thank you. :)
 
    ![bar.png](assets/screenshots/conflict/example2.png)
 
+   <video src="assets/screenshots/conflict/conflicts.mp4" width="800" height="400" controls></video>
+
+
 
 
 Changelog History: https://github.com/opensource111111/tekken-8-mod-manager/blob/main/changelog.md
