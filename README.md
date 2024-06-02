@@ -122,14 +122,6 @@ Changelog History: https://github.com/opensource111111/tekken-8-mod-manager/blob
 
 
 
-
-
-<p>&nbsp;</p>
-<p>&nbsp;</p>
-<p>&nbsp;</p>
-
-
-
 ## Installation
    
    ### Option 1: Run from executable. (Windows Only)
