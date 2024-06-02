@@ -44,7 +44,9 @@ to enable/disable your mods with a switch.
 
 Source code: [https://github.com/opensource111111/tekken-8-mod-manager](https://github.com/opensource111111/tekken-8-mod-manager)
 
-Program Manua: 
+Program Manual:  [manual](manual)
+
+
 Any feedback, bugs or issues, please post in the comment section. Thank you. :)
 
 
