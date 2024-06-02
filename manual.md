@@ -19,7 +19,7 @@
 
 
    - 1.1. Window Configuration Menu.
-   ![e.g](assets\screenshots\features\ui\config.gif)
+   ![e.g](assets/screenshots/features/ui/config.gif)
    
 
 <p>&nbsp;</p>
@@ -52,21 +52,21 @@
 
 
       - 1.4.1 - Filter
-         ![e.g](assets\screenshots\features\ui\filter.gif)
+         ![e.g](assets/screenshots/features/ui/filter.gif)
 
 
 
       - 1.4.2 - Presets
 
          - Overview
-         ![e.g](assets\screenshots\features\ui\presets.gif)
+         ![e.g](assets/screenshots/features/ui/presets.gif)
 
          - Rename Preset
-         ![e.g](assets\screenshots\features\ui\rename.gif)
+         ![e.g](assets/screenshots/features/ui/rename.gif)
 
 
          - Add Preset
-          ![e.g](assets\screenshots\features\ui\addtopresets.gif)
+          ![e.g](assets/screenshots/features/ui/addtopresets.gif)
 
 
       
@@ -79,7 +79,7 @@
       ![e.g](assets/screenshots/features/ui/detailspanel.png)
 
 
-      ![e.g](assets\screenshots\features\ui\detailspanel.gif)
+      ![e.g](assets/screenshots/features/ui/detailspanel.gif)
    
 
 
