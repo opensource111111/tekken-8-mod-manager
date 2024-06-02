@@ -22,11 +22,10 @@
 1. [Description](#Description)
 2. [Updates](#Latest_Update)
 3. [How It Works](#How_It_Works)
-4. [Features](#Features)
-5. [Instructions](#Installation)
-6. [KnowIssues](#Know_Issues)
-7. [FAQ](#FAQ)
-6. [Credits](#Credits)
+4. [Instructions](#Installation)
+5. [KnowIssues](#Know_Issues)
+6. [FAQ](#FAQ)
+7. [Credits](#Credits)
 
 
 
@@ -45,7 +44,7 @@ to enable/disable your mods with a switch.
 
 Source code: [https://github.com/opensource111111/tekken-8-mod-manager](https://github.com/opensource111111/tekken-8-mod-manager)
 
-
+Program Manua: 
 Any feedback, bugs or issues, please post in the comment section. Thank you. :)
 
 
@@ -122,20 +121,6 @@ Changelog History: https://github.com/opensource111111/tekken-8-mod-manager/blob
 <p>&nbsp;</p>
 
 
-
-
-## Features
-
-   1. Two view modes.
-      - List - Enable/Disable individual mods in there separator folders 
-      - Tree: Enable/Disable Individual mods including there sub folders.
-
-   2. Details panel displaing a thumbnail and details of the mod current selected.
-
-   3. Window configuration menu.
-
-   4. A filter search bar, enable/disable buttons and create your own presets.
-  
 
 
 
