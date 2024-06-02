@@ -15,11 +15,11 @@
 
 
    ### 2. UI Overview
-   ![e.g](assets\screenshots\features\ui\ui.png)
+   ![e.g](assets/screenshots/features/ui/ui.png)
 
 
    - 1.1. Window Configuration Menu.
-   <video src="assets\screenshots\features\config.mp4" width="800" height="400*2" controls></video>
+   <video src="assets/screenshots/features/ui/config.mp4" width="800" height="400*2" controls></video>
    
 
 <p>&nbsp;</p>
@@ -52,19 +52,19 @@
 
 
       - 1.4.1 - Filter
-         <video src="assets\screenshots\features\ui\filter.mp4" width="800" height="400*2" controls></video>
+         <video src="assets/screenshots/features/ui/filter.mp4" width="800" height="400*2" controls></video>
 
 
       - 1.4.2 - Presets
 
          - Overview
-         <video src="assets\screenshots\features\ui\presets.mp4" width="800" height="400*2" controls></video>
+         <video src="assets/screenshots/features/ui/presets.mp4" width="800" height="400*2" controls></video>
 
          - Rename Preset
-         <video src="assets\screenshots\features\ui\rename.mp4" width="800" height="400*2" controls></video>
+         <video src="assets/screenshots/features/ui/rename.mp4" width="800" height="400*2" controls></video>
 
          - Add Preset
-          <video src="assets\screenshots\features\ui\addtopresets.mp4" width="800" height="400*2" controls></video>
+          <video src="assets/screenshots/features/ui/addtopresets.mp4" width="800" height="400*2" controls></video>
 
 
       
@@ -74,10 +74,10 @@
 
    - 1.5.  Details Panel
    
-      ![e.g](assets\screenshots\features\ui\detailspanel.png)
+      ![e.g](assets/screenshots/features/ui/detailspanel.png)
 
 
-      <video src="assets\screenshots\features\ui\details panel.mp4" width="800" height="400*2" controls></video>
+      <video src="assets/screenshots/features/ui/details panel.mp4" width="800" height="400*2" controls></video>
 
 
 
