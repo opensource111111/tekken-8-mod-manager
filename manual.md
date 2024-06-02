@@ -7,7 +7,7 @@
       ![e.g](assets/screenshots/features/file_folders/mod.png)
 
 
-   - 1.2 - Inside a profile folder located inside each mod folder. Add your image files inside here. The file type(.png, .jpg/jpeg, .bmp, .webp). The image file can be named want ever you want.
+   - 1.2 - Inside a profile folder located inside each mod folder. Add your image files inside here. The file type(.png, .jpg/jpeg, .bmp, .webp). The image file can be any name of your choice.
       ![e.g](assets/screenshots/features/file_folders/profile.png)
 
 
