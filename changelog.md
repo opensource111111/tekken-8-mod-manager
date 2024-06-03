@@ -5,6 +5,13 @@
 
 Any feedback, bugs or issues, please post in the comment section. Thank you.
 
+### 2nd June 2024
+1. Added a manual including gifs. [Manual](docs/manual.md)
+
+
+
+
+
 ### 1st June 2024
 1. Added a search bar to list view mode. Enable this option in the window configuration menu.
 2. Added a application scale slide in the window configuration menu.
@@ -22,14 +29,11 @@ Any feedback, bugs or issues, please post in the comment section. Thank you.
 ### 27th May 2024
 
 
-   1. Added a function for managing conflicting mods. [Document here](docs/how_to_conflict_mods.md)
+   1. Added a function for managing conflicting mods.
 
-   ![bar.png](assets/screenshots/conflict/example1.png)
+   ![bar.png](docs/assets/manual/conflict/example1.png)
 
-   ![bar.png](assets/screenshots/conflict/example2.png)
-
-   <video src="assets/screenshots/conflict/conflicts.mp4" width="800" height="400" controls></video>
-
+   ![bar.png](docs/assets/manual/conflict/example2.png)
 
 
 
@@ -51,7 +55,7 @@ Any feedback, bugs or issues, please post in the comment section. Thank you.
    2. Add an enabled/disabled mod counter to the top of the ui. 
    3. Added the ability to create you own presets
    Enable multiple mods that are part of the presets you apply. 
-   ![bar.png](assets/screenshots/bar.png)
+   ![bar.png](docs/assets/manual/ui/bar.png)
 
    4. Switching between listview and treeview can be done instantly now. 
    5. Added a splash screen.
@@ -74,7 +78,7 @@ Any feedback, bugs or issues, please post in the comment section. Thank you.
 <span style="color:orange;"> Please make sure that each mod has their own separate folder.
  </span>
 
-![e.g](assets/screenshots/s.png)
+![e.g](docs/assets/instructions/recommended.png)
 
 
     
@@ -114,7 +118,6 @@ Any feedback, bugs or issues, please post in the comment section. Thank you.
 
 #### 6th May 2024
 
-   ![Screenshot of a comment on a GitHub issue showing an image, added in the Markdown, of an Octocat smiling and raising a tentacle.](assets/screenshots/window_setting.png)
    
    - Added a windows configuration menu. Will add onto this at a later date. Option > Windows Configuration:
 
@@ -130,7 +133,7 @@ Any feedback, bugs or issues, please post in the comment section. Thank you.
    All setting will be saved in the "tekken8modmanager.ini". The file will be created in the same location as the program.
    
 
-   ![Screenshot of a comment on a GitHub issue showing an image, added in the Markdown, of an Octocat smiling and raising a tentacle.](assets/screenshots/custom_fonts.png)
+   ![Screenshot of a comment on a GitHub issue showing an image, added in the Markdown, of an Octocat smiling and raising a tentacle.](docs/assets/instructions/custom_fonts.png)
 
    Custom Fonts
    - You can add your own fonts by creating the folders "assets/fonts" in the same location as the program. Paste your font files in the folder "fonts". The font format have to be .ttf or .otf. 
@@ -162,16 +165,11 @@ Any feedback, bugs or issues, please post in the comment section. Thank you.
 
 #### 17th April 2024
 
-   ![Screenshot of a comment on a GitHub issue showing an image, added in the Markdown, of an Octocat smiling and raising a tentacle.](assets/screenshots/thumbnailview.png)
-
-
 
    - Cleaned up UI elements
    - Add a hide button for each folder.
    - Can now search for ~mods, logicmods or mods folders in lowercase or uppercase
 
-
-   ![Screenshot of a comment on a GitHub issue showing an image, added in the Markdown, of an Octocat smiling and raising a tentacle.](assets/screenshots/thumbnail_structure.png)
 
    - (Experimental) Added thumbnail support. Only works in List view mode.  Click on the options tab and show thumbnail.  Place a image file  inside the mod folder of your choice and name it "thumbnail"(jpg, png) If no image is found then it will default to using the programs logo as the thumbnail. 
    -Fixed slow loading of thumbnails
@@ -185,8 +183,7 @@ Any feedback, bugs or issues, please post in the comment section. Thank you.
 
 #### 14th April 2024
 
-   ![Screenshot of a comment on a GitHub issue showing an image, added in the Markdown, of an Octocat smiling and raising a tentacle.](assets/screenshots/treeview.png)
-
+ 
 
    - Added a list directory tree view mode. In this mode you can now enable or disable from the top level folder or sub level folder. To switch viewing mode click the View button on the top left corner and select Tree View from the drop menu.
 

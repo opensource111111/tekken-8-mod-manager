@@ -4,7 +4,7 @@
 ![banner](assets/branding/banner_bbg.png) 
 
 
-![screenshot](assets/screenshots/screenshot1.png)
+![screenshot](docs/assets/screenshot1.png)
 
 
 </div>
@@ -44,7 +44,7 @@ to enable/disable your mods with a switch.
 
 Source code: [https://github.com/opensource111111/tekken-8-mod-manager](https://github.com/opensource111111/tekken-8-mod-manager)
 
-Program Manual:  [manual](manual.md)
+Program Manual:  [Manual here.](docs/manual.md)
 
 
 Any feedback, bugs or issues, please post in the comment section. Thank you. :)
@@ -60,10 +60,18 @@ Any feedback, bugs or issues, please post in the comment section. Thank you. :)
 
 ## Latest_Update
 
-###  1st June 2024
+
+### 2nd June 2024
+1. Added a manual including gifs. [Manual](docs/manual.md)
+
+
+
+### 1st June 2024
 1. Added a search bar to list view mode. Enable this option in the window configuration menu.
 2. Added a application scale slide in the window configuration menu.
 3. Remove the dock information panel option in window configuration menu. The Detail panel will be docked by default.
+
+
 
 
 ### 29th May 2024
@@ -72,19 +80,16 @@ Any feedback, bugs or issues, please post in the comment section. Thank you. :)
 2. A mod.ini file is created for new mods at start-up or by pressing the refresh list button.
 
 
-###  27th May 2024
+### 27th May 2024
 
 
-   1. Added a function for managing conflicting mods. [Document here](docs/how_to_conflict_mods.md)
+   1. Added a function for managing conflicting mods.
 
-   ![bar.png](assets/screenshots/conflict/example1.png)
+   ![bar.png](docs/assets/manual/conflict/example1.png)
 
-   ![bar.png](assets/screenshots/conflict/example2.png)
+   ![bar.png](docs/assets/manual/conflict/example2.png)
 
-   <video src="assets/screenshots/conflict/conflicts.mp4" width="800" height="400" controls></video>
-
-
-
+  
 
 Changelog History: https://github.com/opensource111111/tekken-8-mod-manager/blob/main/changelog.md
 
@@ -102,19 +107,19 @@ Changelog History: https://github.com/opensource111111/tekken-8-mod-manager/blob
 
 - Searches for folders/subfolders inside "Steam\steamapps\common\Tekken 8\Polaris\Content\Paks" that have .pak files inside and then lists them inside the program to then be able to switch them on/off. 
 
-- Recommended folders to create are ~mods , mods and logicmods. To keep things organized, I recommend to have a separate folders for each mod. By doing this you can turn on/off mods seperately but thats up to you.
 
-   examples: 
-
-   ![e.g](assets/screenshots/instructions/recommended.png)
-
-
-
-  
 - The program adds or removes "-x" at the end of each file (.utoc, .ucas, .pak) to enabled/disabled.
 	
    - Enabled = Filenames not ending with "-x"
    - Disabled = Filenames ending with "-x"
+
+
+- Recommended folders to create are ~mods, mods and logicmods. To keep things organized, I recommend to have a separate folders for each mod. By doing this you can turn on/off mods separately but that's up to you.
+
+   examples: 
+
+   ![e.g](docs/assets/instructions/recommended.png)
+
 
 
 
@@ -134,7 +139,7 @@ Changelog History: https://github.com/opensource111111/tekken-8-mod-manager/blob
    2. Place the executable in "Steam\steamapps\common\Tekken 8" and run.
    
    
-   ![folder](assets/screenshots/instructions/place_inside_tekken8_folder.png)
+   ![folder](docs/assets/instructions/place_inside_tekken8_folder.png)
 
 
 
@@ -151,9 +156,7 @@ Changelog History: https://github.com/opensource111111/tekken-8-mod-manager/blob
 
       
    1. <span style="color:Yellow;"> Windows </span> -  Install Python 3.11.9: https://www.python.org/downloads/release/python-3119/
-   2. <span style="color:LightBlue;"> Linux </span> - Open Terminal / Windows - Open Windows command prompt
-      
-      Install required packages using these commands:
+   2. <span style="color:LightBlue;"> Linux </span> - Open Terminal / Windows - Open Windows command prompt and install required packages using these commands below.
 
             - pip install pip
             - pip install glfw
@@ -161,19 +164,19 @@ Changelog History: https://github.com/opensource111111/tekken-8-mod-manager/blob
             - pip install PyOpenGL PyOpenGL_accelerate
             - pip install imgui
             - pip install pillow
-         
 
+         
    3. Place the "tekken8modmanager.py" script and "assets" folder inside "Steam\steamapps\common\Tekken 8".
      
 
-   ![folder2](assets/screenshots/instructions/place_script_inside_folder.png)
+   ![folder2](docs/assets/instructions/place_script_inside_folder.png)
 
 
    
    <span style="color:Yellow;"> Windows </span> - Right click file to open the context menu and open with 
    Python.
 
-   ![folder2](assets/screenshots/instructions/open_with_python.png)
+   ![folder2](docs/assets/instructions/open_with_python.png)
 
 
 
@@ -191,9 +194,6 @@ Changelog History: https://github.com/opensource111111/tekken-8-mod-manager/blob
 
 
 
-
-
-
  # Known_Issues
  - 
 
@@ -205,8 +205,6 @@ Changelog History: https://github.com/opensource111111/tekken-8-mod-manager/blob
  - 
 
 <p>&nbsp;</p>
-
-
 
 
 
