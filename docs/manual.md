@@ -15,6 +15,16 @@
 
 
    ### Files_and_Folders
+   
+   - Recommended folders to create are ~mods, mods and logicmods. To keep things organized, I recommend to have a separate folders for each mod. By doing this you can turn on/off mods separately but that's up to you.
+   
+      examples: 
+   
+     ![e.g](assets/instructions/recommended.png)
+
+
+
+
 
    - 1.1 - Inside a mod folder. The profile folder is created at startup or by pressing the refresh button on the mainmenu bar.
       ![e.g](assets/manual/file_folders/mod.png)
