@@ -3,6 +3,7 @@
 
 
 ### Index
+1. [How It Works](#How_It_Works)
 1. [Files and Folders](#Files_and_Folders)
 2. [UI Overview](#UI_Overview)
 3. [Managing Mod Conflicts In Tekken 8 Mod Manager](#Managing_Mod_Conflicts_In_Tekken_8_Mod_Manager)
@@ -10,20 +11,30 @@
 
 
 
+## How_It_Works
+
+- Searches for folders/subfolders inside "Steam\steamapps\common\Tekken 8\Polaris\Content\Paks" that have .pak files inside and then lists them inside the program to then be able to switch them on/off. 
+
+
+- The program adds or removes "-x" at the end of each file (.utoc, .ucas, .pak) to enabled/disabled.
+	
+   - Enabled = Filenames not ending with "-x"
+   - Disabled = Filenames ending with "-x"
+
+   
+    
 <p>&nbsp;</p>
 
 
 
    ### Files_and_Folders
-   
-   - Recommended folders to create are ~mods, mods and logicmods. To keep things organized, I recommend to have a separate folders for each mod. By doing this you can turn on/off mods separately but that's up to you.
-   
-      examples: 
-   
-     ![e.g](assets/instructions/recommended.png)
 
+    
+- Recommended starting folders to create are ~mods, mods and logicmods. To keep things organized, I recommend to have a separate folders for each mod. By doing this you can turn on/off mods separately but that's up to you.
 
+   examples: 
 
+  ![e.g](assets/instructions/recommended.png)
 
 
    - 1.1 - Inside a mod folder. The profile folder is created at startup or by pressing the refresh button on the mainmenu bar.
@@ -42,7 +53,6 @@
 
 
 
-   
    ### UI_Overview
    ![e.g](assets/manual/ui/ui.png) 
 
@@ -122,23 +132,23 @@
    ### Managing_Mod_Conflicts_In_Tekken_8_Mod_Manager
 
 
-   ![conflict](assets/manual/conflict/conflicts.gif)
+   
+   #### Purpose
+
+   - To find conflicts between different enabled mods and notify the user.
+
+   - It works by matching common strings values that are inputted into the "override parameter" text field in the description panel. You can add as many text fields as you want the describe your mod by click on the + button.
+
+   - The strings values are not hard coded into the program, so you can type anything. I have put together recommendtion on how I use this but if you decide that the recommendation are not up to your liking then you can go by any format you want. Just make sure that the string values have no spaces.
+
+      
+      ![conflict](assets/manual/conflict/conflicts.gif)
 
 
    <p>&nbsp;</p>
 
 
-   #### Purpose
-
-   - To find conflicts between different enabled mods and notify the user.
-
-   - It works by matching common strings values that are inputted into the "override parameter text field in the description panel. You can add as many text fields as you want the describe your mod by click on the + button.
-
-   - The strings values are not hard coded into the program, so you can type anything. I have put together recommendtion on how I use this but if you decide that the recommendation are not up to your liking then you can go by any format you want. Just make sure that the string values have no spaces.
-
-
-
-   #### Recommended syntax
+   #### Recommended Setup
 
          header::the-asset-being-replaced
 
