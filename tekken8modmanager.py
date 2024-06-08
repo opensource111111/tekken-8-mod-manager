@@ -799,7 +799,7 @@ class Configs:
 
 
 
-            if sys.platform == "win32":
+            if sys.platform.startswith("win"):
 
                 # hack for user custom fonts
                 _path = os.path.join(os.path.join(self.owner.pure_dir,"assets"),"fonts")
@@ -1672,14 +1672,14 @@ class WindowUI:
         if imgui.button("Open Root Directory##OpenFolder"):
 
 
-            if sys.platform == "win32":
+            if sys.platform.startswith("win"):
 
 
                 subprocess.Popen([f'explorer', "{0}".format(self.owner.path)])
 
 
 
-            if sys.platform == "linux":
+            if sys.platform.startswith("linux"):
 
 
                 os.system('xdg-open "%s"' % self.owner.path)
@@ -2067,6 +2067,11 @@ class WindowUI:
             imgui.text("Search: ")
             imgui.same_line()
             _, self.search_bar = imgui.input_text("##searchbar",self.search_bar)
+            imgui.same_line()
+
+            if self.search_bar != "":
+                if imgui.button("Clear"):
+                    self.search_bar = ""
 
             self.ui_spacing(6* int(self.application_scale))
 
@@ -2826,14 +2831,14 @@ class WindowUI:
                 if imgui.button("Open Folder##Open_mod_Folder"):
 
 
-                    if sys.platform == "win32":
+                    if sys.platform.startswith("win32"):
 
 
                         subprocess.Popen(['explorer', "{0}".format(self.highlight.location)])
                       
 
 
-                    if sys.platform == "linux":
+                    if sys.platform.startswith("linux"):
                        
 
                         os.system('xdg-open "%s"' % "{0}".format(self.highlight.location))
@@ -3344,7 +3349,7 @@ class WindowUI:
                     self.ui_spacing(5)
 
 
-
+                    imgui.separator()
                     if imgui.button("Close##" + self.highlight.name + "Close"):
 
                         self.show = False
@@ -3407,7 +3412,7 @@ class WindowUI:
 
 
 
-        self.ui_spacing(18* int(self.application_scale))
+        self.ui_spacing(18 * int(self.application_scale))
         self.main_search_bar()
 
 
@@ -3797,7 +3802,7 @@ class WindowUI:
 
 
 
-                self.ui_spacing(4 * int(self.application_scale))
+                self.ui_spacing(4* int(self.application_scale))
 
 
 
@@ -3824,13 +3829,13 @@ class WindowUI:
         if self.show:
 
 
-            self.ui_slide_transition(0,530 ,0.4)
+            self.ui_slide_transition(0,530 ,0.2)
 
 
         else:
 
 
-            self.ui_slide_transition(0,530,-0.4)
+            self.ui_slide_transition(0,530,-0.2)
 
 
             if self.slide == 0:
@@ -4145,26 +4150,21 @@ class ModManager:
 
         
 
-            match sys.platform:
+            if sys.platform.startswith("win"):
+
+                self.path = os.path.dirname(sys.executable) + "\\Polaris\\Content\\Paks"
 
 
-
-                case "win32":
-               
-
-                    self.path = os.path.dirname(sys.executable) + "\\Polaris\\Content\\Paks"
+                self.pure_dir = os.path.dirname(sys.executable)
 
 
-                    self.pure_dir = os.path.dirname(sys.executable)
+                self.window_icon = os.path.abspath(os.path.dirname(__file__)) + "\\assets\\branding\\icon.ico"
 
 
-                    self.window_icon = os.path.abspath(os.path.dirname(__file__)) + "\\assets\\branding\\icon.ico"
+                self.banner = os.path.abspath(os.path.dirname(__file__)) + "\\assets\\branding\\banner.png"
 
 
-                    self.banner = os.path.abspath(os.path.dirname(__file__)) + "\\assets\\branding\\banner.png"
-
-
-                case "linux":
+            if sys.platform.startswith("linux"):
 
 
                     self.path = os.path.dirname(sys.executable) + "/Polaris/Content/Paks"
@@ -4183,31 +4183,26 @@ class ModManager:
         else:
 
 
-
             print('running in a normal Python process')
 
-            match sys.platform:
+
+            if sys.platform.startswith("win"):
+
+                self.path = os.path.dirname(os.path.abspath(__file__)) + "\\Polaris\\Content\\Paks"
+
+                self.window_icon = os.path.abspath(os.path.dirname(__file__)) + "\\assets\\branding\\icon.ico"
+
+                self.banner = os.path.abspath(os.path.dirname(__file__)) + "\\assets\\branding\\banner.png"
 
 
 
-                case "win32":
+            if sys.platform.startswith("linux"):
 
-                    self.path = os.path.dirname(os.path.abspath(__file__)) + "\\Polaris\\Content\\Paks"
+                self.path = os.path.dirname(os.path.abspath(__file__)) + "/Polaris/Content/Paks"
 
-                    self.window_icon = os.path.abspath(os.path.dirname(__file__)) + "\\assets\\branding\\icon.ico"
+                self.window_icon = os.path.dirname(os.path.abspath(__file__)) + "/assets/branding/icon.ico"
 
-                    self.banner = os.path.abspath(os.path.dirname(__file__)) + "\\assets\\branding\\banner.png"
-
-
-
-                case "linux":
-
-
-                    self.path = os.path.dirname(os.path.abspath(__file__)) + "/Polaris/Content/Paks"
-
-                    self.window_icon = os.path.dirname(os.path.abspath(__file__)) + "/assets/branding/icon.ico"
-
-                    self.banner = os.path.abspath(os.path.dirname(__file__)) + "/assets/branding/banner.png"
+                self.banner = os.path.abspath(os.path.dirname(__file__)) + "/assets/branding/banner.png"
 
             
 
