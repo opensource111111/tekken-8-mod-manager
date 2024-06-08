@@ -1,4 +1,9 @@
 
+
+
+![banner_bbg.png](assets/banner_bbg.png)
+
+
 # Manual
 
 
@@ -9,11 +14,14 @@
 3. [Managing Mod Conflicts In Tekken 8 Mod Manager](#Managing_Mod_Conflicts_In_Tekken_8_Mod_Manager)
 
 
+<p>&nbsp;</p>
+<p>&nbsp;</p>
 
 
-## How_It_Works
 
-- Searches for folders/subfolders inside "Steam\steamapps\common\Tekken 8\Polaris\Content\Paks" that have .pak files inside and then lists them inside the program to then be able to switch them on/off. 
+### How_It_Works
+
+- Searches for folders/subfolders inside "Steam\steamapps\common\Tekken 8\Polaris\Content\Paks" that have .pak files inside and then lists them inside the program to then be able to switch them on/off.
 
 
 - The program adds or removes "-x" at the end of each file (.utoc, .ucas, .pak) to enabled/disabled.
@@ -27,7 +35,7 @@
 
 
 
-   ### Files_and_Folders
+### Files_and_Folders
 
     
 - Recommended starting folders to create are ~mods, mods and logicmods. To keep things organized, I recommend to have a separate folders for each mod. By doing this you can turn on/off mods separately but that's up to you.
