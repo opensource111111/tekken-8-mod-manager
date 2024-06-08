@@ -59,7 +59,7 @@ Any feedback, bugs or issues, please post in the comment section. Thank you. :)
 
 
 ## Latest_Update
-Right now I have completed what I want to do with making the mod manager. Im alway open to suggestions and improvement for the program.
+Right now I have completed what I want to do with making the mod manager. I might put out more updates if any new ideas come along. I'm always open to suggestions and improvement to the program. Thank you.
 
 ### 8th June 2024
 1. Changed sys.platform == "the platform string" to sys.platfom.startswith("the platform string")
