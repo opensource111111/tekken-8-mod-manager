@@ -1,7 +1,7 @@
 
 
 
-![banner_bbg.png](assets/manual/banner_bbg.png)
+![banner_bbg.png](assets/banner_bbg.png)
 
 
 # Manual
@@ -67,6 +67,7 @@
 
    - 1.1. Window Configuration Menu.
    ![e.g](assets/manual/ui/config.gif)
+
    
 
    <p>&nbsp;</p>
@@ -149,8 +150,9 @@
 
    - The strings values are not hard coded into the program, so you can type anything. I have put together recommendtion on how I use this but if you decide that the recommendation are not up to your liking then you can go by any format you want. Just make sure that the string values have no spaces.
 
-      
-      ![conflict](assets/manual/conflict/conflicts.gif)
+   - To enable this open the window configuration menu and click on the Mod Conflict Notification box.
+
+![conflict](assets/manual/conflict/conflicts.gif)
 
 
    <p>&nbsp;</p>
