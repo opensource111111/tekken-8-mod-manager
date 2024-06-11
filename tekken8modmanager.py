@@ -795,48 +795,40 @@ class Configs:
 
 
 
+
+        # custom fonts
         if getattr(sys, 'frozen', False) and hasattr(sys, '_MEIPASS'):
 
+            _path = os.path.join(os.path.join(os.path.dirname(sys.executable),"assets"),"fonts")
+
+            if os.path.isdir(_path):
+
+                for i in os.listdir(_path):
 
 
-            if sys.platform.startswith("win"):
-
-                # hack for user custom fonts
-                _path = os.path.join(os.path.join(self.owner.pure_dir,"assets"),"fonts")
-
-                if os.path.isdir(_path):
+                    font = []
 
 
-                    for i in os.listdir(_path):
+                    if i.endswith(".otf") or i.endswith(".ttf"):
 
 
-                        font = []
+                        for jj in range(15):
+
+                            font_path = os.path.join(_path, i)
+
+                            font.append((i + " " + str(font_size_in_pixels) + "px", io.fonts.add_font_from_file_ttf(font_path,font_size_in_pixels * font_scaling_factor)))
+
+                            font_size_in_pixels += 2
 
 
-                        if i.endswith(".otf") or i.endswith(".ttf"):
+                        font_size_in_pixels = 2
 
-
-                            for jj in range(15):
-
-                                font_path = os.path.join(_path, i)
-
-                                font.append((i + " " + str(font_size_in_pixels) + "px", io.fonts.add_font_from_file_ttf(font_path,font_size_in_pixels * font_scaling_factor)))
-
-
-                                font_size_in_pixels += 2
-
-
-                            font_size_in_pixels = 2
-
-
-                            self.fonts.append([i, font])
+                        self.fonts.append([i, font])
 
 
 
 
         #layout = [font][fontset][fontsizeindex][fontfile]
-
-        # to do: put a fail save if font is not preset revert to default
         self.selected_font = self.fonts[6][1][9][1]
 
 
@@ -2063,9 +2055,10 @@ class WindowUI:
     def main_search_bar(self):
 
         if self.toggle_search_bar:
-            imgui.set_next_item_width(400)
+
             imgui.text("Search: ")
             imgui.same_line()
+            imgui.set_next_item_width(200 + 10 * self.owner.config.selected_size * self.application_scale)
             _, self.search_bar = imgui.input_text("##searchbar",self.search_bar)
             imgui.same_line()
 
@@ -2073,7 +2066,7 @@ class WindowUI:
                 if imgui.button("Clear"):
                     self.search_bar = ""
 
-            self.ui_spacing(6* int(self.application_scale))
+            self.ui_spacing(6)
 
         
 
@@ -2137,7 +2130,7 @@ class WindowUI:
                             imgui.same_line()
 
 
-                            changed, self.owner.ui.application_scale = imgui.slider_float("##ApplicationScale", self.owner.ui.application_scale,1,10,'%.1f')
+                            changed, self.owner.ui.application_scale = imgui.slider_float("##ApplicationScale", self.owner.ui.application_scale,1,3,'%.1f')
 
 
                             if changed:
@@ -2761,15 +2754,13 @@ class WindowUI:
 
                 self.ui_spacing(5)
 
-
-
                 x, y =  imgui.get_window_size()
-                imgui.indent((x - self.highlight.icon[self.image_scrollwheel][1]) * 0.5)
+                imgui.indent(((x- (10 * self.application_scale)) - self.highlight.icon[self.image_scrollwheel][1]) * 0.5)
 
                 imgui.image(self.highlight.icon[self.image_scrollwheel][0], self.highlight.icon[self.image_scrollwheel][1], self.highlight.icon[self.image_scrollwheel][2])
 
 
-                imgui.unindent((x - self.highlight.icon[self.image_scrollwheel][1]) * 0.5)
+                imgui.unindent(((x - (10 * self.application_scale)) - self.highlight.icon[self.image_scrollwheel][1]) * 0.5)
 
 
 
@@ -2818,10 +2809,7 @@ class WindowUI:
 
                 # Open button
                 imgui.same_line()
-                imgui.indent(
-
-
-                    self.scaling() * imgui.get_window_size()[0] - 150 * (self.owner.config.selected_size * 0.1))
+                imgui.indent((self.scaling() * imgui.get_window_size()[0] - 110 * (self.owner.config.selected_size * 0.1)) - (40 * self.application_scale) )
 
 
                 self.ui_spacing(2)
@@ -2845,7 +2833,7 @@ class WindowUI:
 
 
 
-                imgui.unindent(self.scaling() * imgui.get_window_size()[0] - 150 * (self.owner.config.selected_size * 0.1))
+                imgui.unindent((self.scaling() * imgui.get_window_size()[0] - 110 * (self.owner.config.selected_size * 0.1)) - (40 * self.application_scale))
 
 
 
@@ -3412,7 +3400,7 @@ class WindowUI:
 
 
 
-        self.ui_spacing(18 * int(self.application_scale))
+        self.ui_spacing(23 + self.owner.config.selected_size)
         self.main_search_bar()
 
 
@@ -3533,7 +3521,6 @@ class WindowUI:
 
 
     def ui_treeview(self, _dir: str = None, indent: int = 0):
-     
 
 
         for item in os.listdir(_dir):
@@ -3789,22 +3776,13 @@ class WindowUI:
 
             if self.toggle_viewmode is True:
 
-
-                self.ui_spacing(20 * int(self.application_scale))
-
-
+                self.ui_spacing(23 + self.owner.config.selected_size)
                 self.ui_treeview(self.owner.path)
-               
-
 
 
             else:
 
-
-
-                self.ui_spacing(4* int(self.application_scale))
-
-
+                #self.ui_spacing(4)
 
                 self.ui_listview()
 
@@ -3829,13 +3807,13 @@ class WindowUI:
         if self.show:
 
 
-            self.ui_slide_transition(0,530 ,0.2)
+            self.ui_slide_transition(0,480 + 60* self.application_scale,0.2)
 
 
         else:
 
 
-            self.ui_slide_transition(0,530,-0.2)
+            self.ui_slide_transition(0,480 + 60* self.application_scale,-0.2)
 
 
             if self.slide == 0:
@@ -3970,9 +3948,6 @@ class ModManager:
         # system path
 
         self.path: str = ""
-
-
-        self.pure_dir: str = ""
 
 
         self.window_icon: str = None
@@ -4143,70 +4118,24 @@ class ModManager:
 
             print('running in a PyInstaller bundle')
 
-
             import pyi_splash
 
             pyi_splash.close()
 
-        
 
-            if sys.platform.startswith("win"):
-
-                self.path = os.path.dirname(sys.executable) + "\\Polaris\\Content\\Paks"
-
-
-                self.pure_dir = os.path.dirname(sys.executable)
-
-
-                self.window_icon = os.path.abspath(os.path.dirname(__file__)) + "\\assets\\branding\\icon.ico"
-
-
-                self.banner = os.path.abspath(os.path.dirname(__file__)) + "\\assets\\branding\\banner.png"
-
-
-            if sys.platform.startswith("linux"):
-
-
-                    self.path = os.path.dirname(sys.executable) + "/Polaris/Content/Paks"
-
-
-                    self.pure_dir = os.path.dirname(sys.executable)
-                    
-
-                    self.window_icon = os.path.dirname(os.path.abspath(__file__)) + "/assets/branding/icon.ico"
-
-
-                    self.banner = os.path.abspath(os.path.dirname(__file__)) + "/assets/branding/banner.png"
-
-
+            self.path = os.path.join(os.path.join(os.path.join(os.path.dirname(sys.executable),"Polaris"),"Content"),"Paks")
 
         else:
 
-
             print('running in a normal Python process')
 
-
-            if sys.platform.startswith("win"):
-
-                self.path = os.path.dirname(os.path.abspath(__file__)) + "\\Polaris\\Content\\Paks"
-
-                self.window_icon = os.path.abspath(os.path.dirname(__file__)) + "\\assets\\branding\\icon.ico"
-
-                self.banner = os.path.abspath(os.path.dirname(__file__)) + "\\assets\\branding\\banner.png"
+            self.path = os.path.join(os.path.join(os.path.join(os.path.abspath(os.path.dirname(__file__)), "Polaris"), "Content"),"Paks")
 
 
 
-            if sys.platform.startswith("linux"):
+        self.window_icon = os.path.join(os.path.join(os.path.join(os.path.abspath(os.path.dirname(__file__)), "assets"), "branding"), "icon.ico")
 
-                self.path = os.path.dirname(os.path.abspath(__file__)) + "/Polaris/Content/Paks"
-
-                self.window_icon = os.path.dirname(os.path.abspath(__file__)) + "/assets/branding/icon.ico"
-
-                self.banner = os.path.abspath(os.path.dirname(__file__)) + "/assets/branding/banner.png"
-
-            
-
-           
+        self.banner = os.path.join(os.path.join(os.path.join(os.path.abspath(os.path.dirname(__file__)), "assets"), "branding"),"banner.png")
 
 
 

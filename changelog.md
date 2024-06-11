@@ -3,7 +3,16 @@
 
 <p>&nbsp;</p>
 
-Any feedback, bugs or issues, please post in the comment section. Thank you.
+
+### 9th Jun 2024
+- Adjusted the offset values on UI elements when changing the application scale value in the window configuration menu. The application scale goes from 1 - 3 in the menu.
+
+
+
+### 8th June 2024
+- Changed sys.platform == "the platform string" to sys.platfom.startswith("the platform string")
+
+
 
 ### 2nd June 2024
 1. Added a manual including gifs. [Manual](docs/manual.md)
