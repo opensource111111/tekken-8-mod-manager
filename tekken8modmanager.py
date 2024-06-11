@@ -3399,8 +3399,6 @@ class WindowUI:
         """
 
 
-
-        self.ui_spacing(23 + self.owner.config.selected_size)
         self.main_search_bar()
 
 
@@ -3776,14 +3774,13 @@ class WindowUI:
 
             if self.toggle_viewmode is True:
 
-                self.ui_spacing(23 + self.owner.config.selected_size)
+                self.ui_spacing(20 + self.owner.config.selected_size)
                 self.ui_treeview(self.owner.path)
 
 
             else:
 
-                #self.ui_spacing(4)
-
+                self.ui_spacing(20 + self.owner.config.selected_size)
                 self.ui_listview()
 
 
