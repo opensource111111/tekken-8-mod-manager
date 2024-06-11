@@ -1,7 +1,7 @@
 
 
 
-![banner_bbg.png](assets/banner_bbg.png)
+![banner_bbg.png](assets/manual/banner_bbg.png)
 
 
 # Manual
