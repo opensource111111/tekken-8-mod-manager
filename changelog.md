@@ -3,6 +3,9 @@
 
 <p>&nbsp;</p>
 
+### 19th Jun 2024
+- Added a delete mod button in the details panel.
+- When opening the mod manager, new mods that are installed will be disabled by default.
 
 ### 9th Jun 2024
 - Adjusted the offset values on UI elements when changing the application scale value in the window configuration menu. The application scale goes from 1 - 3 in the menu.

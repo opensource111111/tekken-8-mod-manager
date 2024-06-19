@@ -62,15 +62,13 @@ Any feedback, bugs or issues, please post in the comment section. Thank you. :)
 
 
 
-### 9th Jun 2024
+### 19th June 2024
+- Added a delete mod button in the details panel.
+- When opening the mod manager, new mods that are installed will be disabled by default.
+
+
+### 9th June 2024
 - Adjusted the offset values on UI elements when changing the application scale value in the window configuration menu. The application scale goes from 1 - 3 in the menu.
-
-
-
-### 8th June 2024
-- Changed sys.platform == "the platform string" to sys.platfom.startswith("the platform string")
-
-
 
 
 ### 2nd June 2024
@@ -78,30 +76,6 @@ Any feedback, bugs or issues, please post in the comment section. Thank you. :)
 
 
 
-### 1st June 2024
-1. Added a search bar to list view mode. Enable this option in the window configuration menu.
-2. Added a application scale slide in the window configuration menu.
-3. Remove the dock information panel option in window configuration menu. The Detail panel will be docked by default.
-
-
-
-
-### 29th May 2024
-
-1. Fixed an issue with mod.ini not being created when clicking the save button in the details panel.
-2. A mod.ini file is created for new mods at start-up or by pressing the refresh list button.
-
-
-### 27th May 2024
-
-
-   1. Added a function for managing conflicting mods.
-
-   ![bar.png](docs/assets/manual/conflict/example1.png)
-
-   ![bar.png](docs/assets/manual/conflict/example2.png)
-
-  
 
 Changelog History: https://github.com/opensource111111/tekken-8-mod-manager/blob/main/changelog.md
 
