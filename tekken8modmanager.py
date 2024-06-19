@@ -1013,16 +1013,29 @@ class Configs:
 
 
 
-        # create profile folder
-
+        # check for new mods and disable by default.
         for file in os.listdir(location):
-                 
+
+            if (file.endswith("pak") or file.endswith("pak-x") or file.endswith("ucas") or file.endswith("ucas-x") or file.endswith("utoc") or file.endswith("utoc-x")):
+
+                if os.path.exists(os.path.join(location, "profile")):
+                    break
+
+                else:
+
+                    if not file.endswith("-x"):
+                        os.rename(os.path.join(location, file), os.path.join(location, file + "-x"))
+
+
+
+
+        # create profile folder
+        for file in os.listdir(location):
 
             if (file.endswith("pak") or file.endswith("pak-x") or file.endswith("ucas") or file.endswith("ucas-x") or file.endswith("utoc") or file.endswith("utoc-x")):
 
                 if os.path.exists(os.path.join(location,"profile")):
                     pass
-
                     #valid_folder = os.path.join(location, "profile")
 
                     #logging.warning("Profile folder exists in {0}".format(valid_folder))
@@ -1369,6 +1382,22 @@ class Configs:
         #self.conflict.show()
 
 
+
+    def delete_mod(self,mod):
+
+        #self.owner.ui.highlight = None
+        self.owner.ui.show = False
+
+        self.owner.ui.slide = 0
+
+        self.owner.ui.t = 0
+
+        self.owner.ui.toggle_edit_information = False
+
+        shutil.rmtree(mod.location)
+
+        self.generate_modlist()
+        
 
 
 
@@ -3236,6 +3265,39 @@ class WindowUI:
 
 
                         self.toggle_edit_information = not self.toggle_edit_information
+
+
+
+
+                    imgui.same_line()
+                    # Delete Mod
+                    if imgui.button("Delete Mod"):
+                        imgui.open_popup("Confirmation")
+                        x, y = glfw.get_window_size(self.owner.window)
+                        imgui.set_next_window_position((x - 350) * 0.5, (y - 230) * 0.5)
+                        imgui.set_next_window_size_constraints((300, 150), (300, 150))
+
+
+
+                    with imgui.begin_popup_modal("Confirmation",imgui.WINDOW_NO_RESIZE | imgui.WINDOW_NO_DECORATION) as select_popup:
+
+                            if select_popup.opened:
+                                imgui.image(self.highlight.icon[0][0], self.thumbnail_size * self.application_scale,self.thumbnail_size * self.application_scale)
+                                imgui.same_line()
+                                imgui.text_wrapped(self.highlight.name)
+
+                                imgui.text("Are you sure?")
+
+
+                                if imgui.button("Yes"):
+                                    self.owner.config.delete_mod(self.highlight)
+
+                                imgui.same_line()
+                                if imgui.button("No"):
+                                    imgui.close_current_popup()
+
+
+
 
                     imgui.separator()
 
