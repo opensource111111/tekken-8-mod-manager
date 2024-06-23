@@ -64,7 +64,7 @@ Any feedback, bugs or issues, please post in the comment section. Thank you. :)
 
 ### 19th June 2024
 - Added a delete mod button in the details panel.
-- When opening the mod manager, new mods that are installed will be disabled by default.
+- When opening the mod manager, new mods that are installed will be disabled.
 
 
 ### 9th June 2024
