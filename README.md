@@ -1,11 +1,7 @@
+
 <div style="text-align: center;">
 
-
 ![banner](assets/branding/banner_bbg.png) 
-
-
-![screenshot](docs/assets/screenshot1.png)
-
 
 </div>
 
@@ -13,83 +9,59 @@
 
 
 <p>&nbsp;</p>
-<p>&nbsp;</p>
-<p>&nbsp;</p>
 
 
 
-# Index
+### Index
+----
 1. [Description](#Description)
-2. [Updates](#Latest_Update)
-3. [How It Works](#How_It_Works)
+2. [Updates](#Latest-Update)
+3. [How It Works](#How-It-Works)
 4. [Instructions](#Installation)
-5. [KnowIssues](#Know_Issues)
+5. [Know Issues](#Know-Issues)
 6. [FAQ](#FAQ)
 7. [Credits](#Credits)
 
 
-
-
-
 <p>&nbsp;</p>
 
 
+### Description
+----
+An open sourced mod manager inspired by [CCDTreborn's 8 Mod On / Off Switch (Version 2)](https://tekkenmods.com/mod/3312/tekken-8-mod-on-off-switch-version-2) to enable/disable your mods with a switch.
 
-
-
-
-## Description
-An open sourced mod manager inspired by [CCDTreborn's 8 Mod On / Off Switch (Version 2)](https://tekkenmods.com/mod/3312/tekken-8-mod-on-off-switch-version-2)
-to enable/disable your mods with a switch.
+![screenshot](docs/assets/screenshot.png) 
 
 Source code: [https://github.com/opensource111111/tekken-8-mod-manager](https://github.com/opensource111111/tekken-8-mod-manager)
 
 Program Manual:  [Manual here.](docs/manual.md)
 
 
-Any feedback, bugs or issues, please post in the comment section. Thank you. :)
-
-
 
 <p>&nbsp;</p>
-<p>&nbsp;</p>
-<p>&nbsp;</p>
 
 
 
+### Latest Update
+----
+#### July 2024
+- Reformed the ini file for mods.
+- Reformed the ini file for the program.
+- Seperated the fonts for the programs text body, title and headers. You can now change the size, font and colour for each.
+- The ability to group sub mods under the main mod. For example, [Chun Li Alpha Costume](https://tekkenmods.com/mod/4352/chun-li-s-alpha-costume).
 
-## Latest_Update
-
-
-
-### 19th June 2024
-- Added a delete mod button in the details panel.
-- When opening the mod manager, new mods that are installed will be disabled.
-
-
-### 9th June 2024
-- Adjusted the offset values on UI elements when changing the application scale value in the window configuration menu. The application scale goes from 1 - 3 in the menu.
-
-
-### 2nd June 2024
-1. Added a manual including gifs. [Manual](docs/manual.md)
-
+![screenshot](docs/assets/manual/ui/options.png) 
 
 
 
 Changelog History: https://github.com/opensource111111/tekken-8-mod-manager/blob/main/changelog.md
 
 
-
-
-<p>&nbsp;</p>
-<p>&nbsp;</p>
 <p>&nbsp;</p>
 
 
-
-
-## How_It_Works
+### How It Works
+----
 
 - Searches for folders/subfolders inside "Steam\steamapps\common\Tekken 8\Polaris\Content\Paks" that have .pak files inside and then lists them inside the program to then be able to switch them on/off. 
 
@@ -100,24 +72,20 @@ Changelog History: https://github.com/opensource111111/tekken-8-mod-manager/blob
    - Disabled = Filenames ending with "-x"
 
 
-- Recommended folders to create are ~mods, mods and logicmods. To keep things organized, I recommend to have a separate folders for each mod. By doing this you can turn on/off mods separately but that's up to you.
+- Please read the mod creator instruction on how to install the mod. THe mod files need to be in there own separate folders. By doing this you can turn on/off mods separately but that's up to you.
 
    examples: 
 
    ![e.g](docs/assets/instructions/recommended.png)
 
 
-
-
-<p>&nbsp;</p>
-<p>&nbsp;</p>
 <p>&nbsp;</p>
 
 
-
-## Installation
+### Installation
+----
    
-   ### Option 1: Run from executable. (Windows Only)
+   #### Option 1: Run from executable. (Windows Only)
 
    1. Unzip the exe file from the zip file. You will most likely get a virus warning which will then quarantine the file. Any virus warning you may have are false positives. 
 
@@ -135,10 +103,7 @@ Changelog History: https://github.com/opensource111111/tekken-8-mod-manager/blob
 
 
 
-<p>&nbsp;</p>
-
-
-  ### Option 2: Run from script (Windows / Linux)
+   #### Option 2: Run from script (Windows / Linux)
 
       
    1. <span style="color:Yellow;"> Windows </span> -  Install Python 3.11.9: https://www.python.org/downloads/release/python-3119/
@@ -174,31 +139,30 @@ Changelog History: https://github.com/opensource111111/tekken-8-mod-manager/blob
 
 
 <p>&nbsp;</p>
+
+
+
+ ### Known Issues
+----
+
+ - 
+
+
+
 <p>&nbsp;</p>
-<p>&nbsp;</p>
 
 
 
-
- ## Known_Issues
-
+### FAQ
+----
  - 
 
 
 <p>&nbsp;</p>
 
 
- ## FAQ
-
- - 
-
-<p>&nbsp;</p>
-
-
-
-
-## Credits:
-
+### Credits:
+----
 
 glfw:  https://pypi.org/project/glfw/
 
