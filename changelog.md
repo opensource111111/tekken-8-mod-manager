@@ -3,28 +3,38 @@
 
 <p>&nbsp;</p>
 
-### 19th Jun 2024
+#### July 2024
+- Reformed the ini file for mods.
+- Reformed the ini file for the program.
+- Seperated the fonts for the programs text body, title and headers. You can now change the size, font and colour for each.
+- The ability to group sub mods under the main mod. For example, [Chun Li Alpha Costume](https://tekkenmods.com/mod/4352/chun-li-s-alpha-costume) and [Fall DressVindictus dress](https://tekkenmods.com/mod/4218/vindictus-dress)
+
+![screenshot](docs\assets\manual\ui\options.png) 
+
+
+
+#### 19th June 2024
 - Added a delete mod button in the details panel.
 - When opening the mod manager, new mods that are installed will be disabled by default.
 
-### 9th Jun 2024
+#### 9th June 2024
 - Adjusted the offset values on UI elements when changing the application scale value in the window configuration menu. The application scale goes from 1 - 3 in the menu.
 
 
 
-### 8th June 2024
+#### 8th June 2024
 - Changed sys.platform == "the platform string" to sys.platfom.startswith("the platform string")
 
 
 
-### 2nd June 2024
+#### 2nd June 2024
 1. Added a manual including gifs. [Manual](docs/manual.md)
 
 
 
 
 
-### 1st June 2024
+#### 1st June 2024
 1. Added a search bar to list view mode. Enable this option in the window configuration menu.
 2. Added a application scale slide in the window configuration menu.
 3. Remove the dock information panel option in window configuration menu. The Detail panel will be docked by default.
@@ -32,13 +42,13 @@
 
 
 
-### 29th May 2024
+#### 29th May 2024
 
 1. Fixed an issue with mod.ini not being created when clicking the save button in the details panel.
 2. A mod.ini file is created for new mods at start-up or by pressing the refresh list button.
 
 
-### 27th May 2024
+#### 27th May 2024
 
 
    1. Added a function for managing conflicting mods.
@@ -52,7 +62,7 @@
 
 
 
-### 26th May 2024
+#### 26th May 2024
 
 1. Fixed an issue with the description format class causing errors while importing the mod list into the program.
 2. Fixed division by 0 error while minimizing window.
@@ -60,7 +70,7 @@
 
 
 
-### 20th May 2024
+#### 20th May 2024
 
 
    1. Added enable/disable all buttons
@@ -83,7 +93,7 @@
 
 
 
-### 12th May 2024
+#### 12th May 2024
 
 1. Removed the ~mods, mods and logicmods folder requirement. The program will now search for any folder/subfolder inside the Pak folder that have .pak files inside them. 
    
