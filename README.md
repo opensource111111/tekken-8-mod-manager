@@ -62,7 +62,7 @@ Changelog History: https://github.com/opensource111111/tekken-8-mod-manager/blob
 
 ### How It Works
 ----
-[Manual][(https://tekkenmods.com/mod/3312/tekken-8-mod-on-off-switch-version-2](https://github.com/opensource111111/tekken-8-mod-manager/blob/main/docs/manual.md))
+[Manual][(https://github.com/opensource111111/tekken-8-mod-manager/blob/main/docs/manual.md)]
 - Searches for folders/subfolders inside "Steam\steamapps\common\Tekken 8\Polaris\Content\Paks" that have .pak files inside and then lists them inside the program to then be able to switch them on/off. 
 
 
