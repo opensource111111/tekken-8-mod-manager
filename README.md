@@ -44,7 +44,7 @@ Program Manual:  [Manual here.](docs/manual.md)
 
 ### Latest Update
 ----
-#### July 2024
+#### 11th July 2024
 - Reformed the ini file for mods.
 - Reformed the ini file for the program.
 - Seperated the fonts for the programs text body, title and headers. You can now change the size, font and colour for each.
