@@ -190,7 +190,7 @@ class ConflictManagement:
                 imgui.push_style_color(imgui.COLOR_TEXT, 0, 0, 0, 1)
                 imgui.push_style_color(imgui.COLOR_BUTTON, 214, 220, 0, 1)
 
-                if imgui.button("!##" + mod.name + "conflicts"):
+                if imgui.button("!##" + mod.description.name + "conflicts"):
 
                     for c in mod.conflict:
 
