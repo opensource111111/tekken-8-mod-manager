@@ -43,7 +43,7 @@ Source code: [https://github.com/opensource111111/tekken-8-mod-manager](https://
 
 
 
-### Latest Update
+### Latest Updates
 
 ----
 
@@ -175,7 +175,7 @@ Changelog History: https://github.com/opensource111111/tekken-8-mod-manager/blob
 - Q = Am i making any videos for the mod manager ?
    - A = Manual here: [Manual here.](docs/manual.md)
 
-- Q = Can you create mod with this program ?
+- Q = Can you create mods with this program ?
    - A = No
 
 
