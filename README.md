@@ -13,6 +13,7 @@
 
 
 ### Index
+
 ----
 1. [Description](#Description)
 2. [Updates](#Latest-Update)
@@ -34,7 +35,7 @@ An open sourced mod manager inspired by [CCDTreborn's 8 Mod On / Off Switch (Ver
 
 Source code: [https://github.com/opensource111111/tekken-8-mod-manager](https://github.com/opensource111111/tekken-8-mod-manager)
 
-Program Manual:  [Manual here.](docs/manual.md)
+
 
 
 
@@ -43,15 +44,24 @@ Program Manual:  [Manual here.](docs/manual.md)
 
 
 ### Latest Update
+
 ----
+
+2.3.1
+#### 17th July 2024
+- The program no longer needs to reimport the list of mods into the program when deleting mods.
+- Added website links to Tekken mods websites under the "Help" tab at the top of the window. 
+
+
+
+2.3
 #### 11th July 2024
 - Reformed the ini file for mods.
 - Reformed the ini file for the program.
-- Seperated the fonts for the programs text body, title and headers. You can now change the size, font and colour for each.
-- The ability to group sub mods under the main mod. For example, [Chun Li Alpha Costume](https://tekkenmods.com/mod/4352/chun-li-s-alpha-costume).
+- Separated the fonts for the programs text body, title and headers. You can now change the size, font and colour for each.
+- The ability to group sub mods under the main mod. For example, [Chun Li Alpha Costume](https://tekkenmods.com/mod/4352/chun-li-s-alpha-costume) and [Vindictus dress](https://tekkenmods.com/mod/4218/vindictus-dress). To use this, open to the details panel of the mod of your choice and click the edit information button. Near the bottom you will see the header called options. Click the + sign which will add a text field and type the absolute folder name of the mod you want to add. The mods you add will now only show under the options header on the mod. To remove the mod just click the - sign in the details panel.
 
-![screenshot](docs/assets/manual/ui/options.png) 
-
+![screenshot](docs\assets\manual\ui\options.png) 
 
 
 Changelog History: https://github.com/opensource111111/tekken-8-mod-manager/blob/main/changelog.md
@@ -61,9 +71,11 @@ Changelog History: https://github.com/opensource111111/tekken-8-mod-manager/blob
 
 
 ### How It Works
+
 ----
-[Manual](https://github.com/opensource111111/tekken-8-mod-manager/blob/main/docs/manual.md)
-- Searches for folders/subfolders inside "Steam\steamapps\common\Tekken 8\Polaris\Content\Paks" that have .pak files inside and then lists them inside the program to then be able to switch them on/off. 
+[Manual here.](doc/manual.md)
+
+- The program searches for folders/subfolders inside "Steam\steamapps\common\Tekken 8\Polaris\Content\Paks" that have .pak files inside on them and then lists them inside the program to then be able to switch them on/off. 
 
 
 - The program adds or removes "-x" at the end of each file (.utoc, .ucas, .pak) to enabled/disabled.
@@ -72,17 +84,19 @@ Changelog History: https://github.com/opensource111111/tekken-8-mod-manager/blob
    - Disabled = Filenames ending with "-x"
 
 
-- Please read the mod creator instruction on how to install the mod. THe mod files need to be in there own separate folders. By doing this you can turn on/off mods separately but that's up to you.
+- Please read the mod creators instruction on how to install there mod. The mod need to have its own separate folder. By doing this you can turn on/off mods separately.
 
    examples: 
 
    ![e.g](docs/assets/instructions/recommended.png)
 
 
+
 <p>&nbsp;</p>
 
 
 ### Installation
+
 ----
    
    #### Option 1: Run from executable. (Windows Only)
@@ -143,9 +157,10 @@ Changelog History: https://github.com/opensource111111/tekken-8-mod-manager/blob
 
 
  ### Known Issues
+
 ----
 
- - 
+ 
 
 
 
@@ -154,14 +169,22 @@ Changelog History: https://github.com/opensource111111/tekken-8-mod-manager/blob
 
 
 ### FAQ
+
 ----
- - 
+
+- Q = Am i making any videos for the mod manager ?
+   - A = Manual here: [Manual here.](docs/manual.md)
+
+- Q = Can you create mod with this program ?
+   - A = No
+
 
 
 <p>&nbsp;</p>
 
 
 ### Credits:
+
 ----
 
 glfw:  https://pypi.org/project/glfw/

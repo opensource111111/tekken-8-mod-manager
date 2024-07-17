@@ -1997,6 +1997,36 @@ class WindowUI:
 
             if imgui.begin_menu("Help"):
                
+                
+                
+                if imgui.begin_menu("Mod Links"):
+
+                    changed, tekkenmods_com = imgui.menu_item("TekkenMods")
+                    if imgui.is_item_hovered():
+
+                        if imgui.begin_tooltip():
+                            imgui.text("https://www.tekkenmods.com")
+                            imgui.end_tooltip()
+
+                    if changed:
+                        
+                        webbrowser.open("https://www.tekkenmods.com", new=2)
+
+
+                    
+                    changed, nexus = imgui.menu_item("Nexus - Tekken 8")
+                    if imgui.is_item_hovered():
+
+                        if imgui.begin_tooltip():
+                            imgui.text("https://www.nexusmods.com/tekken8")
+                            imgui.end_tooltip()
+
+                    if changed:
+                        
+                        webbrowser.open("https://www.nexusmods.com/tekken8", new=2)
+
+                    imgui.end_menu()
+
 
 
 
@@ -2048,7 +2078,12 @@ class WindowUI:
                 imgui.indent(x*0.2)
                 imgui.image(self.about_logo[0], self.about_logo[1] * 0.5, self.about_logo[2] * 0.5)
                 imgui.unindent(x*0.2)
+
+                imgui.indent(x * 0.40)
+                imgui.text_wrapped(self.owner.version)
+                imgui.unindent(x * 0.40)
                 imgui.indent(x * 0.24)
+
                 imgui.text_wrapped(self.about_message)
                 imgui.unindent(x * 0.24)
                 imgui.indent(x * 0.31)
@@ -2478,7 +2513,7 @@ class WindowUI:
 
 
 
-                            # WORK IN PROCRESS
+
 
                             # Emable sub mods
                             for i in self.highlight.description.options:
@@ -2684,9 +2719,11 @@ class WindowUI:
                                     self.show = False
                                     self.slide = 0
                                     self.t = 0
-                                    self.toggle_edit_information = False
                                     shutil.rmtree(self.highlight.location)
-                                    self.owner.config.generate_modlist()
+                                    if self.highlight in self.owner.config.mod_list:
+                                        self.owner.config.mod_list.remove(self.highlight)
+
+
 
 
                                 imgui.same_line()
@@ -3054,9 +3091,9 @@ class WindowUI:
     def run(self):
 
         if self.show:
-            self.ui_slide_transition(0,480 + 60* self.application_scale,0.2)
+            self.ui_slide_transition(0,480 + 60* (self.application_scale * self.application_scale),0.2)
         else:
-            self.ui_slide_transition(0,480 + 60* self.application_scale,-0.2)
+            self.ui_slide_transition(0,480 + 60* (self.application_scale * self.application_scale),-0.2)
 
             if self.slide == 0:
                 self.highlight = None
@@ -3127,7 +3164,7 @@ class ModManager:
         self.config: Configs = None
         self.io = None
         self.impl = None
-        self.version: str = "2.0.1"
+        self.version: str = "v" + "2.3.1"
 
 
     def ui_images(self, image: str = ""):
@@ -3191,7 +3228,7 @@ class ModManager:
         glfw.window_hint(glfw.MAXIMIZED, self.config.maximised)
 
 
-        self.window = glfw.create_window(810, 800, "Tekken 8 Mod Manager", None, None)
+        self.window = glfw.create_window(810, 800, "Tekken 8 Mod Manager  " + self.version, None, None)
 
 
         # Check for platform and build status of the program.

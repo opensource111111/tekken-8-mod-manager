@@ -1,27 +1,36 @@
 
-## ChangeLog
+## Changelog
 
 <p>&nbsp;</p>
 
+2.3.1
+#### 17th July 2024
+- The program no longer needs to reimport the list of mods into the program when deleting mods.
+- Added website links to Tekken mods websites under the "Help" tab at the top of the window. 
+
+2.3
 #### 11th July 2024
 - Reformed the ini file for mods.
 - Reformed the ini file for the program.
-- Seperated the fonts for the programs text body, title and headers. You can now change the size, font and colour for each.
-- The ability to group sub mods under the main mod. For example, [Chun Li Alpha Costume](https://tekkenmods.com/mod/4352/chun-li-s-alpha-costume) and [Fall DressVindictus dress](https://tekkenmods.com/mod/4218/vindictus-dress)
+- Separated the fonts for the programs text body, title and headers. You can now change the size, font and colour for each.
+- The ability to group sub mods under the main mod. For example, [Chun Li Alpha Costume](https://tekkenmods.com/mod/4352/chun-li-s-alpha-costume) and [Vindictus dress](https://tekkenmods.com/mod/4218/vindictus-dress). To use this, open to the details panel of the mod of your choice and click the edit information button. Near the bottom you will see the header called options. Click the + sign which will add a text field and type the absolute folder name of the mod you want to add. The mods you add will now only show under the options header on the mod. To remove the mod just click the - sign in the details panel.
 
 ![screenshot](docs\assets\manual\ui\options.png) 
 
 
 
+2.2
 #### 19th June 2024
 - Added a delete mod button in the details panel.
 - When opening the mod manager, new mods that are installed will be disabled by default.
 
+
+2.1.2
 #### 9th June 2024
 - Adjusted the offset values on UI elements when changing the application scale value in the window configuration menu. The application scale goes from 1 - 3 in the menu.
 
 
-
+2.1.1
 #### 8th June 2024
 - Changed sys.platform == "the platform string" to sys.platfom.startswith("the platform string")
 
@@ -33,7 +42,7 @@
 
 
 
-
+2.1
 #### 1st June 2024
 1. Added a search bar to list view mode. Enable this option in the window configuration menu.
 2. Added a application scale slide in the window configuration menu.
@@ -41,13 +50,15 @@
 
 
 
-
+2.0.1
 #### 29th May 2024
 
 1. Fixed an issue with mod.ini not being created when clicking the save button in the details panel.
 2. A mod.ini file is created for new mods at start-up or by pressing the refresh list button.
 
 
+
+2.0
 #### 27th May 2024
 
 
@@ -61,6 +72,7 @@
 
 
 
+1.9.1
 
 #### 26th May 2024
 
@@ -69,7 +81,7 @@
 3. Added a slide in transition to the details panel.
 
 
-
+1.9
 #### 20th May 2024
 
 
@@ -92,7 +104,7 @@
 
 
 
-
+1.8
 #### 12th May 2024
 
 1. Removed the ~mods, mods and logicmods folder requirement. The program will now search for any folder/subfolder inside the Pak folder that have .pak files inside them. 
@@ -138,6 +150,7 @@
 <p>&nbsp;</p>
 
 
+1.7
 #### 6th May 2024
 
    
@@ -167,7 +180,7 @@
 <p>&nbsp;</p>
 
 
-
+1.6
 #### 3rd May 2024
 
    - Added the ability to save your viewmode setting. This will create a file called "tekken8modmanager.ini".
@@ -177,6 +190,7 @@
 <p>&nbsp;</p>
 
 
+1.5.1
 #### 27th April 2024
    - Fixed aspect ratio on thumbnails when hovering over icon with the mouse curser.
 
@@ -185,6 +199,7 @@
 <p>&nbsp;</p>
 
 
+1.5
 #### 17th April 2024
 
 
@@ -202,7 +217,7 @@
 <p>&nbsp;</p>
 
 
-
+1.4
 #### 14th April 2024
 
  
@@ -215,7 +230,7 @@
 <p>&nbsp;</p>
 
 
-
+1.3
 #### 11th April 2024
    - Can now search for the folder "mods" inside "Steam\steamapps\common\Tekken 8\Polaris\Content\Paks"
 
@@ -226,7 +241,7 @@
 <p>&nbsp;</p>
 
 
-
+1.2
 #### 10th April 2024
    - Added a button to open mod folders.
    - Changed colour of UI titlebar.
@@ -241,7 +256,7 @@
 
 
 
-
+1.1
 #### 7th April 2024
    - Added a separator to the UI to show both ~mods and logicmods separately.
 
