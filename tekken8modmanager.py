@@ -879,8 +879,9 @@ class Configs:
                         description_info.options = description.get("Mod", "options").split(",")
 
 
-                    if description.get("Mod", "is_sub_mod") == "":
+                    if description.get("Mod", "is_sub_mod", fallback="") == "":
                         pass
+
                     else:
                         description_info.is_sub_mod = description.getboolean("Mod", "is_sub_mod", fallback=False)
 
