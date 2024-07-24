@@ -4,6 +4,15 @@
 <p>&nbsp;</p>
 
 2.3.1
+
+#### 24th July 2024
+
+- Fixed issue with presets. AttributeError: 'Configs' object has no attribute 'font_colour'
+
+#### 22nd July 2024
+
+- Fixed error with mod ini file throwing error for "is_sub_mod".
+
 #### 17th July 2024
 - The program no longer needs to reimport the list of mods into the program when deleting mods.
 - Added website links to Tekken mods websites under the "Help" tab at the top of the window. 
