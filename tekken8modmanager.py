@@ -381,7 +381,7 @@ class Configs:
             self.owner.ui.conflict_notification = configfile.getboolean(header1, 'warning', fallback=True)
 
             #presets
-            self.owner.ui.presets = configfile.get(header1, 'presets', fallback="Default").split()
+            self.owner.ui.presets = configfile.get(header1, 'presets', fallback="Default").replace('"',"").replace(',',"").split()
 
             # Round Frame
             self.owner.ui.round = int(configfile.get(header1, 'round_frame', fallback=5))
@@ -1278,7 +1278,7 @@ class WindowUI:
                 if self.preset_input.find(" ") != -1:
                     colour = 0.8,0,0,1
                 else:
-                    colour = self.owner.config.font_colour
+                    colour = self.owner.config.text_body_font_colour
 
                 imgui.push_style_color(imgui.COLOR_TEXT, *colour)
                 imgui.set_next_item_width(380)
@@ -1381,7 +1381,7 @@ class WindowUI:
                 if self.preset_input.find(" ") != -1:
                     colour = 0.8,0,0,1
                 else:
-                    colour = self.owner.config.font_colour
+                    colour = self.owner.config.text_body_font_colour
 
                 imgui.push_style_color(imgui.COLOR_TEXT, *colour)
                 imgui.set_next_item_width(380)
