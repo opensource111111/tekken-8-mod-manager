@@ -151,9 +151,14 @@
       You can edit the information by clicking on the edit information button.
      
 
-   - You can group sub mods under the main mod. For example, [Chun Li Alpha Costume](https://tekkenmods.com/mod/4352/chun-li-s-alpha-costume) and [Vindictus dress](https://tekkenmods.com/mod/4218/vindictus-dress). To use this, open to the details panel of the mod of your choice and click the edit information button. Near the bottom you will see the header called options. Click the + sign which will add a text field and type the absolute folder name of the mod you want to add. The mods you add will now only show under the options header on the mod. To remove the mod just click the - sign in the details panel.
-
+  - You can group sub mods under the main mod. For example, [Chun Li Alpha Costume](https://tekkenmods.com/mod/4352/chun-li-s-alpha-costume) and [Vindictus dress](https://tekkenmods.com/mod/4218/vindictus-dress). 
 ![screenshot](assets/manual/ui/options.png) 
+
+     - To use this, open to the details panel of the mod of your choice and click the edit information button. Near the bottom you will see the header called "Options". Click the + sign which will add a text field and type the absolute folder name, or copy and paste the folder name from your file explorer of the mod you want to be a submod. If you want to add more then one then clicking the + button again create additional text boxes. One per text box.
+     
+     - The mods you flag ad sub mods will now only show under the options header in the details panel of the mod you decided add the sub mods to.
+     - To remove a sub mod, open the details panel of mod with the submods and click the edit information button. By each text box under the options header will have a "-" sign. Click it to remove and click the save button. This will remove the sub mod flag for that mod and put it back to be shown in the mod list on the left.
+    
 
 <p>&nbsp;</p>
 
