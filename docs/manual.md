@@ -17,6 +17,10 @@
 2. [UI Overview](#UI-Overview)
    - [How To Add A Sub Mod](#How-To-Add-A-Sub-Mod)
 4. [Managing Mod Conflicts In Tekken 8 Mod Manager](#Managing-Mod-Conflicts-In-Tekken-8_Mod-Manager)
+   - [How it works](#How-it-works)
+   - [How to enable this feature ?](#How-to-enable-this-feature-?)
+   - [Recommended Setup](#Recommended-Setup)
+   - [Examples](#Examples)
 
 
 <p>&nbsp;</p>
