@@ -185,7 +185,7 @@ Changelog History: https://github.com/opensource111111/tekken-8-mod-manager/blob
    - A = Manual here: [Manual here.](docs/manual.md)
 
 - Q = Can you create mods with this program ?
-   - A = No
+   - A = No. This programs purpose is to help organise your mod collection.
 
 
 
