@@ -15,7 +15,8 @@
 1. [How It Works](#How-It-Works)
 1. [Files and Folders](#Files-and-Folders)
 2. [UI Overview](#UI-Overview)
-3. [Managing Mod Conflicts In Tekken 8 Mod Manager](#Managing-Mod-Conflicts-In-Tekken-8_Mod-Manager)
+   - [How To Add A Sub Mod](#How-To-Add-A-Sub-Mod)
+4. [Managing Mod Conflicts In Tekken 8 Mod Manager](#Managing-Mod-Conflicts-In-Tekken-8_Mod-Manager)
 
 
 <p>&nbsp;</p>
@@ -149,7 +150,9 @@
       How to access this.
       ![e.g](assets/manual/ui/detailspanel.gif)
       You can edit the information by clicking on the edit information button.
+
      
+   ##### How To Add A Sub Mod
 
   - You can group sub mods under the main mod. For example, [Chun Li Alpha Costume](https://tekkenmods.com/mod/4352/chun-li-s-alpha-costume) and [Vindictus dress](https://tekkenmods.com/mod/4218/vindictus-dress). 
 ![screenshot](assets/manual/ui/options.png) 
