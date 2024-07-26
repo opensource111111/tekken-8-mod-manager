@@ -806,7 +806,6 @@ class Configs:
 
 
 
-
                 description_info.override_parameter = []
 
                 description_info.presets = []
@@ -818,42 +817,22 @@ class Configs:
 
                 if description.read(os.path.join(os.path.join(location,"profile"),"mod.ini")):
 
-                    description_info.name = description.get("Mod", "name").strip('"')
-
-                    if len(description_info.name) == 0:
+                    description_info.name = description.get("Mod", "name", fallback = folder_name).strip('"')
+                    if description_info.name == "":
                         description_info.name = folder_name
 
 
-                    description_info.author = description.get("Mod", "author").strip('"')
-                    if len(description_info.author) == 0:
-                        description_info.author = "".replace('"', "")
+                    description_info.author = description.get("Mod", "author", fallback = "").strip('"')
 
+                    description_info.date = description.get("Mod", "date", fallback= "").strip('"')
 
-                    description_info.date = description.get("Mod", "date").strip('"')
-                    if len(description_info.date) == 0:
-                        description_info.date = "".replace('"', "")
+                    description_info.version = description.get("Mod", "version",fallback="").strip('"')
 
+                    description_info.description = description.get("Mod", "description", fallback="").strip('"')
 
+                    description_info.url = description.get("Mod", "url", fallback="").strip('"')
 
-
-                    description_info.version = description.get("Mod", "version").strip('"')
-                    if len(description_info.version ) == 0:
-                        description_info.version  = "".replace('"', "")
-
-
-                    description_info.description = description.get("Mod", "description").strip('"')
-                    if len(description_info.description) == 0:
-                        description_info.description = "".replace('"', "")
-
-
-                    description_info.url = description.get("Mod", "url").strip('"')
-                    if len(description_info.url) == 0:
-                        description_info.url = "".replace('"', "")
-
-
-                    description_info.category = description.get("Mod", "category").strip('"')
-                    if len(description_info.category) == 0:
-                        description_info.category = "".replace('"', "")
+                    description_info.category = description.get("Mod", "category", fallback="").strip('"')
 
 
                     if description.get("Mod", "override_parameter", fallback="") == "":
