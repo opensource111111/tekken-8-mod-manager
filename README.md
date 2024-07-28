@@ -175,9 +175,9 @@ Changelog History: https://github.com/opensource111111/tekken-8-mod-manager/blob
  ### Known Issues
 
 ----
-    - UnicodeEncodeError: 'charmap' codec can't encode characters in position 27-30: character maps to <undefined>.  This may happen when the program is creating a new mod.ini file for newly added mods. Reopening the program after getting this error should remove the error code. I will investigate how to fix this.
+ - UnicodeEncodeError: 'charmap' codec can't encode characters in position 27-30: character maps to <undefined>.  This may happen when the program is creating a new mod.ini file for newly added mods. Reopening the program after getting this error should remove the error code. I will investigate how to fix this.
 
-    - Error with using characters + [ in the search bar.
+- Error with using characters + [ in the search bar.
  
 
 
