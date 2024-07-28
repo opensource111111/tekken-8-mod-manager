@@ -49,6 +49,12 @@ Source code: [https://github.com/opensource111111/tekken-8-mod-manager](https://
 
 2.3.1
 
+
+#### 26th July 2024
+
+ - Added fallbacks for all the options in the mod.ini if for some reason an option is missing or if you misspelled it while editing the mod.ini manually. 
+
+
 #### 24th July 2024
 
 - Fixed issue with presets. AttributeError: 'Configs' object has no attribute 'font_colour'
@@ -133,11 +139,12 @@ Changelog History: https://github.com/opensource111111/tekken-8-mod-manager/blob
    2. <span style="color:LightBlue;"> Linux </span> - Open Terminal / Windows - Open Windows command prompt and install required packages using these commands below.
 
             - pip install pip
-            - pip install glfw
-            - pip install numpy
-            - pip install PyOpenGL PyOpenGL_accelerate
-            - pip install imgui
-            - pip install pillow
+            - pip install glfw=2.7.0
+            - pip install numpy=1.26.4
+            - pip install PyOpenGL=3.1.7
+            - pip install PyOpenGL_accelerate
+            - pip install imgui=2.0.0
+            - pip install pillow=10.3.0
 
          
    3. Place the "tekken8modmanager.py" script and "assets" folder inside "Steam\steamapps\common\Tekken 8".
@@ -168,7 +175,9 @@ Changelog History: https://github.com/opensource111111/tekken-8-mod-manager/blob
  ### Known Issues
 
 ----
+    - UnicodeEncodeError: 'charmap' codec can't encode characters in position 27-30: character maps to <undefined>.  This may happen when the program is creating a new mod.ini file for newly added mods. Reopening the program after getting this error should remove the error code. I will investigate how to fix this.
 
+    - Error with using characters + [ in the search bar.
  
 
 
