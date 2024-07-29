@@ -5,6 +5,16 @@
 
 2.3.1
 
+#### 29th July 2024
+
+- Added an encoding flag "encoding="utf-8" to the function that creates the mod.ini for newly added mods. It should fix the encoding issue. If this is still happening then please let me know in the comments.
+
+- Fixed an issue with some special characters crashing the program when typed in the search bar. If this is still happening then please let me know in the comments.
+
+#### 26th July 2024
+
+ - Added fallbacks for all the options in the mod.ini if for some reason an option is missing or if you misspelled it while editing the mod.ini manually. 
+
 #### 24th July 2024
 
 - Fixed issue with presets. AttributeError: 'Configs' object has no attribute 'font_colour'

@@ -48,6 +48,11 @@ Source code: [https://github.com/opensource111111/tekken-8-mod-manager](https://
 ----
 
 2.3.1
+#### 29th July 2024
+    
+- Added an encoding flag "encoding="utf-8" to the function that creates the mod.ini for newly added mods. It should fix the encoding issue. If this is still happening then please let me know in the comments.
+
+- Fixed an issue with some special characters crashing the program when typed in the search bar. If this is still happening then please let me know in the comments.
 
 
 #### 26th July 2024
@@ -74,7 +79,7 @@ Source code: [https://github.com/opensource111111/tekken-8-mod-manager](https://
 - Reformed the ini file for mods.
 - Reformed the ini file for the program.
 - Separated the fonts for the programs text body, title and headers. You can now change the size, font and colour for each.
-- The ability to group sub mods under the main mod. For example, [Chun Li Alpha Costume](https://tekkenmods.com/mod/4352/chun-li-s-alpha-costume) and [Vindictus dress](https://tekkenmods.com/mod/4218/vindictus-dress). To use this, open to the details panel of the mod of your choice and click the edit information button. Near the bottom you will see the header called options. Click the + sign which will add a text field and type the absolute folder name of the mod you want to add. The mods you add will now only show under the options header on the mod. To remove the mod just click the - sign in the details panel.
+- The ability to group sub mods under the main mod. For example, [Chun Li Alpha Costume](https://tekkenmods.com/mod/4352/chun-li-s-alpha-costume) and [Vindictus dress](https://tekkenmods.com/mod/4218/vindictus-dress). To use this, open to the details panel of the mod of your choice and click the edit information button. Near the bottom you will see the header called options. Click the + sign which will add a text field and type the absolute name of the mod you want to be added as a sub mod. The mods you add will now only show under the options header on the mod. To remove the mod just click the - sign in the details panel.
 
 ![screenshot](docs/assets/manual/ui/options.png) 
 
@@ -175,11 +180,8 @@ Changelog History: https://github.com/opensource111111/tekken-8-mod-manager/blob
  ### Known Issues
 
 ----
- - UnicodeEncodeError: 'charmap' codec can't encode characters in position 27-30: character maps to <undefined>.  This may happen when the program is creating a new mod.ini file for newly added mods. Reopening the program after getting this error should remove the error code. I will investigate how to fix this.
 
-- Error with using characters + [ in the search bar.
- 
-
+-
 
 
 <p>&nbsp;</p>
