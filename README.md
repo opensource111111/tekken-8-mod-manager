@@ -52,7 +52,7 @@ Source code: [https://github.com/opensource111111/tekken-8-mod-manager](https://
     
 - Added an encoding flag "encoding="utf-8" to the function that creates the mod.ini for newly added mods. It should fix the encoding issue. If this is still happening then please let me know in the comments.
 
-- Fixed an issue with some special characters crashing the program when typed in the search bar. If this is still happening then please let me know in the comments.
+- Decreased the likelihood of crashing the program when typing special characters in the search bar. If this is still happening then please let me know in the comments.
 
 
 #### 26th July 2024
