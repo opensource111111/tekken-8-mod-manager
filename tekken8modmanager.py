@@ -772,9 +772,10 @@ class Configs:
 
 
             # create template file
+            # Note : UnicodeEncodeError: 'charmap' codec can't encode characters in position 27-30: character maps to <undefined>
             if os.path.exists(os.path.join(os.path.join(location, "profile"),"mod.ini")) == False:
 
-                with open(os.path.join(os.path.join(location, "profile"), "mod.ini"), 'w') as descrp:
+                with open(os.path.join(os.path.join(location, "profile"), "mod.ini"), 'w', encoding="utf-8") as descrp:
 
                     description['Mod'] = {
 
@@ -2141,7 +2142,7 @@ class WindowUI:
 
                         for v in self.owner.config.conflict.history:
 
-                            if re.search(pattern.lower(), v.lower()):
+                            if re.search(pattern.lower().strip("\/*+()[]+?{}"), v.lower()):
                                 imgui.selectable(v.lower())
 
 
@@ -2837,7 +2838,8 @@ class WindowUI:
 
             if (self.filter_bar == "All" or self.filter_bar.lower() == i.description.category.lower()) and i.is_mod_folder == True and i.description.is_sub_mod == False:
 
-                if re.search(self.search_bar.lower(), i.description.name.lower()) or re.search(self.search_bar.lower(), i.description.name.lower()):
+                # Note error with using characters +=-_[
+                if re.search(self.search_bar.lower().strip("\/*+()[]+?{}"), i.description.name.lower()):
 
                     if self.show_thumbnail is True:
                         imgui.push_id(i.description.name)
